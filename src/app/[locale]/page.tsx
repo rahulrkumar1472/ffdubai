@@ -1,30 +1,49 @@
 import type {Metadata} from "next";
-import {getTranslations} from "next-intl/server";
-import {PRICING} from "@/config/pricing";
-import {buildMetadata} from "@/lib/seo";
-import {HomePage} from "@/components/sections/home-page";
+import {notFound} from "next/navigation";
+import {HomeView} from "@/components/home-view";
+import {getDictionary, locales, type Locale} from "@/lib/i18n";
+import {buildMetadata, SITE_NAME} from "@/lib/seo";
 
-export async function generateMetadata({
+function isLocale(value: string): value is Locale {
+  return locales.includes(value as Locale);
+}
+
+export function generateMetadata({
   params
 }: {
-  params: Promise<{locale: "en" | "ar"}>;
-}): Promise<Metadata> {
-  const {locale} = await params;
-  const t = await getTranslations({locale, namespace: "meta"});
+  params: {locale: string};
+}): Metadata {
+  const {locale} = params;
+
+  if (!isLocale(locale)) {
+    return buildMetadata({
+      locale: "en",
+      path: "/",
+      title: `${SITE_NAME} | From AED 489`,
+      description: "Fat freezing in Dubai from AED 489 with FREE 30-min consultation. Led by a specialised DHA doctor (in-house trained)."
+    });
+  }
+
+  const t = getDictionary(locale);
 
   return buildMetadata({
     locale,
     path: "/",
-    title: t("defaultTitle"),
-    description: t("defaultDescription", {price: PRICING.fatFreezingFromAED})
+    title: `${SITE_NAME} | ${t.hero.priceChip}`,
+    description: t.hero.subheading
   });
 }
 
-export default async function LocalizedHomePage({
+export default function LocalizedHomePage({
   params
 }: {
-  params: Promise<{locale: "en" | "ar"}>;
+  params: {locale: string};
 }) {
-  const {locale} = await params;
-  return <HomePage locale={locale} />;
+  const {locale} = params;
+
+  if (!isLocale(locale)) {
+    notFound();
+  }
+
+  return <HomeView locale={locale} />;
 }
