@@ -8,14 +8,19 @@ datasource db {
 }
 
 model Booking {
-  id        String   @id @default(cuid())
-  locale    String
-  name      String
-  email     String
-  phone     String
-  date      String
-  time      String
-  createdAt DateTime @default(now())
+  id              String   @id @default(cuid())
+  referenceId     String   @unique
+  locale          String
+  bookingType     String   @default("consultation")
+  treatment       String?
+  area            String?
+  name            String
+  email           String
+  phone           String
+  date            String
+  time            String
+  durationMinutes Int      @default(60)
+  createdAt       DateTime @default(now())
 
   @@index([createdAt])
 }

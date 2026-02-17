@@ -28,13 +28,13 @@ export function LanguageToggle({currentLocale}: {currentLocale: "en" | "ar"}) {
   const arPath = buildLocalePath(pathname, "ar");
 
   return (
-    <>
-      <Link className="link-btn" href={enPath}>
-        🇬🇧 EN
+    <div aria-label="Language" className="lang-toggle" role="group">
+      <Link aria-current={currentLocale === "en" ? "page" : undefined} className="lang-option" href={enPath}>
+        EN
       </Link>
-      <Link className="link-btn" href={arPath}>
-        🇦🇪 AR
+      <Link aria-current={currentLocale === "ar" ? "page" : undefined} className="lang-option" href={arPath}>
+        AR
       </Link>
-    </>
+    </div>
   );
 }

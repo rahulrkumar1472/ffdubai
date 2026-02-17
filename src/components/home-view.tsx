@@ -14,7 +14,9 @@ function getImage(images: string[], index: number) {
 
 export function HomeView({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
-  const bookHref = locale === "en" ? "/en/book" : "/ar/book";
+  const base = locale === "en" ? "/en" : "/ar";
+  const bookHref = `${base}/book`;
+  const treatmentBookHref = `${base}/book?mode=treatment`;
 
   const heroImage = getImage(STOCK_IMAGES, 0);
   const whatIsImage = getImage(STOCK_IMAGES, 1);
@@ -75,11 +77,16 @@ export function HomeView({locale}: {locale: Locale}) {
                   <Link className="primary-btn" href={bookHref}>
                     {t.hero.primaryCta}
                   </Link>
-                  <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-                    {t.hero.secondaryCta}
-                  </a>
+                  <Link className="outline-btn" href={treatmentBookHref}>
+                    {t.hero.bookTreatmentCta}
+                  </Link>
                 </div>
                 <p className="hero-trustline">{t.hero.sameDayLine}</p>
+                <p className="hero-trustline hero-whatsapp-note">
+                  <a href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                    {t.hero.secondaryCta}
+                  </a>
+                </p>
               </article>
 
               {heroImage ? (
@@ -140,6 +147,10 @@ export function HomeView({locale}: {locale: Locale}) {
             <div className="container">
               <h2 className="section-title">{t.areas.title}</h2>
               <p className="section-lead">{t.areas.lead}</p>
+              <div className="inline-links">
+                <Link href={`${base}/treatments/fat-freezing`}>{t.nav.fatFreezing}</Link>
+                <Link href={`${base}/pricing`}>{t.nav.pricing}</Link>
+              </div>
 
               <div className="grid-areas" role="list" aria-label={locale === "ar" ? "مناطق العلاج" : "Treatment areas"}>
                 {areaCards.map((area) => (
@@ -179,9 +190,9 @@ export function HomeView({locale}: {locale: Locale}) {
                   <Link className="primary-btn" href={bookHref}>
                     {t.hero.primaryCta}
                   </Link>
-                  <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-                    {t.hero.secondaryCta}
-                  </a>
+                  <Link className="outline-btn" href={treatmentBookHref}>
+                    {t.hero.bookTreatmentCta}
+                  </Link>
                 </div>
               </>
             ) : (
@@ -272,25 +283,17 @@ export function HomeView({locale}: {locale: Locale}) {
                 <Link className="primary-btn" href={bookHref}>
                   {t.finalCta.primaryCta}
                 </Link>
-                <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                <Link className="outline-btn" href={treatmentBookHref}>
                   {t.finalCta.secondaryCta}
+                </Link>
+                <a className="link-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                  {t.finalCta.tertiaryCta}
                 </a>
               </div>
             </article>
           </div>
         </section>
       </main>
-
-      <div className="sticky-cta" role="region" aria-label={locale === "ar" ? "إجراءات الحجز السريع" : "Quick booking actions"}>
-        <div className="sticky-cta-inner">
-          <Link className="primary-btn" href={bookHref}>
-            {t.hero.primaryCta}
-          </Link>
-          <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-            {t.hero.secondaryCta}
-          </a>
-        </div>
-      </div>
     </>
   );
 }

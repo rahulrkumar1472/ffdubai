@@ -5,10 +5,12 @@ import {buildMetadata} from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   locale: "ar",
   path: "/book",
-  title: "احجز استشارة مجانية | FAT FREEZING",
-  description: "احجز استشارة مجانية 30 دقيقة بين 12:00 و20:00 في دبي."
+  title: "احجز استشارة أو جلسة علاج | FAT FREEZING",
+  description: "اختر الموعد ثم أكمل البيانات و أكد حجزك لمدة 60 دقيقة للاستشارة أو العلاج في دبي."
 });
 
-export default function ArBookPage() {
-  return <BookView locale="ar" />;
+export default function ArBookPage({searchParams}: {searchParams?: {mode?: string}}) {
+  const initialMode = searchParams?.mode === "treatment" ? "treatment" : "consultation";
+
+  return <BookView initialMode={initialMode} locale="ar" />;
 }
