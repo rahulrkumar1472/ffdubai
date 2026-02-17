@@ -53,6 +53,9 @@ type Dictionary = {
     title: string;
     subtitle: string;
     disclaimer: string;
+    comingSoonTitle: string;
+    comingSoonText: string;
+    comingSoonCta: string;
   };
   whyChooseUs: {
     title: string;
@@ -130,13 +133,13 @@ const dictionary: Record<Locale, Dictionary> = {
     hero: {
       eyebrow: "Doctor-led body contouring in Jumeirah, Dubai",
       heading: "Remove stubborn fat from just AED 489",
-      subheading: "Doctor-led non-invasive fat freezing for targeted body sculpting with no downtime.",
+      subheading: "Doctor-led non-invasive cryolipolysis for targeted sculpting with no surgery and no downtime.",
       trustPills: ["DHA licensed doctor", "Same-day appointments", "No downtime", "No surgery"],
       typewriterLines: [
-        "Clinically guided cryolipolysis protocol",
-        "Targeted contouring for stubborn areas",
-        "Medical consultation before every plan",
-        "Safe non-surgical treatment pathway"
+        "Permanent fat reduction for selected stubborn pockets",
+        "Clinically proven technology with doctor-led planning",
+        "Target stomach, love handles, arms, and chin",
+        "Free 30-min consultation before treatment"
       ],
       priceChip: "From AED 489",
       consultationBadge: "Free 30-min consultation",
@@ -147,29 +150,29 @@ const dictionary: Record<Locale, Dictionary> = {
     whatIs: {
       title: "What Is Fat Freezing?",
       intro:
-        "Fat freezing, also known as cryolipolysis, is a medical aesthetic treatment used to reduce localised fat pockets that are difficult to shift with lifestyle changes alone. It is a contouring treatment designed for shape refinement, not a replacement for overall weight-loss care.",
+        "Fat freezing, also known as cryolipolysis, is a medical aesthetics treatment used to reduce localised fat pockets that do not respond easily to diet and exercise alone. It is designed for contour refinement and silhouette balance, not general weight-loss management.",
       sections: [
         {
           title: "How it works",
           text:
-            "A specialised applicator delivers controlled cooling to a selected treatment area. Fat cells are more sensitive to cold than surrounding structures, so the protocol is calibrated to target fat while preserving skin and tissue comfort. Following treatment, the body gradually clears affected fat cells through natural metabolic processes. Each session is doctor-led, and settings are adjusted according to area, tissue thickness, and treatment tolerance."
+            "A specialised applicator delivers controlled cooling to a selected treatment area. Fat cells are more sensitive to cold than surrounding structures, so the protocol is calibrated to target fat while maintaining skin comfort. After treatment, the body gradually clears the affected fat cells through natural processes. Every plan is doctor-led, with settings adjusted by treatment zone, tissue thickness, and clinical tolerance."
         },
         {
           title: "What it treats",
           text:
-            "Cryolipolysis is typically used for stubborn, pinchable fat around the abdomen, love handles, thighs, upper arms, and under the chin. It is most appropriate for clients who want targeted contour improvements rather than dramatic scale changes. During consultation, suitability is reviewed based on anatomy, skin quality, and clinical history. Some clients respond with one treatment cycle, while others benefit from staged sessions to achieve balanced contour outcomes."
+            "Cryolipolysis is commonly used for stubborn, pinchable fat around the abdomen, love handles, thighs, upper arms, and under the chin. It is best suited for patients seeking targeted contour changes rather than major scale reduction. During consultation, suitability is reviewed based on anatomy, skin quality, and medical history. Some patients respond with one cycle, while others benefit from staged sessions for balanced outcomes."
         },
         {
           title: "When you'll see results",
           text:
-            "Visible change is usually gradual. Early improvements can appear within a few weeks, while clearer contour definition is commonly seen between weeks 6 and 12. Individual response depends on treatment area, baseline body profile, and adherence to aftercare guidance. A structured follow-up helps evaluate progress with realistic expectations. This consultation-first model prioritises safety, transparency, and medically responsible planning rather than exaggerated promises."
+            "Visible change is typically gradual. Early improvements can appear within a few weeks, while clearer contour definition is commonly seen between weeks 6 and 12. Individual response depends on treatment area, baseline body profile, and aftercare adherence. Structured follow-up helps track progress with realistic expectations. This consultation-first pathway prioritises safety, transparency, and medically responsible planning."
         }
       ],
       cta: "Book Free Consultation"
     },
     areas: {
       title: "Areas We Treat",
-      lead: "Targeted spot reduction zones most commonly requested in our Dubai clinic.",
+      lead: "Targeted contouring for stubborn fat pockets commonly treated in our Dubai clinic.",
       cardCta: "Book consultation",
       popularCaption: "Most popular in Dubai: stomach + love handles.",
       items: [
@@ -197,12 +200,16 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     results: {
       title: "Real Patient Results",
-      subtitle: "Before and after outcomes from clinic cases",
-      disclaimer: "Results vary. A consultation is required to confirm suitability."
+      subtitle: "Before-and-after outcomes from approved clinic cases",
+      disclaimer: "Results vary. A consultation is required to confirm suitability.",
+      comingSoonTitle: "Results gallery coming soon",
+      comingSoonText:
+        "We publish only approved clinical outcomes. Book a consultation to review the most suitable treatment path and realistic timeline.",
+      comingSoonCta: "Book Free Consultation"
     },
     whyChooseUs: {
       title: "Why Patients Choose FAT FREEZING",
-      lead: "A consultation-first model focused on safety, clarity, and premium clinical care.",
+      lead: "A consultation-first model built on safety, transparency, and premium clinical care.",
       items: [
         {
           title: "Doctor-led treatment",
@@ -232,7 +239,7 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     bookingJourney: {
       title: "How Booking Works",
-      lead: "A simple 3-step consultation funnel designed for fast, medically safe decision-making.",
+      lead: "A clear three-step pathway for fast and medically responsible treatment decisions.",
       stepLabel: "Step",
       steps: [
         {
@@ -253,8 +260,8 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     finalCta: {
       title: "Start Your Fat Reduction Journey Today",
-      subtitle: "Free consultation with a doctor-led treatment assessment.",
-      reassurance: "Confidential, no obligation.",
+      subtitle: "Free consultation with a doctor-led suitability assessment.",
+      reassurance: "No obligation. Confidential. Doctor-led assessment.",
       primaryCta: "Book Free Consultation",
       secondaryCta: "Chat on WhatsApp"
     },
@@ -306,13 +313,13 @@ const dictionary: Record<Locale, Dictionary> = {
     hero: {
       eyebrow: "نحت الجسم بإشراف طبي في جميرا، دبي",
       heading: "تخلّص من الدهون العنيدة ابتداءً من 489 درهم",
-      subheading: "تجميد دهون غير جراحي بإشراف طبيب مختص لنحت مناطق محددة دون فترة نقاهة.",
+      subheading: "علاج كرايو ليبوليسيس غير جراحي بإشراف طبي لنحت المناطق العنيدة بدون جراحة وبدون فترة نقاهة.",
       trustPills: ["طبيب مرخص من DHA", "مواعيد في نفس اليوم", "بدون فترة نقاهة", "بدون جراحة"],
       typewriterLines: [
-        "بروتوكول تجميد دهون بإشراف طبي",
-        "تقنية دقيقة للمناطق العنيدة",
-        "تقييم طبي واضح قبل أي جلسة",
-        "خطة علاج آمنة بدون جراحة"
+        "تقليل دائم للدهون الموضعية المناسبة للعلاج",
+        "تقنية مثبتة سريرياً مع خطة علاج بإشراف طبي",
+        "استهداف دقيق للبطن والخواصر والذراعين والذقن",
+        "استشارة مجانية لمدة 30 دقيقة قبل بدء الخطة"
       ],
       priceChip: "ابتداءً من 489 درهم",
       consultationBadge: "استشارة مجانية 30 دقيقة",
@@ -323,29 +330,29 @@ const dictionary: Record<Locale, Dictionary> = {
     whatIs: {
       title: "ما هو تجميد الدهون؟",
       intro:
-        "تجميد الدهون أو الكرايو ليبوليسيس هو إجراء غير جراحي يهدف إلى تقليل الدهون الموضعية العنيدة التي لا تستجيب بسهولة للرياضة أو النظام الغذائي. العلاج مخصص لنحت القوام في مناطق محددة، وليس لإنقاص الوزن العام.",
+        "تجميد الدهون (الكرايو ليبوليسيس) هو إجراء طبي تجميلي غير جراحي يهدف إلى تقليل الدهون الموضعية العنيدة التي لا تستجيب بسهولة للرياضة أو النظام الغذائي. العلاج مخصص لنحت القوام وتحسين التناسق، وليس بديلاً عن برامج إنقاص الوزن العامة.",
       sections: [
         {
           title: "كيف يعمل العلاج",
           text:
-            "يتم وضع جهاز تبريد طبي على المنطقة المستهدفة بدرجة حرارة مدروسة. الخلايا الدهنية تتأثر بالبرودة أكثر من الأنسجة المحيطة، لذلك يركز العلاج على الدهون مع الحفاظ على سلامة الجلد. بعد الجلسة، يبدأ الجسم بالتخلص تدريجياً من الخلايا المتأثرة عبر العمليات الحيوية الطبيعية. يتم ضبط الخطة وفق التقييم الطبي لكل حالة لضمان التوازن بين الأمان والنتيجة المتوقعة."
+            "يوضع جهاز تبريد طبي على المنطقة المستهدفة بدرجة حرارة مدروسة. الخلايا الدهنية أكثر حساسية للبرودة مقارنة بالأنسجة المحيطة، لذلك يركّز العلاج على الدهون مع الحفاظ على راحة الجلد. بعد الجلسة، يبدأ الجسم بالتخلص تدريجياً من الخلايا المتأثرة عبر العمليات الحيوية الطبيعية. يتم ضبط الخطة بناءً على تقييم الطبيب لكل حالة لضمان التوازن بين الأمان والنتيجة المتوقعة."
         },
         {
           title: "ما الذي يعالجه",
           text:
-            "يُستخدم العلاج للدهون الموضعية في البطن، الخواصر، الفخذين، الذراعين، ومنطقة الذقن. وهو مناسب لمن يرغب بتحسين تفاصيل القوام وليس تغييرات وزن كبيرة. خلال الاستشارة نقيّم سماكة الدهون ومرونة الجلد والتاريخ الطبي، ثم نحدد عدد الجلسات الأنسب. بعض الحالات تستفيد من جلسة واحدة، بينما حالات أخرى تحتاج خطة تدريجية لتحقيق تناسق أفضل."
+            "يُستخدم العلاج للدهون الموضعية في البطن، الخواصر، الفخذين، الذراعين، ومنطقة الذقن. وهو مناسب لمن يرغب في تحسين تفاصيل القوام لا في تغييرات وزن كبيرة. خلال الاستشارة نقيم سماكة الدهون ومرونة الجلد والتاريخ الطبي، ثم نحدد عدد الجلسات الأنسب. بعض الحالات تستفيد من جلسة واحدة، بينما تحتاج حالات أخرى إلى خطة تدريجية لتحقيق تناسق أفضل."
         },
         {
           title: "متى تظهر النتائج",
           text:
-            "النتائج تظهر بشكل تدريجي، وقد تبدأ ملاحظات أولية خلال الأسابيع الأولى. في الغالب يصبح التحسن أوضح بين الأسبوع السادس والثاني عشر. سرعة الاستجابة تختلف بحسب طبيعة الجسم والمنطقة المعالجة والالتزام بالتعليمات بعد الجلسة. لهذا نعتمد متابعة طبية منظمة وتوقعات واقعية، حتى تتخذ قرارك بثقة ووضوح دون وعود مبالغ فيها."
+            "النتائج تظهر تدريجياً، وقد تبدأ ملاحظات أولية خلال الأسابيع الأولى. غالباً يصبح التحسن أوضح بين الأسبوع السادس والثاني عشر. سرعة الاستجابة تختلف حسب طبيعة الجسم والمنطقة المعالجة والالتزام بالتعليمات بعد الجلسة. لذلك نعتمد متابعة طبية منظمة وتوقعات واقعية بعيداً عن أي وعود مبالغ فيها."
         }
       ],
       cta: "احجز استشارة مجانية"
     },
     areas: {
       title: "المناطق التي نعالجها",
-      lead: "مناطق موضعية يتم علاجها بدقة وفق تقييم طبي واضح لكل حالة.",
+      lead: "نستهدف الدهون الموضعية العنيدة بخطة علاج دقيقة وتقييم طبي واضح.",
       cardCta: "احجز استشارة",
       popularCaption: "الأكثر طلباً في دبي: البطن + الخواصر.",
       items: [
@@ -373,12 +380,16 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     results: {
       title: "نتائج حقيقية للمرضى",
-      subtitle: "صور قبل وبعد من حالات تم تقييمها في العيادة",
-      disclaimer: "النتائج تختلف حسب كل حالة. الاستشارة الطبية مطلوبة لتأكيد الملاءمة."
+      subtitle: "صور قبل وبعد لحالات معتمدة طبياً في العيادة",
+      disclaimer: "النتائج تختلف حسب كل حالة. الاستشارة الطبية مطلوبة لتأكيد الملاءمة.",
+      comingSoonTitle: "معرض النتائج قيد التحديث",
+      comingSoonText:
+        "نعرض فقط النتائج الطبية المعتمدة وبعد موافقة الحالة. احجز استشارتك لمراجعة الخطة الأنسب لك والزمن المتوقع للنتائج.",
+      comingSoonCta: "احجز استشارة مجانية"
     },
     whyChooseUs: {
       title: "لماذا يختار المرضى FAT FREEZING",
-      lead: "نهج علاجي يبدأ بالاستشارة ويضع الأمان والوضوح في مقدمة القرار الطبي.",
+      lead: "نهج علاجي يبدأ بالاستشارة ويضع الأمان والوضوح في مقدمة القرار.",
       items: [
         {
           title: "علاج بإشراف طبي",
@@ -408,7 +419,7 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     bookingJourney: {
       title: "كيف تتم رحلة الحجز",
-      lead: "خطوات واضحة وسريعة تساعدك على اتخاذ قرار علاجي مدروس بثقة.",
+      lead: "ثلاث خطوات واضحة وسريعة لاتخاذ قرار علاجي مدروس بثقة.",
       stepLabel: "الخطوة",
       steps: [
         {
@@ -429,8 +440,8 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     finalCta: {
       title: "ابدأ رحلتك لتقليل الدهون اليوم",
-      subtitle: "استشارة مجانية مع تقييم علاجي بإشراف طبي.",
-      reassurance: "سرية تامة، بدون التزام.",
+      subtitle: "استشارة مجانية مع تقييم ملاءمة علاجي بإشراف طبي.",
+      reassurance: "بدون التزام. سرية تامة. تقييم علاجي بإشراف طبي.",
       primaryCta: "احجز استشارة مجانية",
       secondaryCta: "تواصل عبر واتساب"
     },

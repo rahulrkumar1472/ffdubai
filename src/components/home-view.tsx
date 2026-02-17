@@ -16,9 +16,9 @@ export function HomeView({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
   const bookHref = locale === "en" ? "/en/book" : "/ar/book";
 
-  const heroImage = STOCK_IMAGES[0] ?? null;
-  const whatIsImage = STOCK_IMAGES[1] ?? null;
-  const bookingImage = STOCK_IMAGES[2] ?? null;
+  const heroImage = getImage(STOCK_IMAGES, 0);
+  const whatIsImage = getImage(STOCK_IMAGES, 1);
+  const bookingImage = getImage(STOCK_IMAGES, 2);
 
   const areaCards = t.areas.items
     .map((item, index) => ({
@@ -27,7 +27,18 @@ export function HomeView({locale}: {locale: Locale}) {
     }))
     .filter((item): item is {name: string; description: string; image: string} => Boolean(item.image));
 
-  const showResults = BEFORE_AFTER_IMAGES.length > 0;
+  const resultsImagesAvailable = BEFORE_AFTER_IMAGES.filter(Boolean);
+  const resultsCount = resultsImagesAvailable.length;
+  const resultsMode = resultsCount === 0 ? "empty" : resultsCount < 3 ? "compact" : "grid";
+  const isCompactResults = resultsMode === "compact";
+  const hasResults = resultsMode !== "empty";
+  const resultsImages = isCompactResults ? resultsImagesAvailable.slice(0, 2) : resultsImagesAvailable;
+  const resultsLayoutClass = [
+    "results-gallery-wrap",
+    isCompactResults ? (resultsImages.length === 1 ? "results-single" : "results-compact") : "results-standard"
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <>
@@ -60,7 +71,7 @@ export function HomeView({locale}: {locale: Locale}) {
                 <Typewriter lines={t.hero.typewriterLines} />
                 <p className="section-lead">{t.hero.subheading}</p>
 
-                <div className="cta-row">
+                <div className="cta-row cta-row-hero">
                   <Link className="primary-btn" href={bookHref}>
                     {t.hero.primaryCta}
                   </Link>
@@ -80,7 +91,7 @@ export function HomeView({locale}: {locale: Locale}) {
                     sizes="(max-width: 900px) 100vw, 45vw"
                     src={heroImage}
                   />
-                  <span className="hero-overlay" />
+                  <span aria-hidden className="hero-overlay" />
                   <span className="hero-badge">{t.hero.consultationBadge}</span>
                 </article>
               ) : null}
@@ -130,9 +141,9 @@ export function HomeView({locale}: {locale: Locale}) {
               <h2 className="section-title">{t.areas.title}</h2>
               <p className="section-lead">{t.areas.lead}</p>
 
-              <div className="grid-areas">
+              <div className="grid-areas" role="list" aria-label={locale === "ar" ? "مناطق العلاج" : "Treatment areas"}>
                 {areaCards.map((area) => (
-                  <article className="card area-card" key={area.name}>
+                  <article className="card area-card" key={area.name} role="listitem">
                     <div className="area-media">
                       <Image alt={area.name} fill loading="lazy" sizes="(max-width: 900px) 100vw, 20vw" src={area.image} />
                       <span className="area-overlay" />
@@ -153,24 +164,42 @@ export function HomeView({locale}: {locale: Locale}) {
           </section>
         ) : null}
 
-        {showResults ? (
-          <section className="section" id="results">
-            <div className="container">
-              <h2 className="section-title">{t.results.title}</h2>
-              <p className="section-lead">{t.results.subtitle}</p>
-              <p className="results-disclaimer">{t.results.disclaimer}</p>
-              <ResultsGallery images={BEFORE_AFTER_IMAGES} locale={locale} />
-              <div className="cta-row cta-row-center section-cta">
-                <Link className="primary-btn" href={bookHref}>
-                  {t.hero.primaryCta}
-                </Link>
-                <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-                  {t.hero.secondaryCta}
-                </a>
-              </div>
-            </div>
-          </section>
-        ) : null}
+        <section className="section" id="results">
+          <div className="container">
+            <h2 className="section-title">{t.results.title}</h2>
+            <p className="section-lead">{t.results.subtitle}</p>
+            <p className="results-disclaimer">{t.results.disclaimer}</p>
+
+            {hasResults ? (
+              <>
+                <div className={resultsLayoutClass}>
+                  <ResultsGallery images={resultsImages} locale={locale} />
+                </div>
+                <div className="cta-row cta-row-center section-cta">
+                  <Link className="primary-btn" href={bookHref}>
+                    {t.hero.primaryCta}
+                  </Link>
+                  <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                    {t.hero.secondaryCta}
+                  </a>
+                </div>
+              </>
+            ) : (
+              <article className="card results-empty">
+                <h3>{t.results.comingSoonTitle}</h3>
+                <p>{t.results.comingSoonText}</p>
+                <div className="cta-row cta-row-tight">
+                  <Link className="primary-btn" href={bookHref}>
+                    {t.results.comingSoonCta}
+                  </Link>
+                  <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                    {t.hero.secondaryCta}
+                  </a>
+                </div>
+              </article>
+            )}
+          </div>
+        </section>
 
         <section className="section section-muted" id="why-choose-us">
           <div className="container">
