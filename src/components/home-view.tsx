@@ -1,41 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import {Typewriter} from "@/components/typewriter";
-import {BookingForm} from "@/components/booking-form";
 import {ResultsGallery} from "@/components/results-gallery";
 import {JsonLd} from "@/components/json-ld";
 import {clinicSchema, serviceSchema} from "@/lib/schema";
 import {getDictionary, type Locale} from "@/lib/i18n";
 import {BEFORE_AFTER_IMAGES, STOCK_IMAGES} from "@/lib/image-manifest";
 
-function pickImage(images: string[], index: number) {
-  if (images.length === 0) return null;
+function getImage(images: string[], index: number) {
+  if (!images.length) return null;
   return images[index % images.length];
 }
 
 export function HomeView({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
+  const bookHref = locale === "en" ? "/en/book" : "/ar/book";
 
-  const stockImages = STOCK_IMAGES;
-  const beforeAfterImages = BEFORE_AFTER_IMAGES;
-  const heroImage = pickImage(stockImages, 0);
-  const whatIsImage = pickImage(stockImages, 1);
-  const areaImageMap = t.areas.items.map((_, index) => pickImage(stockImages, index + 2));
+  const heroImage = STOCK_IMAGES[0] ?? null;
+  const whatIsImage = STOCK_IMAGES[1] ?? null;
+  const bookingImage = STOCK_IMAGES[2] ?? null;
 
-  const typewriterLines =
-    locale === "ar"
-      ? [
-          "ابتداءً من 489 درهم • مواعيد نفس اليوم متاحة",
-          "طبيب مرخص من DHA • بدون فترة نقاهة",
-          "استهداف البطن • الخواصر • الذراعين • الذقن",
-          "استشارة مجانية 30 دقيقة — احجز اليوم"
-        ]
-      : [
-          "From AED 489 • Same-day appointments available",
-          "DHA-licensed doctor • No downtime",
-          "Target stomach • love handles • arms • chin",
-          "Free 30-min consultation — book today"
-        ];
+  const areaCards = t.areas.items
+    .map((item, index) => ({
+      ...item,
+      image: getImage(STOCK_IMAGES, index + 3)
+    }))
+    .filter((item): item is {name: string; description: string; image: string} => Boolean(item.image));
+
+  const showResults = BEFORE_AFTER_IMAGES.length > 0;
 
   return (
     <>
@@ -43,190 +35,233 @@ export function HomeView({locale}: {locale: Locale}) {
       <JsonLd data={serviceSchema(locale)} />
 
       <main>
-        <section className="hero">
-          <div className="container hero-shell">
-            <div className="hero-layout">
-              <div className="hero-copy">
+        <section className="section hero-section" id="top">
+          <div className="container">
+            <div className={heroImage ? "hero-grid" : "hero-grid hero-grid-single"}>
+              <article className="card hero-copy">
                 <span className="eyebrow">{t.hero.eyebrow}</span>
-                <div style={{marginTop: "0.8rem", marginBottom: "0.1rem", color: "#1a4d7d", fontWeight: 800, letterSpacing: "0.14em"}}>
-                  FAT FREEZING
-                </div>
-                <div style={{color: "#6d89a8", fontWeight: 600, marginBottom: "0.2rem"}}>
-                  {locale === "ar" ? "مركز دبي لنحت وخسارة الوزن" : "Dubai’s Weight Loss Centre"}
-                </div>
-                <h1>{t.hero.heading}</h1>
-                <Typewriter lines={typewriterLines} />
-                <p className="lead">{t.hero.subheading}</p>
 
-                <ul style={{marginTop: "0.9rem", paddingInlineStart: "1.1rem", color: "#3e6287", lineHeight: 1.75}}>
-                  <li>{locale === "ar" ? "طبيب مرخص من DHA" : "DHA-licensed doctor"}</li>
-                  <li>{locale === "ar" ? "مواعيد نفس اليوم متاحة" : "Same-day slots available"}</li>
-                  <li>{locale === "ar" ? "بدون جراحة • بدون إبر • بدون نقاهة" : "No surgery • No needles • No downtime"}</li>
-                  <li>{locale === "ar" ? "جميرا، دبي" : "Jumeirah, Dubai"}</li>
+                <div className="brand-lockup">
+                  <p className="hero-brand">{t.brandLockup.brandName}</p>
+                  <p className="hero-tagline">{t.brandLockup.brandDescriptor}</p>
+                </div>
+
+                <h1>{t.hero.heading}</h1>
+                <p className="price-chip">{t.hero.priceChip}</p>
+
+                <ul className="pill-row" aria-label={locale === "ar" ? "مؤشرات الثقة" : "Trust indicators"}>
+                  {t.hero.trustPills.map((pill) => (
+                    <li className="pill" key={pill}>
+                      {pill}
+                    </li>
+                  ))}
                 </ul>
 
-                <div className="hero-cta-row">
-                  <Link className="primary-btn" href={locale === "en" ? "/en/book" : "/ar/book"}>
+                <Typewriter lines={t.hero.typewriterLines} />
+                <p className="section-lead">{t.hero.subheading}</p>
+
+                <div className="cta-row">
+                  <Link className="primary-btn" href={bookHref}>
                     {t.hero.primaryCta}
                   </Link>
                   <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
                     {t.hero.secondaryCta}
                   </a>
                 </div>
-                <p className="hero-trustline">{t.hero.trustLine}</p>
-              </div>
+                <p className="hero-trustline">{t.hero.sameDayLine}</p>
+              </article>
 
-              <div className="hero-image">
-                {heroImage ? (
-                  <Image alt="Fat freezing consultation in Dubai" fill priority sizes="(max-width: 900px) 100vw, 45vw" src={heroImage} />
-                ) : null}
-                <div className="hero-badge-floating">{locale === "ar" ? "ابتداءً من 489 درهم" : "From AED 489"}</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="container">
-            <div className="highlight-grid">
-              {[
-                locale === "ar" ? "إشراف طبي" : "Doctor-led",
-                locale === "ar" ? "أجهزة طبية معتمدة" : "Medical-grade devices",
-                locale === "ar" ? "أسعار واضحة" : "Transparent pricing",
-                locale === "ar" ? "تجربة 5 نجوم" : "5-star rated experience"
-              ].map((item, idx) => (
-                <article className="highlight-item" key={item}>
-                  <span className="highlight-icon" aria-hidden>
-                    {idx === 0 ? "✓" : idx === 1 ? "✚" : idx === 2 ? "AED" : "★"}
-                  </span>
-                  <span className="highlight-text">{item}</span>
+              {heroImage ? (
+                <article className="hero-media card" aria-label={locale === "ar" ? "صورة علاج تجميد الدهون" : "Fat freezing clinic visual"}>
+                  <Image
+                    alt={locale === "ar" ? "جلسة تجميد دهون في دبي" : "Fat freezing treatment in Dubai"}
+                    fill
+                    priority
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                    src={heroImage}
+                  />
+                  <span className="hero-overlay" />
+                  <span className="hero-badge">{t.hero.consultationBadge}</span>
                 </article>
-              ))}
+              ) : null}
             </div>
           </div>
         </section>
 
-        <section className="section section-alt">
-          <div className="container copy-image-grid">
-            <div className="copy-box">
-              <h2 className="section-head">{t.whatIs.title}</h2>
-              {t.whatIs.body.split("\n\n").map((paragraph) => (
-                <p key={paragraph.slice(0, 40)}>{paragraph}</p>
-              ))}
-            </div>
-            <div className="image-card">
-              {whatIsImage ? <Image alt="What is fat freezing" fill sizes="(max-width: 900px) 100vw, 40vw" src={whatIsImage} /> : null}
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
+        <section className="section" id="what-is-fat-freezing">
           <div className="container">
-            <h2 className="section-head">{t.areas.title}</h2>
-            <div className="area-grid">
-              {t.areas.items.map((area, index) => {
-                const areaCardImage = areaImageMap[index] || heroImage;
+            <div className={whatIsImage ? "authority-grid" : "authority-grid authority-grid-single"}>
+              {whatIsImage ? (
+                <article className="card authority-media">
+                  <Image
+                    alt={locale === "ar" ? "شرح طبي لتجميد الدهون" : "Medical fat freezing explanation"}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 900px) 100vw, 42vw"
+                    src={whatIsImage}
+                  />
+                </article>
+              ) : null}
 
-                return (
-                  <Link className="area-card" href={locale === "en" ? "/en/book" : "/ar/book"} key={area.name}>
-                    <div className="area-thumb">
-                      {areaCardImage ? <Image alt={area.name} fill sizes="(max-width: 900px) 100vw, 20vw" src={areaCardImage} /> : null}
-                    </div>
-                    <div className="area-name">{area.name}</div>
+              <article className="card authority-copy">
+                <h2 className="section-title">{t.whatIs.title}</h2>
+                <p className="section-lead">{t.whatIs.intro}</p>
+
+                {t.whatIs.sections.map((section) => (
+                  <article className="authority-block" key={section.title}>
+                    <h3>{section.title}</h3>
+                    <p>{section.text}</p>
+                  </article>
+                ))}
+
+                <div className="cta-row cta-row-tight">
+                  <Link className="primary-btn" href={bookHref}>
+                    {t.whatIs.cta}
                   </Link>
-                );
-              })}
+                </div>
+              </article>
             </div>
           </div>
         </section>
 
-        <section className="section section-alt">
-          <div className="container">
-            <div className="offer-strip">
-              <div className="offer-title">{t.offers.title}</div>
-              <div className="offer-subtitle">{t.offers.subtitle}</div>
-              <Link className="primary-btn" href={locale === "en" ? "/en/book" : "/ar/book"}>
-                {locale === "ar" ? "احجز الآن" : "Book Now"}
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="container">
-            <h2 className="section-head">{t.howItWorks.title}</h2>
-            <div className="steps-grid">
-              {t.howItWorks.steps.map((step) => (
-                <article className="step-card" key={step.title}>
-                  <h3 className="step-title">{step.title}</h3>
-                  <p className="step-desc">{step.description}</p>
-                </article>
-              ))}
-            </div>
-            <p style={{marginTop: "0.7rem", color: "#6a86a5", fontSize: "0.9rem"}}>
-              {locale === "ar" ? "تنبيه: النتائج تختلف من شخص لآخر." : "Disclaimer: Results vary."}
-            </p>
-          </div>
-        </section>
-
-        {beforeAfterImages.length > 0 ? (
-          <section className="section section-alt">
+        {areaCards.length > 0 ? (
+          <section className="section section-muted" id="areas-we-treat">
             <div className="container">
-              <h2 className="section-head">{locale === "ar" ? "نتائج قبل وبعد" : "Results (Before & After)"}</h2>
-              <p className="section-sub">
-                {locale === "ar"
-                  ? "جميع الصور المعروضة من مجلد before-after. النتائج تختلف حسب الحالة والمنطقة وخطة العلاج."
-                  : "Gallery pulled from the before-after folder. Results vary by body profile, area, and treatment plan."}
-              </p>
-              <ResultsGallery images={beforeAfterImages} locale={locale} />
-              <p style={{marginTop: "0.7rem", color: "#6a86a5", fontSize: "0.9rem"}}>
-                {locale === "ar" ? "تنبيه: النتائج تختلف من شخص لآخر." : "Disclaimer: Results vary."}
-              </p>
+              <h2 className="section-title">{t.areas.title}</h2>
+              <p className="section-lead">{t.areas.lead}</p>
+
+              <div className="grid-areas">
+                {areaCards.map((area) => (
+                  <article className="card area-card" key={area.name}>
+                    <div className="area-media">
+                      <Image alt={area.name} fill loading="lazy" sizes="(max-width: 900px) 100vw, 20vw" src={area.image} />
+                      <span className="area-overlay" />
+                    </div>
+                    <div className="area-content">
+                      <h3>{area.name}</h3>
+                      <p>{area.description}</p>
+                      <Link className="area-link" href={bookHref}>
+                        {t.areas.cardCta}
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <p className="section-lead areas-caption">{t.areas.popularCaption}</p>
             </div>
           </section>
         ) : null}
 
-        <section className="section">
-          <div className="container">
-            <h2 className="section-head">{t.booking.sectionTitle}</h2>
-            <p className="section-sub">{t.booking.sectionSubtitle}</p>
-            <BookingForm locale={locale} />
-          </div>
-        </section>
-
-        <section className="section section-alt">
-          <div className="container">
-            <h2 className="section-head">{t.faq.title}</h2>
-            <div className="faq-grid">
-              {t.faq.items.map((faq) => (
-                <article className="faq-card" key={faq.question}>
-                  <h3 className="faq-question">{faq.question}</h3>
-                  <p className="faq-answer">{faq.answer}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="container">
-            <div className="final-cta">
-              <h3 className="section-head" style={{marginTop: 0}}>
-                {t.finalCta.title}
-              </h3>
-              <p className="section-sub">{t.finalCta.subtitle}</p>
-              <div className="actions">
-                <Link className="primary-btn" href={locale === "en" ? "/en/book" : "/ar/book"}>
-                  {t.finalCta.button}
+        {showResults ? (
+          <section className="section" id="results">
+            <div className="container">
+              <h2 className="section-title">{t.results.title}</h2>
+              <p className="section-lead">{t.results.subtitle}</p>
+              <p className="results-disclaimer">{t.results.disclaimer}</p>
+              <ResultsGallery images={BEFORE_AFTER_IMAGES} locale={locale} />
+              <div className="cta-row cta-row-center section-cta">
+                <Link className="primary-btn" href={bookHref}>
+                  {t.hero.primaryCta}
                 </Link>
                 <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
                   {t.hero.secondaryCta}
                 </a>
               </div>
             </div>
+          </section>
+        ) : null}
+
+        <section className="section section-muted" id="why-choose-us">
+          <div className="container">
+            <h2 className="section-title">{t.whyChooseUs.title}</h2>
+            <p className="section-lead">{t.whyChooseUs.lead}</p>
+
+            <div className="grid-features">
+              {t.whyChooseUs.items.map((item) => (
+                <article className="card feature-card" key={item.title}>
+                  <span aria-hidden className="feature-dot" />
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section" id="how-booking-works">
+          <div className="container">
+            <div className={bookingImage ? "journey-grid" : "journey-grid journey-grid-single"}>
+              <article className="card journey-content">
+                <h2 className="section-title">{t.bookingJourney.title}</h2>
+                <p className="section-lead">{t.bookingJourney.lead}</p>
+
+                <div className="grid-steps">
+                  {t.bookingJourney.steps.map((step, index) => (
+                    <article className="card step-card" key={step.title}>
+                      <p className="step-index">{`${t.bookingJourney.stepLabel} ${index + 1}`}</p>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                    </article>
+                  ))}
+                </div>
+
+                <p className="journey-note">{t.bookingJourney.note}</p>
+
+                <div className="cta-row cta-row-tight">
+                  <Link className="primary-btn" href={bookHref}>
+                    {t.bookingJourney.cta}
+                  </Link>
+                </div>
+              </article>
+
+              {bookingImage ? (
+                <article className="card journey-media">
+                  <Image
+                    alt={locale === "ar" ? "توضيح خطوات الاستشارة" : "Consultation journey visual"}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 900px) 100vw, 40vw"
+                    src={bookingImage}
+                  />
+                </article>
+              ) : null}
+            </div>
+          </div>
+        </section>
+
+        <section className="section" id="final-cta">
+          <div className="container">
+            <article className="card final-panel">
+              <h2 className="section-title">{t.finalCta.title}</h2>
+              <p className="section-lead">{t.finalCta.subtitle}</p>
+              <p className="final-reassure">{t.finalCta.reassurance}</p>
+
+              <div className="cta-row cta-row-center">
+                <Link className="primary-btn" href={bookHref}>
+                  {t.finalCta.primaryCta}
+                </Link>
+                <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                  {t.finalCta.secondaryCta}
+                </a>
+              </div>
+            </article>
           </div>
         </section>
       </main>
+
+      <div className="sticky-cta" role="region" aria-label={locale === "ar" ? "إجراءات الحجز السريع" : "Quick booking actions"}>
+        <div className="sticky-cta-inner">
+          <Link className="primary-btn" href={bookHref}>
+            {t.hero.primaryCta}
+          </Link>
+          <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+            {t.hero.secondaryCta}
+          </a>
+        </div>
+      </div>
     </>
   );
 }
