@@ -2,10 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import {Breadcrumbs} from "@/components/breadcrumbs";
 import {JsonLd} from "@/components/json-ld";
-import {blogPostingSchema, breadcrumbSchema, faqSchema} from "@/lib/schema";
+import {faqSchema} from "@/lib/schema";
 import {calculateReadingTime, getRelatedPosts, type BlogPost} from "@/lib/blog";
 import type {Locale} from "@/lib/i18n";
 import {STOCK_IMAGES} from "@/lib/image-manifest";
+import {SITE_URL} from "@/lib/seo";
+import {breadcrumbJsonLd} from "@/lib/seo/jsonld";
 
 function getFeaturedImage(slug: string) {
   if (!STOCK_IMAGES.length) return null;
@@ -18,15 +20,57 @@ function getFeaturedImage(slug: string) {
   return STOCK_IMAGES[hash % STOCK_IMAGES.length];
 }
 
-export function BlogPostView({locale, post}: {locale: Locale; post: BlogPost}) {
-  const base = locale === "en" ? "/en" : "/ar";
+export function BlogPostView({
+  locale,
+  post,
+  basePath,
+  canonicalPrefix
+}: {
+  locale: Locale;
+  post: BlogPost;
+  basePath?: string;
+  canonicalPrefix?: string;
+}) {
+  const base = basePath ?? (locale === "en" ? "/en" : "/ar");
+  const prefix = canonicalPrefix ?? (locale === "en" ? "/en" : "/ar");
+  const blogHref = `${base}/blog`.replace("//", "/");
   const related = getRelatedPosts(locale, post.slug, 3);
   const featuredImage = getFeaturedImage(post.slug);
+  const canonicalBlogPath = `${prefix}/blog`.replace("//", "/");
+  const canonicalPostPath = `${canonicalBlogPath}/${post.slug}`.replace("//", "/");
 
   return (
     <>
-      <JsonLd data={breadcrumbSchema(locale, [{name: locale === "en" ? "Blog" : "المدونة", path: "/blog"}, {name: post.title, path: `/blog/${post.slug}`}])} />
-      <JsonLd data={blogPostingSchema(locale, post)} />
+      <JsonLd
+        data={breadcrumbJsonLd(SITE_URL, [
+          {name: locale === "en" ? "Home" : "الرئيسية", path: prefix || "/"},
+          {name: locale === "en" ? "Blog" : "المدونة", path: canonicalBlogPath},
+          {name: post.title, path: canonicalPostPath}
+        ])}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.metaDescription,
+          datePublished: post.publishedAt,
+          dateModified: post.publishedAt,
+          inLanguage: locale === "ar" ? "ar-AE" : "en-AE",
+          url: `${SITE_URL}${canonicalPostPath}`,
+          mainEntityOfPage: `${SITE_URL}${canonicalPostPath}`,
+          author: {
+            "@type": "Person",
+            name: post.author
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "FAT FREEZING"
+          },
+          articleSection: post.category,
+          keywords: post.tags.join(", ")
+        }}
+      />
       {post.faq.length > 0 ? <JsonLd data={faqSchema(post.faq)} /> : null}
 
       <main>
@@ -35,8 +79,8 @@ export function BlogPostView({locale, post}: {locale: Locale; post: BlogPost}) {
             <Breadcrumbs
               locale={locale}
               items={[
-                {label: locale === "en" ? "Blog" : "المدونة", href: `${base}/blog`},
-                {label: post.title, href: `${base}/blog/${post.slug}`}
+                {label: locale === "en" ? "Blog" : "المدونة", href: blogHref},
+                {label: post.title, href: `${blogHref}/${post.slug}`.replace("//", "/")}
               ]}
             />
 
@@ -86,7 +130,7 @@ export function BlogPostView({locale, post}: {locale: Locale; post: BlogPost}) {
                           : "احجز استشارة مجانية لمراجعة الملاءمة الطبية والمناطق المستهدفة وخيارات الباقات."}
                       </p>
                       <div className="cta-row cta-row-tight">
-                        <Link className="primary-btn" href={`${base}/book`}>
+                        <Link className="primary-btn" href={`${base}/book`.replace("//", "/")}>
                           {locale === "en" ? "Book Free Consultation" : "احجز استشارة مجانية"}
                         </Link>
                         <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
@@ -106,7 +150,7 @@ export function BlogPostView({locale, post}: {locale: Locale; post: BlogPost}) {
                     : "احجز استشارة مجانية لمراجعة الملاءمة الطبية والمناطق المستهدفة وخيارات الباقات."}
                 </p>
                 <div className="cta-row cta-row-tight">
-                  <Link className="primary-btn" href={`${base}/book`}>
+                  <Link className="primary-btn" href={`${base}/book`.replace("//", "/")}>
                     {locale === "en" ? "Book Free Consultation" : "احجز استشارة مجانية"}
                   </Link>
                   <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
@@ -138,7 +182,7 @@ export function BlogPostView({locale, post}: {locale: Locale; post: BlogPost}) {
                     <article className="card blog-card" key={item.slug}>
                       <h3>{item.title}</h3>
                       <p>{item.summary}</p>
-                      <Link className="outline-btn" href={`${base}/blog/${item.slug}`}>
+                      <Link className="outline-btn" href={`${blogHref}/${item.slug}`.replace("//", "/")}>
                         {locale === "en" ? "Read" : "اقرأ"}
                       </Link>
                     </article>

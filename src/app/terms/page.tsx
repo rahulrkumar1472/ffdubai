@@ -1,45 +1,49 @@
 import type {Metadata} from "next";
+import {PageLayout} from "@/components/site/PageLayout";
+import {buildRootMetadata} from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Terms | FAT FREEZING",
-  description: "Terms and conditions for FAT FREEZING clinic website and booking use."
-};
+export const metadata: Metadata = buildRootMetadata({
+  path: "/terms",
+  title: "Terms and Conditions | FAT FREEZING",
+  description: "Terms of use and booking conditions for fatfreezing.ae services in Dubai."
+});
 
 export default function TermsPage() {
   return (
-    <main>
-      <section className="section">
-        <div className="container">
-          <article className="card legal-card">
-            <h1>Terms & Conditions</h1>
-            <p className="section-lead">
-              These terms govern use of FAT FREEZING website content, appointment requests, and communication channels. By
-              using this site, you agree to these terms and any applicable UAE regulations.
-            </p>
-            <h2>Medical suitability</h2>
-            <p>
-              Website content is informational and does not replace a clinical assessment. Treatment recommendations are
-              confirmed only after consultation with a qualified clinician.
-            </p>
-            <h2>Bookings and availability</h2>
-            <p>
-              Appointment requests are subject to slot confirmation. Same-day availability may vary. We reserve the right to
-              reschedule when clinical requirements or operational constraints apply.
-            </p>
-            <h2>Pricing and offers</h2>
-            <p>
-              Promotional pricing may be time-limited and subject to suitability checks. Final treatment planning is agreed
-              during consultation.
-            </p>
-            <h2>Liability</h2>
-            <p>
-              We work to keep information accurate, but no guarantee is made that site content is complete at all times. Use
-              of this site is at your own discretion.
-            </p>
-          </article>
-        </div>
-      </section>
-    </main>
+    <PageLayout>
+      <main>
+        <section className="section">
+          <div className="container">
+            <article className="card legal-card">
+              <h1>Terms and Conditions</h1>
+              <p className="section-lead">
+                By using this website, you agree to these terms for information use, booking requests, and communication.
+                Content is educational and should not be treated as a substitute for direct medical evaluation.
+              </p>
+              <h2>Service information</h2>
+              <p>
+                Treatment descriptions are provided for general education. Final suitability and treatment scope are determined
+                only after consultation.
+              </p>
+              <h2>Booking requests</h2>
+              <p>
+                Appointment submissions are requests, not guaranteed treatment approval. Slots are subject to confirmation and
+                clinical suitability checks.
+              </p>
+              <h2>Pricing and offers</h2>
+              <p>
+                Offer terms can change over time. Transparent package recommendations are provided during consultation based on
+                area suitability and treatment plan.
+              </p>
+              <h2>Liability notice</h2>
+              <p>
+                We work to keep information accurate and current, but no guarantee is made that every page is complete at all
+                times. Use of site information remains your responsibility.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </PageLayout>
   );
 }
-

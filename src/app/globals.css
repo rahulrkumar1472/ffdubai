@@ -220,6 +220,19 @@ img {
   position: relative;
 }
 
+.nav-dropdown-details {
+  position: relative;
+}
+
+.nav-dropdown-details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.nav-dropdown-details > summary::-webkit-details-marker {
+  display: none;
+}
+
 .nav-trigger {
   background: transparent;
   cursor: pointer;
@@ -258,6 +271,10 @@ img {
 }
 
 .nav-dropdown.is-open .dropdown-panel {
+  display: grid;
+}
+
+.nav-dropdown-details[open] > .seo-dropdown-panel {
   display: grid;
 }
 
@@ -402,6 +419,20 @@ img {
   height: 2px;
   border-radius: 999px;
   background: #2f5d87;
+}
+
+.seo-mobile-menu {
+  display: none;
+}
+
+.seo-mobile-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.seo-mobile-menu[open] .seo-mobile-panel {
+  transform: translateX(0);
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .mobile-drawer-backdrop {
@@ -1948,6 +1979,21 @@ select:focus {
   margin: 8px 0 0;
 }
 
+.inner-list {
+  margin: 0;
+  padding-inline-start: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.seo-footer .footer-links {
+  align-content: start;
+}
+
+.seo-footer-trust {
+  margin-top: 8px;
+}
+
 .messagemind-widget-wrap {
   animation: widget-enter 0.4s ease-out both;
 }
@@ -2028,6 +2074,10 @@ select:focus {
     display: none;
   }
 
+  .seo-mobile-menu {
+    display: block;
+  }
+
   .header-inner {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 7px;
@@ -2042,6 +2092,10 @@ select:focus {
   }
 
   .header-book-desktop {
+    display: none;
+  }
+
+  .seo-header-actions .header-book {
     display: none;
   }
 

@@ -1,45 +1,50 @@
 import type {Metadata} from "next";
+import {PageLayout} from "@/components/site/PageLayout";
+import {buildRootMetadata} from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildRootMetadata({
+  path: "/privacy-policy",
   title: "Privacy Policy | FAT FREEZING",
-  description: "Privacy policy for FAT FREEZING clinic website, booking forms, and contact requests."
-};
+  description: "Privacy policy covering booking forms, enquiry data, and communication preferences for fatfreezing.ae."
+});
 
 export default function PrivacyPolicyPage() {
   return (
-    <main>
-      <section className="section">
-        <div className="container">
-          <article className="card legal-card">
-            <h1>Privacy Policy</h1>
-            <p className="section-lead">
-              FAT FREEZING respects your privacy. This policy explains how booking and contact details are collected and used
-              to manage consultation requests and treatment communication.
-            </p>
-            <h2>Data we collect</h2>
-            <p>
-              We collect name, phone, email, preferred date/time, and optional message fields submitted through booking forms
-              or lead capture modules.
-            </p>
-            <h2>How data is used</h2>
-            <p>
-              Data is used to coordinate appointments, send confirmations, and provide relevant service updates. We do not sell
-              personal data.
-            </p>
-            <h2>Storage and retention</h2>
-            <p>
-              Submitted data is stored securely within our booking systems and retained only as needed for operational,
-              clinical-support, or regulatory purposes.
-            </p>
-            <h2>Your rights</h2>
-            <p>
-              You can request correction or deletion of your contact data by contacting the clinic directly via WhatsApp or
-              phone.
-            </p>
-          </article>
-        </div>
-      </section>
-    </main>
+    <PageLayout>
+      <main>
+        <section className="section">
+          <div className="container">
+            <article className="card legal-card">
+              <h1>Privacy Policy</h1>
+              <p className="section-lead">
+                This policy explains how personal information submitted through fatfreezing.ae is handled for booking,
+                communication, and service support. We use only the information required to coordinate your consultation and
+                treatment planning journey.
+              </p>
+              <h2>Information we collect</h2>
+              <p>
+                Information may include your name, phone number, email, selected date and time, treatment interest, and
+                message details entered into booking or enquiry forms.
+              </p>
+              <h2>How information is used</h2>
+              <p>
+                Data is used to respond to enquiries, confirm appointments, send service communications, and support
+                consultation planning. We do not sell personal data.
+              </p>
+              <h2>Storage and protection</h2>
+              <p>
+                Data is stored using operational systems that support appointment management. Access is limited to relevant
+                staff and service workflows.
+              </p>
+              <h2>Your rights</h2>
+              <p>
+                You may request data correction or deletion by contacting the clinic. Some records may be retained where
+                required for legal, operational, or clinical documentation obligations.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </PageLayout>
   );
 }
-

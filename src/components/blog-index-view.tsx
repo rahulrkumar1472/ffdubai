@@ -1,12 +1,15 @@
 import Link from "next/link";
 import {Breadcrumbs} from "@/components/breadcrumbs";
 import {JsonLd} from "@/components/json-ld";
-import {breadcrumbSchema} from "@/lib/schema";
 import {calculateReadingTime, getBlogPosts} from "@/lib/blog";
 import type {Locale} from "@/lib/i18n";
+import {breadcrumbJsonLd} from "@/lib/seo/jsonld";
+import {SITE_URL} from "@/lib/seo";
 
-export function BlogIndexView({locale}: {locale: Locale}) {
-  const base = locale === "en" ? "/en" : "/ar";
+export function BlogIndexView({locale, basePath, canonicalPrefix}: {locale: Locale; basePath?: string; canonicalPrefix?: string}) {
+  const base = basePath ?? (locale === "en" ? "/en" : "/ar");
+  const prefix = canonicalPrefix ?? (locale === "en" ? "/en" : "/ar");
+  const blogHref = `${base}/blog`.replace("//", "/");
   const posts = getBlogPosts(locale);
 
   const title = locale === "en" ? "Dubai Fat Freezing Blog" : "مدونة تجميد الدهون في دبي";
@@ -17,11 +20,16 @@ export function BlogIndexView({locale}: {locale: Locale}) {
 
   return (
     <>
-      <JsonLd data={breadcrumbSchema(locale, [{name: locale === "en" ? "Blog" : "المدونة", path: "/blog"}])} />
+      <JsonLd
+        data={breadcrumbJsonLd(SITE_URL, [
+          {name: locale === "en" ? "Home" : "الرئيسية", path: prefix || "/"},
+          {name: locale === "en" ? "Blog" : "المدونة", path: `${prefix}/blog`.replace("//", "/")}
+        ])}
+      />
       <main>
         <section className="section inner-hero">
           <div className="container">
-            <Breadcrumbs locale={locale} items={[{label: locale === "en" ? "Blog" : "المدونة", href: `${base}/blog`}]} />
+            <Breadcrumbs locale={locale} items={[{label: locale === "en" ? "Blog" : "المدونة", href: blogHref}]} />
 
             <div className="inner-hero-head">
               <h1>{title}</h1>
@@ -48,10 +56,10 @@ export function BlogIndexView({locale}: {locale: Locale}) {
                     ))}
                   </div>
                   <div className="cta-row cta-row-tight">
-                    <Link className="primary-btn" href={`${base}/blog/${post.slug}`}>
+                    <Link className="primary-btn" href={`${blogHref}/${post.slug}`.replace("//", "/")}>
                       {locale === "en" ? "Read Article" : "اقرأ المقال"}
                     </Link>
-                    <Link className="outline-btn" href={`${base}/book`}>
+                    <Link className="outline-btn" href={`${base}/book`.replace("//", "/")}>
                       {locale === "en" ? "Book Free Consultation" : "احجز استشارة مجانية"}
                     </Link>
                   </div>

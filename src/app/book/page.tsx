@@ -1,5 +1,72 @@
-import {redirect} from "next/navigation";
+import type {Metadata} from "next";
+import Link from "next/link";
+import {BookingForm} from "@/components/booking-form";
+import {JsonLd} from "@/components/json-ld";
+import {PageLayout} from "@/components/site/PageLayout";
+import {buildRootMetadata} from "@/lib/seo";
+import {localBusinessJsonLd} from "@/lib/seo/jsonld";
+import {SITE_CONFIG} from "@/lib/site-config";
 
-export default function BookRedirectPage() {
-  redirect("/en/book");
+export const metadata: Metadata = buildRootMetadata({
+  path: "/book",
+  title: "Book Free Consultation | FAT FREEZING Dubai",
+  description: "Choose a date, share your details, and confirm your cryolipolysis consultation or treatment booking in Dubai."
+});
+
+export default function BookPage({
+  searchParams
+}: {
+  searchParams?: {mode?: string; treatment?: string; package?: string};
+}) {
+  const hasTreatmentPreset = Boolean(searchParams?.treatment);
+  const initialMode = searchParams?.mode === "treatment" || hasTreatmentPreset ? "treatment" : "consultation";
+  const initialTreatment = searchParams?.treatment ?? "";
+  const initialPackage = searchParams?.package ?? "";
+
+  return (
+    <PageLayout>
+      <JsonLd
+        data={
+          localBusinessJsonLd({
+            name: SITE_CONFIG.brandName,
+            url: `${SITE_CONFIG.siteUrl}/book`,
+            description:
+              "Online booking flow for free consultation and treatment planning for fat freezing in Dubai.",
+            areaServed: SITE_CONFIG.serviceArea,
+            address: SITE_CONFIG.address,
+            telephone: SITE_CONFIG.phone
+          })
+        }
+      />
+
+      <main>
+        <section className="section inner-hero">
+          <div className="container">
+            <article className="card">
+              <h1>Book Free Consultation</h1>
+              <p className="section-lead">
+                Select a date and time, complete your details, and confirm your appointment request. Every booking is reviewed
+                for medical suitability, and treatment recommendations are provided during consultation.
+              </p>
+              <BookingForm
+                initialMode={initialMode}
+                initialPackage={initialPackage}
+                initialTreatment={initialTreatment}
+                locale="en"
+              />
+              <div className="inline-links" style={{marginTop: 16}}>
+                <Link href="/pricing">Pricing</Link>
+                <Link href="/fat-freezing">Fat Freezing</Link>
+                <Link href="/faq">FAQ</Link>
+              </div>
+              <p className="results-disclaimer">
+                Informational note: booking confirmation does not guarantee treatment suitability. Final clinical decisions are
+                made at consultation.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </PageLayout>
+  );
 }

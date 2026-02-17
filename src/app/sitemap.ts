@@ -1,62 +1,44 @@
 import type {MetadataRoute} from "next";
 import {SITE_URL} from "@/lib/seo";
 import {BLOG_SLUGS} from "@/lib/blog";
-import {getAreaSlugs} from "@/lib/areas";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "/book",
-    "/areas",
+    "/about",
     "/fat-freezing",
-    "/ultrasound-cavitation",
-    "/radiofrequency",
+    "/cryolipolysis",
+    "/coolsculpting-alternative",
+    "/body-areas",
     "/treatments",
-    "/treatments/fat-freezing",
-    "/treatments/ultrasound-cavitation",
-    "/treatments/radiofrequency",
     "/pricing",
     "/results",
+    "/before-after",
+    "/locations",
+    "/locations/dubai",
+    "/locations/jumeirah",
     "/faq",
     "/contact",
-    "/blog"
+    "/blog",
+    "/privacy-policy",
+    "/terms",
+    "/cookie-policy",
+    "/disclaimer"
   ];
-  const areaPaths = getAreaSlugs().map((slug) => `/areas/${slug}`);
   const blogPaths = BLOG_SLUGS.map((slug) => `/blog/${slug}`);
 
-  const entries: MetadataRoute.Sitemap = [];
-
-  for (const locale of ["en", "ar"]) {
-    for (const path of paths) {
-      entries.push({
-        url: `${SITE_URL}/${locale}${path}`,
-        changeFrequency: "weekly",
-        priority: path === "" ? 1 : 0.85
-      });
-    }
-
-    for (const path of areaPaths) {
-      entries.push({
-        url: `${SITE_URL}/${locale}${path}`,
-        changeFrequency: "weekly",
-        priority: 0.82
-      });
-    }
-
-    for (const path of blogPaths) {
-      entries.push({
-        url: `${SITE_URL}/${locale}${path}`,
-        changeFrequency: "monthly",
-        priority: 0.78
-      });
-    }
-  }
-
-  const legalEntries: MetadataRoute.Sitemap = ["/terms", "/privacy-policy", "/cookies"].map((path) => ({
+  const entries: MetadataRoute.Sitemap = paths.map((path) => ({
     url: `${SITE_URL}${path}`,
-    changeFrequency: "yearly",
-    priority: 0.4
+    changeFrequency: path.startsWith("/blog") ? "monthly" : "weekly",
+    priority: path === "" ? 1 : 0.82
   }));
 
-  return [...entries, ...legalEntries];
+  const blogEntries: MetadataRoute.Sitemap = blogPaths.map((path) => ({
+    url: `${SITE_URL}${path}`,
+    changeFrequency: "monthly",
+    priority: 0.78
+  }));
+
+  return [...entries, ...blogEntries];
 }
