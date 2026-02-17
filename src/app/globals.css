@@ -72,21 +72,29 @@ img {
 }
 
 .seasonal-banner {
+  position: sticky;
+  top: 0;
+  z-index: 60;
   border-bottom: 1px solid rgba(199, 162, 105, 0.42);
-  background: linear-gradient(95deg, #0f4a83 0%, #2f79bd 45%, #d5b37a 100%);
+  background: linear-gradient(95deg, #0d467e 0%, #2f79bd 42%, #d5b37a 100%);
   color: #ffffff;
-  font-size: 0.74rem;
+  font-size: 0.73rem;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
 .seasonal-banner-inner {
-  min-height: 40px;
+  min-height: 46px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   text-align: start;
+}
+
+.seasonal-banner-copy {
+  display: grid;
+  gap: 2px;
 }
 
 .seasonal-banner-inner p {
@@ -94,26 +102,36 @@ img {
   max-width: 68ch;
 }
 
+.seasonal-banner-countdown {
+  font-size: 0.66rem;
+  opacity: 0.95;
+}
+
 .seasonal-banner-actions {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .seasonal-banner-cta {
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(244, 212, 153, 0.35));
   color: #fff;
-  min-height: 24px;
-  padding: 0.26rem 0.62rem;
+  min-height: 26px;
+  padding: 0.28rem 0.66rem;
   font-size: 0.7rem;
   font-weight: 700;
   white-space: nowrap;
 }
 
 .seasonal-banner-cta:hover {
-  background: rgba(255, 255, 255, 0.24);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.24), rgba(244, 212, 153, 0.45));
+}
+
+.seasonal-banner-cta-secondary {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .seasonal-banner-close {
@@ -524,6 +542,19 @@ h3 {
   background: var(--surface);
   box-shadow: var(--shadow);
   padding: var(--card-padding);
+}
+
+.legal-card {
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.legal-card h2 {
+  margin-top: 16px;
+}
+
+.legal-card p {
+  margin: 8px 0 0;
 }
 
 .section-title,
@@ -1512,13 +1543,42 @@ h3 {
   max-width: 860px;
 }
 
-.blog-section {
+.blog-toc {
   display: grid;
   gap: 8px;
 }
 
+.blog-toc ul {
+  margin: 0;
+  padding-inline-start: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.blog-toc a {
+  color: #1e629f;
+  font-weight: 600;
+}
+
+.blog-section {
+  display: grid;
+  gap: 8px;
+  scroll-margin-top: 120px;
+}
+
 .blog-inline-cta {
   background: linear-gradient(135deg, #f8fbff 0%, #edf5ff 100%);
+}
+
+.faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.faq-item-card {
+  padding: 12px;
+  box-shadow: none;
+  background: #f9fcff;
 }
 
 .form-wrap {
@@ -1888,6 +1948,21 @@ select:focus {
   margin: 8px 0 0;
 }
 
+.messagemind-widget-wrap {
+  animation: widget-enter 0.4s ease-out both;
+}
+
+@keyframes widget-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .page[dir="rtl"] .breadcrumbs ol {
   flex-direction: row;
 }
@@ -2035,14 +2110,22 @@ select:focus {
   }
 
   .seasonal-banner-inner {
-    min-height: 30px;
+    min-height: 34px;
     gap: 6px;
   }
 
+  .seasonal-banner-countdown {
+    display: none;
+  }
+
   .seasonal-banner-cta {
-    min-height: 22px;
+    min-height: 21px;
     padding: 0.24rem 0.52rem;
     font-size: 0.64rem;
+  }
+
+  .seasonal-banner-cta-secondary {
+    display: none;
   }
 
   .seasonal-banner-close {

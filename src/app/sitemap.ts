@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "/book",
+    "/areas",
     "/fat-freezing",
     "/ultrasound-cavitation",
     "/radiofrequency",
@@ -51,7 +52,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  return [
-    ...entries
-  ];
+  const legalEntries: MetadataRoute.Sitemap = ["/terms", "/privacy-policy", "/cookies"].map((path) => ({
+    url: `${SITE_URL}${path}`,
+    changeFrequency: "yearly",
+    priority: 0.4
+  }));
+
+  return [...entries, ...legalEntries];
 }

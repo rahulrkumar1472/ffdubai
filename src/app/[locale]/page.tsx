@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
-import {HomeView} from "@/components/home-view";
+import HomePageSections from "@/components/sections/home-page";
+import {PRICING} from "@/config/pricing";
 import {getDictionary, locales, type Locale} from "@/lib/i18n";
 import {buildMetadata, SITE_NAME} from "@/lib/seo";
 
@@ -19,8 +20,8 @@ export function generateMetadata({
     return buildMetadata({
       locale: "en",
       path: "/",
-      title: `${SITE_NAME} | From AED 489`,
-      description: "Fat freezing in Dubai from AED 489 with FREE 30-min consultation. Led by a specialised DHA doctor (in-house trained)."
+      title: `${SITE_NAME} | From AED ${PRICING.fatFreezingFromAED}`,
+      description: `Fat freezing in Dubai from AED ${PRICING.fatFreezingFromAED} with FREE 30-min consultation. Led by a specialised DHA doctor (in-house trained).`
     });
   }
 
@@ -45,5 +46,5 @@ export default function LocalizedHomePage({
     notFound();
   }
 
-  return <HomeView locale={locale} />;
+  return <HomePageSections locale={locale} />;
 }

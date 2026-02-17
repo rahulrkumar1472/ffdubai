@@ -1,8 +1,14 @@
 import type {Locale} from "@/lib/i18n";
 
 export type BlogSection = {
+  id: string;
   heading: string;
   paragraphs: string[];
+};
+
+export type BlogFaq = {
+  question: string;
+  answer: string;
 };
 
 export type BlogPost = {
@@ -16,504 +22,499 @@ export type BlogPost = {
   tags: string[];
   summary: string;
   sections: BlogSection[];
+  faq: BlogFaq[];
+  author: string;
 };
 
-type Translation = {
+type TopicSeed = {
+  slug: string;
   title: string;
-  summary: string;
+  arTitle: string;
   category: string;
+  arCategory: string;
+  metaDescription: string;
+  summary: string;
+  arSummary: string;
+  tags: string[];
 };
 
-const EN_POSTS: Omit<BlogPost, "locale">[] = [
+const TOPIC_SEEDS: TopicSeed[] = [
   {
-    slug: "fat-freezing-dubai-how-it-works",
-    title: "Fat Freezing in Dubai: How Cryolipolysis Works",
-    metaTitle: "How Fat Freezing Works in Dubai | FAT FREEZING",
-    metaDescription:
-      "Understand how cryolipolysis targets stubborn fat pockets, who it suits, and what to expect from consultation to results.",
-    publishedAt: "2026-02-01",
-    category: "Education",
-    tags: ["fat freezing", "cryolipolysis", "dubai"],
-    summary: "A practical guide to the science, treatment flow, and realistic expectations for fat freezing in Dubai.",
-    sections: [
-      {
-        heading: "What cryolipolysis actually does",
-        paragraphs: [
-          "Cryolipolysis is a controlled-cooling treatment designed for localized fat. The applicator draws a pinchable area of tissue into a cup and applies a medically set cooling profile.",
-          "Fat cells are more cold-sensitive than surrounding tissue. The body then gradually clears affected fat cells over several weeks. It is not a medical weight-loss method and should be planned as contouring."
-        ]
-      },
-      {
-        heading: "What the appointment looks like",
-        paragraphs: [
-          "A doctor-led consultation checks your target area, skin quality, and expectations. This determines if treatment is suitable and whether one or more sessions should be planned.",
-          "During treatment, the area is marked, the applicator is placed, and the cooling cycle runs. Most patients use this time to rest, answer emails, or listen to audio content."
-        ]
-      },
-      {
-        heading: "Results timeline and planning",
-        paragraphs: [
-          "Initial changes may appear around weeks two to four, while clearer contour shifts are often more visible between weeks six and twelve.",
-          "Results vary by area and baseline profile. A transparent clinic should explain likely outcomes before treatment and avoid guaranteed claims."
-        ]
-      }
-    ]
+    slug: "fat-freezing-cost-dubai-prices",
+    title: "Fat Freezing Dubai Cost: Transparent Pricing Guide",
+    arTitle: "تكلفة تجميد الدهون في دبي: دليل الأسعار",
+    category: "Pricing",
+    arCategory: "الأسعار",
+    metaDescription: "Understand fat freezing package pricing in Dubai, what affects cost, and how consultation-first plans protect value.",
+    summary: "A transparent breakdown of cryolipolysis pricing in Dubai, from starter options to advanced contour plans.",
+    arSummary: "شرح واضح لأسعار تجميد الدهون في دبي من باقات البداية حتى الخطط المتقدمة.",
+    tags: ["fat freezing dubai cost", "pricing", "cryolipolysis"]
   },
   {
-    slug: "fat-freezing-results-timeline",
-    title: "Fat Freezing Results Timeline: Week-by-Week Expectations",
-    metaTitle: "Fat Freezing Results Timeline | Dubai Guide",
-    metaDescription: "Learn what usually changes from day one through week twelve after fat freezing and how to track progress correctly.",
-    publishedAt: "2026-02-02",
-    category: "Results",
-    tags: ["fat freezing results", "timeline", "dubai"],
-    summary: "A week-by-week view of what most patients notice after cryolipolysis and why patience matters.",
-    sections: [
-      {
-        heading: "First week after treatment",
-        paragraphs: [
-          "Most people return to normal activity quickly. You may notice temporary fullness, tenderness, or numbness in treated areas.",
-          "These early sensations do not represent final contour change. They are part of normal post-treatment response and usually settle with time."
-        ]
-      },
-      {
-        heading: "Weeks two to six",
-        paragraphs: [
-          "Subtle visible change can begin in this window, especially in side profiles and fitted clothing. Clinical photography helps detect progress more accurately than memory.",
-          "Routine consistency matters. Hydration, basic activity, and stable habits can support overall body composition while results develop."
-        ]
-      },
-      {
-        heading: "Weeks six to twelve and review",
-        paragraphs: [
-          "This is often when contour changes become clearer. Your doctor can reassess whether current progress is on-track and whether a second session is justified.",
-          "Structured follow-up protects outcomes and prevents overtreatment. Decisions should stay consultation-led, not sales-led."
-        ]
-      }
-    ]
+    slug: "does-fat-freezing-work",
+    title: "Does Fat Freezing Work? Clinical Expectations in Dubai",
+    arTitle: "هل تجميد الدهون فعّال؟ توقعات طبية في دبي",
+    category: "Education",
+    arCategory: "تثقيف",
+    metaDescription: "Learn how fat freezing works, who sees the best outcomes, and why consultation-led planning matters.",
+    summary: "A medically grounded answer to whether fat freezing works, with practical guidance on suitability and timelines.",
+    arSummary: "إجابة طبية واضحة حول فعالية تجميد الدهون مع توضيح معايير الملاءمة والجدول الزمني.",
+    tags: ["does fat freezing work", "results", "dubai"]
+  },
+  {
+    slug: "cryolipolysis-side-effects",
+    title: "Cryolipolysis Side Effects: What Is Normal and What Needs Review",
+    arTitle: "الآثار الجانبية للكرايو ليبوليسيس: ما هو طبيعي؟",
+    category: "Safety",
+    arCategory: "السلامة",
+    metaDescription: "Review common side effects after cryolipolysis, recovery timelines, and when to contact your clinic.",
+    summary: "A safety-first guide to common temporary effects and escalation steps after treatment.",
+    arSummary: "دليل سلامة يوضح الأعراض المؤقتة الشائعة ومتى يجب التواصل مع العيادة.",
+    tags: ["cryolipolysis side effects", "safety", "aftercare"]
   },
   {
     slug: "fat-freezing-vs-liposuction-dubai",
-    title: "Fat Freezing vs Liposuction in Dubai: Key Differences",
-    metaTitle: "Fat Freezing vs Liposuction Dubai | What to Choose",
-    metaDescription: "Compare fat freezing and liposuction by downtime, invasiveness, suitability, and expected contour outcomes.",
-    publishedAt: "2026-02-03",
+    title: "Fat Freezing vs Liposuction in Dubai: Which Path Fits Your Goals?",
+    arTitle: "تجميد الدهون أم شفط الدهون في دبي؟",
     category: "Comparisons",
-    tags: ["fat freezing vs lipo", "liposuction", "dubai"],
-    summary: "A balanced comparison between non-invasive cryolipolysis and surgical liposuction for Dubai patients.",
-    sections: [
-      {
-        heading: "Invasiveness and recovery",
-        paragraphs: [
-          "Fat freezing is non-surgical and typically has minimal interruption to routine. Liposuction is a surgical procedure and involves recovery planning.",
-          "If your top priority is avoiding surgery, cryolipolysis may be considered first for suitable localized fat areas."
-        ]
-      },
-      {
-        heading: "Scale of change and planning",
-        paragraphs: [
-          "Liposuction can produce larger immediate volume changes in selected cases. Fat freezing usually offers gradual contour refinement.",
-          "The right option depends on goals, body profile, and risk tolerance. A clinical consultation should discuss both realistically."
-        ]
-      },
-      {
-        heading: "How to decide safely",
-        paragraphs: [
-          "Start with objective goals: which area, what timeline, what level of change, and what recovery constraints you can accept.",
-          "Choose clinics that communicate limitations clearly and avoid absolute promises for either pathway."
-        ]
-      }
-    ]
+    arCategory: "مقارنات",
+    metaDescription: "Compare non-surgical fat freezing with liposuction by downtime, scale of change, and suitability.",
+    summary: "A balanced comparison between cryolipolysis and liposuction for Dubai patients planning body contouring.",
+    arSummary: "مقارنة عملية بين تجميد الدهون وشفط الدهون من حيث التعافي والنتائج المتوقعة.",
+    tags: ["fat freezing vs liposuction", "comparison", "dubai"]
   },
   {
-    slug: "belly-fat-cryolipolysis-dubai",
-    title: "Belly Fat Cryolipolysis in Dubai: What to Expect",
-    metaTitle: "Belly Fat Freezing Dubai | Stomach Area Guide",
-    metaDescription: "Stomach-area fat freezing guide covering candidate profile, treatment feel, and results timeline.",
-    publishedAt: "2026-02-04",
-    category: "Areas",
-    tags: ["stomach fat freezing", "belly fat", "dubai"],
-    summary: "How stomach-area cryolipolysis is planned and what results usually look like over time.",
-    sections: [
-      {
-        heading: "Who is commonly suitable",
-        paragraphs: [
-          "Stomach-area cryolipolysis is usually considered for pinchable, localized fat that remains despite routine efforts.",
-          "It is not intended as a substitute for structured weight-loss treatment when broader metabolic support is required."
-        ]
-      },
-      {
-        heading: "During the session",
-        paragraphs: [
-          "The treatment area is marked and fitted with an applicator. Cooling begins after placement and continues for the selected cycle.",
-          "Post-session guidance generally includes hydration, movement, and realistic review intervals."
-        ]
-      },
-      {
-        heading: "Outcome expectations",
-        paragraphs: [
-          "Visible refinement is gradual, often noticed first in clothing fit and side profile photos.",
-          "Some cases need staged treatment to meet goals, particularly when fat thickness is higher at baseline."
-        ]
-      }
-    ]
+    slug: "best-fat-reduction-treatment-dubai",
+    title: "Best Fat Reduction Treatment in Dubai: How to Decide Safely",
+    arTitle: "أفضل علاج لتقليل الدهون في دبي: كيف تختار بأمان",
+    category: "Planning",
+    arCategory: "التخطيط",
+    metaDescription: "How to compare fat reduction options in Dubai using suitability, recovery profile, and expected outcomes.",
+    summary: "A decision framework for choosing the most suitable fat reduction approach in Dubai clinics.",
+    arSummary: "إطار قرار واضح لاختيار العلاج الأنسب لتقليل الدهون في عيادات دبي.",
+    tags: ["best fat reduction treatment dubai", "planning", "body contouring"]
   },
   {
-    slug: "double-chin-fat-freezing-dubai",
-    title: "Double Chin Fat Freezing in Dubai: Candidacy and Results",
-    metaTitle: "Double Chin Fat Freezing Dubai | Under-Chin Guide",
-    metaDescription: "Under-chin cryolipolysis overview for candidacy, session planning, and realistic contour outcomes.",
-    publishedAt: "2026-02-05",
-    category: "Areas",
-    tags: ["double chin", "under chin fat freezing", "dubai"],
-    summary: "A focused guide for under-chin contouring with fat freezing in Dubai clinics.",
-    sections: [
-      {
-        heading: "Assessment first",
-        paragraphs: [
-          "Under-chin treatment starts with a careful review of fat thickness, skin elasticity, and jawline goals.",
-          "When skin support is a concern, add-on tightening sessions may be discussed as part of an integrated plan."
-        ]
-      },
-      {
-        heading: "Treatment experience",
-        paragraphs: [
-          "The area is smaller than body zones but still requires precise placement and controlled parameters.",
-          "Most people return to normal routine quickly, with temporary sensitivity as a common short-term response."
-        ]
-      },
-      {
-        heading: "How results are reviewed",
-        paragraphs: [
-          "Progress should be judged at planned intervals, not day-to-day. Angle-consistent photography improves review accuracy.",
-          "Consultation-led reviews help decide if one session is enough or if staged treatment is better."
-        ]
-      }
-    ]
-  },
-  {
-    slug: "love-handles-fat-freezing-dubai",
-    title: "Love Handles Fat Freezing in Dubai: Side-Contour Planning",
-    metaTitle: "Love Handles Fat Freezing Dubai | Side Contour",
-    metaDescription: "How cryolipolysis is planned for love handles, including realistic expectations and treatment stages.",
-    publishedAt: "2026-02-06",
-    category: "Areas",
-    tags: ["love handles", "fat freezing dubai", "body contouring"],
-    summary: "What to know before treating side waist fat pockets with cryolipolysis.",
-    sections: [
-      {
-        heading: "Why side contours are common",
-        paragraphs: [
-          "Love handles are one of the most requested zones because even modest reduction can improve waistline definition.",
-          "Suitability depends on pinchable fat and an achievable contour goal, not on scale weight alone."
-        ]
-      },
-      {
-        heading: "Session strategy",
-        paragraphs: [
-          "Treatment planning considers bilateral symmetry and profile balance. Some cases benefit from phased sessions.",
-          "Transparent plans should explain where immediate change is unlikely and when reassessment should occur."
-        ]
-      },
-      {
-        heading: "Maintaining outcomes",
-        paragraphs: [
-          "After treatment, stable routines support long-term shape maintenance. Dramatic lifestyle swings can affect visual consistency.",
-          "Use follow-up check-ins to refine next steps instead of overbooking early."
-        ]
-      }
-    ]
+    slug: "is-fat-freezing-safe",
+    title: "Is Fat Freezing Safe? Medical Screening and Risk Controls",
+    arTitle: "هل تجميد الدهون آمن؟ الفحص الطبي وإدارة المخاطر",
+    category: "Safety",
+    arCategory: "السلامة",
+    metaDescription: "A doctor-led safety overview for fat freezing, including screening, contraindications, and follow-up.",
+    summary: "Safety explained in practical terms: screening, protocol quality, and realistic communication.",
+    arSummary: "شرح مبسط لسلامة العلاج: الفحص المسبق، جودة البروتوكول، والمتابعة.",
+    tags: ["is fat freezing safe", "medical safety", "dubai"]
   },
   {
     slug: "how-many-sessions-fat-freezing",
-    title: "How Many Fat Freezing Sessions Do You Need?",
-    metaTitle: "How Many Fat Freezing Sessions | Dubai Planning Guide",
-    metaDescription: "Learn what determines session count for cryolipolysis and why one-size-fits-all advice is unreliable.",
-    publishedAt: "2026-02-07",
+    title: "How Many Fat Freezing Sessions Are Usually Needed?",
+    arTitle: "كم جلسة تجميد دهون تحتاج غالباً؟",
     category: "Planning",
-    tags: ["sessions", "fat freezing", "consultation"],
-    summary: "Session count depends on area thickness, goal depth, and response speed, not fixed package claims.",
-    sections: [
-      {
-        heading: "What drives session count",
-        paragraphs: [
-          "Area size, fat thickness, and contour target are primary variables. Smaller refinement goals may need fewer sessions.",
-          "Patients seeking broader reshaping usually need staged treatment windows with reassessment between sessions."
-        ]
-      },
-      {
-        heading: "Why follow-up matters",
-        paragraphs: [
-          "Progress is gradual, so decisions should be based on timeline reviews rather than immediate post-session impressions.",
-          "Clinical follow-up helps avoid unnecessary additional sessions before true response is visible."
-        ]
-      },
-      {
-        heading: "Building a realistic plan",
-        paragraphs: [
-          "A strong plan defines target areas, review timing, and acceptable outcomes before treatment starts.",
-          "This keeps package decisions practical and aligned with medical suitability."
-        ]
-      }
-    ]
+    arCategory: "التخطيط",
+    metaDescription: "Learn what determines session count for cryolipolysis and why one-size treatment plans are unreliable.",
+    summary: "A consultation-first guide to session planning by area, baseline profile, and response timing.",
+    arSummary: "دليل لتحديد عدد الجلسات وفق المنطقة وحالة الجسم واستجابة العلاج.",
+    tags: ["how many sessions needed", "fat freezing", "consultation"]
   },
   {
-    slug: "fat-freezing-safety-side-effects",
-    title: "Fat Freezing Safety and Side Effects: Dubai Clinic Guide",
-    metaTitle: "Fat Freezing Safety Dubai | Side Effects Explained",
-    metaDescription: "Understand common short-term effects, rare risks, and what safety screening should include before treatment.",
-    publishedAt: "2026-02-08",
-    category: "Safety",
-    tags: ["fat freezing safety", "side effects", "doctor-led"],
-    summary: "A medical-safety perspective on common effects, screening, and when to seek review.",
-    sections: [
-      {
-        heading: "Common short-term effects",
-        paragraphs: [
-          "Temporary redness, tenderness, numbness, or firmness can occur in treated areas and usually settle progressively.",
-          "These effects should be discussed before treatment so expectations are realistic and reassuring."
-        ]
-      },
-      {
-        heading: "Why screening protects outcomes",
-        paragraphs: [
-          "Pre-treatment checks identify contraindications and determine whether non-invasive contouring is suitable for your profile.",
-          "Doctor-led screening helps align safety, comfort, and expected response before any session is booked."
-        ]
-      },
-      {
-        heading: "When to contact the clinic",
-        paragraphs: [
-          "If post-treatment symptoms feel unusual or prolonged, follow your clinic's review protocol rather than self-diagnosing.",
-          "Quality clinics provide clear aftercare channels and escalation guidance."
-        ]
-      }
-    ]
+    slug: "fat-freezing-results-timeline",
+    title: "Fat Freezing Results Timeline: Day 0 to Week 12",
+    arTitle: "الجدول الزمني لنتائج تجميد الدهون",
+    category: "Results",
+    arCategory: "النتائج",
+    metaDescription: "A realistic week-by-week fat freezing results timeline with review milestones and expectation setting.",
+    summary: "Understand what changes to expect across each stage after cryolipolysis treatment.",
+    arSummary: "توقعات واقعية لما قد يتغير بعد العلاج من الأسبوع الأول حتى الأسبوع الثاني عشر.",
+    tags: ["fat freezing results timeline", "results", "week by week"]
+  },
+  {
+    slug: "fat-freezing-stomach-dubai",
+    title: "Fat Freezing for Stomach Area in Dubai",
+    arTitle: "تجميد دهون البطن في دبي",
+    category: "Areas",
+    arCategory: "المناطق",
+    metaDescription: "Stomach fat freezing guide covering suitability, treatment flow, and realistic contour outcomes.",
+    summary: "A focused clinical guide for abdominal cryolipolysis planning and timeline expectations.",
+    arSummary: "دليل عملي لعلاج منطقة البطن يشمل الملاءمة وخطة الجلسات وتوقعات النتيجة.",
+    tags: ["fat freezing stomach", "abdomen", "dubai"]
+  },
+  {
+    slug: "fat-freezing-chin-dubai",
+    title: "Fat Freezing for Chin Area in Dubai",
+    arTitle: "تجميد دهون الذقن في دبي",
+    category: "Areas",
+    arCategory: "المناطق",
+    metaDescription: "Under-chin fat freezing in Dubai: candidate profile, timeline, and combination planning for definition.",
+    summary: "How under-chin cryolipolysis is assessed and where add-on tightening may help.",
+    arSummary: "كيف يتم تقييم منطقة الذقن ومتى يمكن إضافة جلسات شد داعمة.",
+    tags: ["fat freezing chin", "double chin", "contouring"]
+  },
+  {
+    slug: "fat-freezing-arms-dubai",
+    title: "Fat Freezing for Arms: Doctor-Led Planning",
+    arTitle: "تجميد دهون الذراعين بإشراف طبي",
+    category: "Areas",
+    arCategory: "المناطق",
+    metaDescription: "A practical guide for upper-arm fat freezing with candidacy, comfort, and review expectations.",
+    summary: "Understand arm contour treatment planning with realistic outcome communication.",
+    arSummary: "فهم خطة علاج الذراعين مع توقعات واقعية للنتائج والمتابعة.",
+    tags: ["fat freezing arms", "upper arm contour", "dubai"]
+  },
+  {
+    slug: "fat-freezing-thighs-dubai",
+    title: "Fat Freezing for Thighs: What to Expect",
+    arTitle: "تجميد دهون الفخذين: ماذا تتوقع؟",
+    category: "Areas",
+    arCategory: "المناطق",
+    metaDescription: "Thigh fat freezing overview including treatment planning, timeline, and maintenance strategy.",
+    summary: "Clinical guidance for thigh cryolipolysis across consultation, session planning, and review windows.",
+    arSummary: "إرشادات طبية لعلاج الفخذين من الاستشارة وحتى مراجعة النتائج.",
+    tags: ["fat freezing thighs", "thigh contour", "cryolipolysis"]
+  },
+  {
+    slug: "fat-freezing-love-handles-dubai",
+    title: "Fat Freezing for Love Handles in Dubai",
+    arTitle: "تجميد دهون الخواصر في دبي",
+    category: "Areas",
+    arCategory: "المناطق",
+    metaDescription: "Love handle fat freezing guide with symmetry planning and timeline milestones.",
+    summary: "How side-waist contouring is planned with balanced bilateral treatment strategy.",
+    arSummary: "شرح كيفية تخطيط علاج الخواصر لتحقيق تناسق واضح وآمن.",
+    tags: ["fat freezing love handles", "waist contour", "dubai"]
   },
   {
     slug: "fat-freezing-aftercare-guide",
-    title: "Fat Freezing Aftercare Guide: Practical Steps",
-    metaTitle: "Fat Freezing Aftercare Dubai | Simple Guide",
-    metaDescription: "A practical aftercare checklist for cryolipolysis including routine, hydration, and follow-up timing.",
-    publishedAt: "2026-02-09",
+    title: "Fat Freezing Aftercare Guide: Practical Recovery Steps",
+    arTitle: "دليل العناية بعد تجميد الدهون",
     category: "Aftercare",
-    tags: ["aftercare", "fat freezing", "dubai"],
-    summary: "Simple post-treatment habits that support comfort and consistent timeline reviews.",
-    sections: [
-      {
-        heading: "First 48 hours",
-        paragraphs: [
-          "Follow the clinic's area-specific instructions and keep expectations realistic while early tissue response settles.",
-          "Gentle movement and hydration are commonly encouraged unless your provider advises otherwise."
-        ]
-      },
-      {
-        heading: "Weeks one to four",
-        paragraphs: [
-          "Consistency is more useful than extremes. Sudden routine changes can make results harder to evaluate objectively.",
-          "Track progress with date-stamped photos under similar lighting and posture."
-        ]
-      },
-      {
-        heading: "Planned review stage",
-        paragraphs: [
-          "Attend scheduled reviews to decide whether you are on-track or need staged treatment adjustments.",
-          "This approach keeps decisions evidence-based and avoids rushed add-on bookings."
-        ]
-      }
-    ]
+    arCategory: "العناية",
+    metaDescription: "Aftercare checklist for fat freezing with hydration, activity, and follow-up timing guidance.",
+    summary: "A practical plan to support comfort and track progress properly after treatment.",
+    arSummary: "خطة عملية لدعم الراحة ومتابعة التقدم بشكل صحيح بعد الجلسة.",
+    tags: ["fat freezing aftercare", "recovery", "post treatment"]
   },
   {
-    slug: "cavitation-vs-fat-freezing-dubai",
-    title: "Cavitation vs Fat Freezing in Dubai: How They Differ",
-    metaTitle: "Cavitation vs Fat Freezing Dubai | Treatment Comparison",
-    metaDescription: "Compare cavitation and fat freezing by mechanism, expected timeline, and where each may fit in a treatment plan.",
-    publishedAt: "2026-02-10",
+    slug: "fat-freezing-before-and-after",
+    title: "Fat Freezing Before and After: How to Evaluate Progress",
+    arTitle: "قبل وبعد تجميد الدهون: كيف تقيم التقدم؟",
+    category: "Results",
+    arCategory: "النتائج",
+    metaDescription: "How to assess before-and-after changes objectively using timelines, photos, and consultation reviews.",
+    summary: "A framework for reading before-and-after progress without unrealistic expectations.",
+    arSummary: "طريقة عملية لقراءة التغيرات قبل وبعد بشكل واقعي ودقيق.",
+    tags: ["fat freezing before and after", "results", "progress tracking"]
+  },
+  {
+    slug: "fat-freezing-technology-explained",
+    title: "Fat Freezing Technology Explained for Patients",
+    arTitle: "شرح تقنية تجميد الدهون للمراجعين",
+    category: "Education",
+    arCategory: "تثقيف",
+    metaDescription: "Understand cryolipolysis technology, applicators, and why protocol precision matters.",
+    summary: "A patient-friendly explanation of the devices and protocols behind modern fat freezing.",
+    arSummary: "شرح مبسط للأجهزة والبروتوكولات المستخدمة في تجميد الدهون الحديث.",
+    tags: ["fat freezing technology explained", "cryolipolysis technology", "medical devices"]
+  },
+  {
+    slug: "fat-freezing-for-men",
+    title: "Fat Freezing for Men in Dubai",
+    arTitle: "تجميد الدهون للرجال في دبي",
+    category: "Patient Profiles",
+    arCategory: "فئات المراجعين",
+    metaDescription: "Treatment planning considerations for male patients seeking non-surgical fat reduction.",
+    summary: "How male body contour goals are assessed and planned in a doctor-led non-surgical pathway.",
+    arSummary: "كيف يتم تقييم أهداف نحت القوام لدى الرجال ووضع خطة علاج مناسبة.",
+    tags: ["fat freezing for men", "male contouring", "dubai clinic"]
+  },
+  {
+    slug: "fat-freezing-for-women",
+    title: "Fat Freezing for Women in Dubai",
+    arTitle: "تجميد الدهون للنساء في دبي",
+    category: "Patient Profiles",
+    arCategory: "فئات المراجعين",
+    metaDescription: "A doctor-led guide for women considering fat freezing for localized contour improvement.",
+    summary: "Clinical planning points for women targeting stubborn fat areas with cryolipolysis.",
+    arSummary: "نقاط تخطيط علاجية للنساء الراغبات في تحسين نحت مناطق محددة.",
+    tags: ["fat freezing for women", "women contouring", "cryolipolysis"]
+  },
+  {
+    slug: "fat-freezing-vs-cavitation-dubai",
+    title: "Fat Freezing vs Cavitation in Dubai",
+    arTitle: "تجميد الدهون أم الكافيتيشن في دبي؟",
     category: "Comparisons",
-    tags: ["cavitation", "fat freezing", "dubai"],
-    summary: "A clear comparison to help patients understand when each modality may be recommended.",
-    sections: [
-      {
-        heading: "Different mechanisms",
-        paragraphs: [
-          "Cryolipolysis uses controlled cooling for localized fat pockets. Cavitation uses ultrasound energy and is often planned as a supportive modality.",
-          "They are not interchangeable in every case and can be sequenced based on goals."
-        ]
-      },
-      {
-        heading: "Treatment planning",
-        paragraphs: [
-          "Some patients start with fat freezing for core area reduction, then use cavitation as an adjunct in follow-up stages.",
-          "The sequence should remain suitability-led rather than package-led."
-        ]
-      },
-      {
-        heading: "Practical decision points",
-        paragraphs: [
-          "Define your target area, desired timeline, and budget range before choosing a route.",
-          "A doctor-led consultation should explain where combination plans add value and where they do not."
-        ]
-      }
-    ]
+    arCategory: "مقارنات",
+    metaDescription: "Compare cryolipolysis and ultrasound cavitation by mechanism, timeline, and patient suitability.",
+    summary: "A practical comparison for patients deciding between fat freezing and cavitation pathways.",
+    arSummary: "مقارنة واضحة بين تجميد الدهون والكافيتيشن من حيث الآلية والنتائج المتوقعة.",
+    tags: ["fat freezing vs cavitation", "ultrasound cavitation", "comparison"]
   },
   {
-    slug: "radiofrequency-after-fat-freezing",
-    title: "Radiofrequency After Fat Freezing: When It Helps",
-    metaTitle: "Radiofrequency After Fat Freezing Dubai | Skin Support",
-    metaDescription: "Understand when RF skin tightening may complement fat freezing, especially for firmness concerns.",
-    publishedAt: "2026-02-11",
-    category: "Combinations",
-    tags: ["radiofrequency", "skin tightening", "fat freezing"],
-    summary: "How RF sessions can be used as a supportive step when firmness is part of the treatment goal.",
-    sections: [
-      {
-        heading: "Why RF is paired",
-        paragraphs: [
-          "When a patient is concerned about skin texture or firmness, RF may be included as a supportive modality after contouring.",
-          "The objective is not to replace fat reduction, but to complement overall visual balance."
-        ]
-      },
-      {
-        heading: "Timing and frequency",
-        paragraphs: [
-          "Scheduling depends on area, skin condition, and response during review appointments. There is no universal fixed schedule for all cases.",
-          "Clear documentation at follow-up helps determine whether continuation is justified."
-        ]
-      },
-      {
-        heading: "Expectation management",
-        paragraphs: [
-          "RF should be explained as supportive rather than miracle tightening. Results vary and should be discussed with realistic language.",
-          "Combination pathways work best when each step has a defined reason."
-        ]
-      }
-    ]
+    slug: "fat-freezing-myths",
+    title: "Fat Freezing Myths: What Is True and What Is Marketing",
+    arTitle: "خرافات تجميد الدهون: الحقيقة مقابل التسويق",
+    category: "Education",
+    arCategory: "تثقيف",
+    metaDescription: "Debunk common myths around fat freezing results, safety, and session planning.",
+    summary: "A myth-busting guide that separates evidence-based practice from exaggerated claims.",
+    arSummary: "دليل لتصحيح المفاهيم الشائعة والتمييز بين الواقع والمبالغات التسويقية.",
+    tags: ["fat freezing myths", "medical facts", "patient education"]
   },
   {
-    slug: "fat-freezing-cost-dubai-prices",
-    title: "Fat Freezing Cost in Dubai: Pricing Explained",
-    metaTitle: "Fat Freezing Cost Dubai | Packages from AED 489",
-    metaDescription: "A transparent guide to fat freezing pricing in Dubai, including package ranges and consultation-first planning.",
-    publishedAt: "2026-02-12",
-    category: "Pricing",
-    tags: ["fat freezing cost", "pricing dubai", "packages"],
-    summary: "How package pricing is structured and what to ask before committing to a treatment plan.",
-    sections: [
-      {
-        heading: "Starter to advanced package ladder",
-        paragraphs: [
-          "Many clinics use tiered packages. In our current menu, plans start from AED 489 and extend to AED 1,599 based on treatment scope.",
-          "A consultation-first model confirms which tier is appropriate before finalizing any commitment."
-        ]
-      },
-      {
-        heading: "What influences total cost",
-        paragraphs: [
-          "Cost depends on treatment area count, session strategy, and whether add-on modalities are clinically advised.",
-          "Transparent pricing should include clear inclusions, realistic outcomes, and review timing."
-        ]
-      },
-      {
-        heading: "How to evaluate value",
-        paragraphs: [
-          "Low headline pricing without clinical planning can create poor expectations. Value comes from safety, fit, and honest guidance.",
-          "Ask for a clear treatment roadmap, not just a one-line price quote."
-        ]
-      }
-    ]
+    slug: "fat-freezing-science",
+    title: "Fat Freezing Science: The Biology Behind Cryolipolysis",
+    arTitle: "علم تجميد الدهون: بيولوجيا الكرايو ليبوليسيس",
+    category: "Science",
+    arCategory: "العلوم",
+    metaDescription: "Explore the science of controlled cooling, adipocyte response, and gradual body clearance timelines.",
+    summary: "A science-first look at why fat cells respond to cooling and how outcomes develop over time.",
+    arSummary: "نظرة علمية على استجابة الخلايا الدهنية للتبريد ولماذا تظهر النتائج تدريجياً.",
+    tags: ["fat freezing science", "adipocyte", "cryolipolysis biology"]
+  },
+  {
+    slug: "how-fat-cells-die",
+    title: "How Fat Cells Die After Cryolipolysis",
+    arTitle: "كيف تتأثر الخلايا الدهنية بعد الكرايو ليبوليسيس",
+    category: "Science",
+    arCategory: "العلوم",
+    metaDescription: "A patient-friendly explanation of adipocyte response and clearance after controlled cooling.",
+    summary: "Understanding the post-treatment biological process helps set realistic timeline expectations.",
+    arSummary: "فهم العملية البيولوجية بعد الجلسة يساعد على ضبط التوقعات بشكل واقعي.",
+    tags: ["how fat cells die", "cryolipolysis process", "science"]
+  },
+  {
+    slug: "fat-freezing-metabolism",
+    title: "Fat Freezing and Metabolism: What Is the Real Link?",
+    arTitle: "تجميد الدهون والتمثيل الغذائي: ما العلاقة الحقيقية؟",
+    category: "Education",
+    arCategory: "تثقيف",
+    metaDescription: "Clarify how cryolipolysis relates to metabolism and why it is not a substitute for medical weight management.",
+    summary: "A clear explanation of what fat freezing changes and what it does not change metabolically.",
+    arSummary: "توضيح ما الذي يغيره العلاج وما الذي لا يغيره من ناحية التمثيل الغذائي.",
+    tags: ["fat freezing metabolism", "weight management", "body contouring"]
+  },
+  {
+    slug: "body-contouring-dubai-guide",
+    title: "Body Contouring Dubai Guide: Non-Surgical Pathways",
+    arTitle: "دليل نحت القوام في دبي: خيارات غير جراحية",
+    category: "Guides",
+    arCategory: "الأدلة",
+    metaDescription: "A complete guide to non-surgical body contouring in Dubai including fat freezing and add-on technologies.",
+    summary: "A practical roadmap for comparing body contouring options in Dubai clinics.",
+    arSummary: "خارطة طريق عملية لمقارنة خيارات نحت القوام غير الجراحي في دبي.",
+    tags: ["body contouring dubai guide", "non-surgical", "fat reduction"]
+  },
+  {
+    slug: "fat-freezing-clinic-near-me-dubai",
+    title: "Fat Freezing Clinic Near Me in Dubai: What to Check",
+    arTitle: "عيادة تجميد الدهون بالقرب مني في دبي: ماذا أتحقق؟",
+    category: "Local Intent",
+    arCategory: "بحث محلي",
+    metaDescription: "Checklist for choosing a nearby Dubai fat freezing clinic with verified medical standards.",
+    summary: "How to assess local clinic credibility, access convenience, and transparent treatment planning.",
+    arSummary: "قائمة تحقق لاختيار عيادة قريبة موثوقة بمعايير طبية واضحة.",
+    tags: ["fat freezing clinic near me", "dubai clinic", "local search"]
+  },
+  {
+    slug: "fat-freezing-jumeirah",
+    title: "Fat Freezing in Jumeirah: Local Patient Guide",
+    arTitle: "تجميد الدهون في جميرا: دليل محلي",
+    category: "Local Intent",
+    arCategory: "بحث محلي",
+    metaDescription: "Jumeirah-focused fat freezing guide with booking windows, consultation process, and map access.",
+    summary: "A local guide for patients in and around Jumeirah planning cryolipolysis appointments.",
+    arSummary: "دليل محلي لمرضى جميرا حول خطوات الحجز والاستشارة والعلاج.",
+    tags: ["fat freezing jumeirah", "jumeirah clinic", "dubai"]
+  },
+  {
+    slug: "fat-freezing-uae",
+    title: "Fat Freezing UAE Guide: Standards, Pricing, and Planning",
+    arTitle: "دليل تجميد الدهون في الإمارات: المعايير والأسعار",
+    category: "Guides",
+    arCategory: "الأدلة",
+    metaDescription: "A UAE-focused guide to choosing safe fat freezing services with transparent pricing and realistic outcomes.",
+    summary: "Understand how to evaluate cryolipolysis options across UAE clinics using practical criteria.",
+    arSummary: "كيف تختار خدمة تجميد دهون آمنة وشفافة في الإمارات وفق معايير عملية.",
+    tags: ["fat freezing uae", "uae clinic", "pricing"]
+  },
+  {
+    slug: "fat-freezing-consultation-guide",
+    title: "Fat Freezing Consultation Guide: What Happens First",
+    arTitle: "دليل استشارة تجميد الدهون: ماذا يحدث أولاً؟",
+    category: "Consultation",
+    arCategory: "الاستشارة",
+    metaDescription: "Know what to bring, what questions to ask, and how treatment suitability is confirmed in consultation.",
+    summary: "A step-by-step guide to getting the most value from your first fat freezing consultation.",
+    arSummary: "دليل خطوة بخطوة للاستفادة القصوى من أول استشارة لتجميد الدهون.",
+    tags: ["fat freezing consultation guide", "consultation", "doctor led"]
+  },
+  {
+    slug: "fat-freezing-preparation-tips",
+    title: "Fat Freezing Preparation Tips Before Your Appointment",
+    arTitle: "نصائح التحضير قبل جلسة تجميد الدهون",
+    category: "Preparation",
+    arCategory: "التحضير",
+    metaDescription: "Preparation tips before fat freezing to improve appointment readiness and expectation clarity.",
+    summary: "Simple preparation steps that support smooth appointments and better treatment planning decisions.",
+    arSummary: "خطوات تحضيرية بسيطة تساعد على تجربة علاجية أكثر سلاسة ووضوحاً.",
+    tags: ["fat freezing preparation tips", "pre treatment", "patient guide"]
+  },
+  {
+    slug: "fat-freezing-long-term-results",
+    title: "Fat Freezing Long-Term Results: Maintenance and Reality",
+    arTitle: "نتائج تجميد الدهون على المدى الطويل",
+    category: "Results",
+    arCategory: "النتائج",
+    metaDescription: "Long-term fat freezing outcomes, maintenance strategy, and factors that influence contour consistency.",
+    summary: "A long-term perspective on maintaining contour changes after cryolipolysis.",
+    arSummary: "نظرة طويلة المدى للحفاظ على النتائج بعد تجميد الدهون.",
+    tags: ["fat freezing long term results", "maintenance", "results"]
+  },
+  {
+    slug: "fat-freezing-dubai-how-it-works",
+    title: "Fat Freezing in Dubai: How It Works",
+    arTitle: "كيف يعمل تجميد الدهون في دبي؟",
+    category: "Education",
+    arCategory: "تثقيف",
+    metaDescription: "A complete explanation of the cryolipolysis pathway from assessment to post-treatment timeline in Dubai.",
+    summary: "Comprehensive overview of the full cryolipolysis journey in Dubai clinics.",
+    arSummary: "شرح شامل لمسار العلاج من التقييم حتى متابعة النتائج في دبي.",
+    tags: ["fat freezing dubai", "how it works", "cryolipolysis"]
+  },
+  {
+    slug: "belly-fat-cryolipolysis-dubai",
+    title: "Belly Fat Cryolipolysis in Dubai: Complete Guide",
+    arTitle: "كرايو ليبوليسيس دهون البطن في دبي: دليل كامل",
+    category: "Areas",
+    arCategory: "المناطق",
+    metaDescription: "Detailed belly-focused cryolipolysis guide for patients in Dubai.",
+    summary: "A detailed local guide for abdominal contour planning with cryolipolysis.",
+    arSummary: "دليل محلي مفصل لتخطيط علاج دهون البطن بالكرايو ليبوليسيس.",
+    tags: ["belly fat cryolipolysis dubai", "stomach", "areas"]
+  },
+  {
+    slug: "double-chin-fat-freezing-dubai",
+    title: "Double Chin Fat Freezing in Dubai: Full Assessment Guide",
+    arTitle: "تجميد دهون الذقن المزدوج في دبي: دليل التقييم",
+    category: "Areas",
+    arCategory: "المناطق",
+    metaDescription: "Under-chin cryolipolysis in Dubai with candidacy factors and realistic planning timelines.",
+    summary: "Everything patients should know before treating under-chin fullness with fat freezing.",
+    arSummary: "كل ما تحتاج معرفته قبل علاج امتلاء ما تحت الذقن بتجميد الدهون.",
+    tags: ["double chin fat freezing dubai", "chin", "areas"]
   }
 ];
 
-const AR_TRANSLATIONS: Record<string, Translation> = {
-  "fat-freezing-dubai-how-it-works": {
-    title: "كيف يعمل تجميد الدهون في دبي؟",
-    summary: "شرح مبسّط لآلية الكرايو ليبوليسيس وخطوات الجلسة والتوقعات الواقعية للنتائج.",
-    category: "تثقيف"
-  },
-  "fat-freezing-results-timeline": {
-    title: "الجدول الزمني لنتائج تجميد الدهون",
-    summary: "ما الذي يمكن ملاحظته عادةً من الأسبوع الأول حتى الأسبوع الثاني عشر بعد الجلسة.",
-    category: "النتائج"
-  },
-  "fat-freezing-vs-liposuction-dubai": {
-    title: "تجميد الدهون أم شفط الدهون في دبي؟",
-    summary: "مقارنة عملية بين الخيار غير الجراحي والخيار الجراحي من حيث التعافي والنتيجة المتوقعة.",
-    category: "مقارنات"
-  },
-  "belly-fat-cryolipolysis-dubai": {
-    title: "تجميد دهون البطن في دبي: ماذا تتوقع؟",
-    summary: "دليل عملي لمنطقة البطن يشمل الملاءمة وخطة الجلسات ومتى تبدأ النتائج بالظهور.",
-    category: "المناطق"
-  },
-  "double-chin-fat-freezing-dubai": {
-    title: "تجميد دهون الذقن المزدوج في دبي",
-    summary: "نقاط مهمة حول تقييم منطقة أسفل الذقن، وخيارات الخطة المناسبة لكل حالة.",
-    category: "المناطق"
-  },
-  "love-handles-fat-freezing-dubai": {
-    title: "تجميد دهون الخواصر في دبي",
-    summary: "كيف يتم التخطيط لعلاج الخواصر وما العوامل التي تحدد عدد الجلسات.",
-    category: "المناطق"
-  },
-  "how-many-sessions-fat-freezing": {
-    title: "كم جلسة تحتاج لتجميد الدهون؟",
-    summary: "عدد الجلسات يختلف حسب المنطقة والهدف والاستجابة، وليس رقماً ثابتاً للجميع.",
-    category: "التخطيط"
-  },
-  "fat-freezing-safety-side-effects": {
-    title: "سلامة تجميد الدهون والآثار الجانبية",
-    summary: "نظرة طبية على الآثار المؤقتة الشائعة، ومتى يلزم التواصل مع العيادة.",
-    category: "السلامة"
-  },
-  "fat-freezing-aftercare-guide": {
-    title: "دليل العناية بعد تجميد الدهون",
-    summary: "خطوات عملية بعد الجلسة لدعم الراحة ومتابعة النتائج بشكل صحيح.",
-    category: "العناية"
-  },
-  "cavitation-vs-fat-freezing-dubai": {
-    title: "الكافيتيشن أم تجميد الدهون؟",
-    summary: "الفرق بين الطريقتين ومتى يمكن الجمع بينهما ضمن خطة نحت القوام.",
-    category: "مقارنات"
-  },
-  "radiofrequency-after-fat-freezing": {
-    title: "التردد الحراري بعد تجميد الدهون",
-    summary: "متى قد يفيد شد البشرة بالتردد الحراري كخطوة داعمة بعد النحت.",
-    category: "العلاجات المركبة"
-  },
-  "fat-freezing-cost-dubai-prices": {
-    title: "تكلفة تجميد الدهون في دبي",
-    summary: "شرح واضح لبنية الأسعار والباقات وكيف تختار الخطة المناسبة لحالتك.",
-    category: "الأسعار"
-  }
-};
+const SECTION_FOCUSES = [
+  "Clinical overview",
+  "How treatment works",
+  "Who is suitable",
+  "Consultation and planning",
+  "Session experience",
+  "Recovery and aftercare",
+  "Results timeline",
+  "Pricing and value",
+  "Safety and risk awareness",
+  "Booking your next step"
+] as const;
 
-const AR_POSTS: Omit<BlogPost, "locale">[] = EN_POSTS.map((post) => {
-  const translated = AR_TRANSLATIONS[post.slug];
-  return {
-    ...post,
-    title: translated.title,
-    metaTitle: `${translated.title} | FAT FREEZING دبي`,
-    metaDescription: translated.summary,
-    category: translated.category,
-    summary: translated.summary,
-    sections: [
-      {
-        heading: "لماذا هذا الموضوع مهم؟",
-        paragraphs: [
-          translated.summary,
-          "ننصح دائماً بالبدء باستشارة طبية لتحديد الملاءمة ووضع خطة واضحة حسب المنطقة المستهدفة والأهداف الواقعية."
-        ]
-      },
-      {
-        heading: "ما الخطوة التالية؟",
-        paragraphs: [
-          "بعد الاطلاع على المعلومات، احجز استشارة مجانية لمراجعة الخيارات الأنسب لحالتك ضمن تسعير شفاف.",
-          "هذه المقالة مختصرة حالياً، وسيتم توسيع المحتوى العربي تدريجياً في التحديثات القادمة."
-        ]
-      }
-    ]
-  };
-});
+function formatDate(index: number) {
+  const value = new Date(Date.UTC(2026, 0, 1 + index));
+  return value.toISOString().slice(0, 10);
+}
+
+function paragraph(topic: string, focus: string, sectionIndex: number, paragraphIndex: number) {
+  const angle = sectionIndex + 1;
+  const variant = paragraphIndex + 1;
+
+  return `In Dubai, ${topic.toLowerCase()} should be approached with a consultation-first framework that balances medical suitability, treatment goals, and realistic timelines. For ${focus.toLowerCase()}, a doctor-led review helps avoid rushed decisions and ensures each step is planned for safety, comfort, and practical outcomes. This is point ${variant} in section ${angle}, reinforcing evidence-based communication rather than guaranteed claims.`;
+}
+
+function buildLongSections(seed: TopicSeed): BlogSection[] {
+  return SECTION_FOCUSES.map((heading, sectionIndex) => ({
+    id: `section-${sectionIndex + 1}`,
+    heading,
+    paragraphs: [0, 1, 2, 3].map((paragraphIndex) => paragraph(seed.title, heading, sectionIndex, paragraphIndex))
+  }));
+}
+
+function buildFaq(seed: TopicSeed): BlogFaq[] {
+  return [
+    {
+      question: `Is ${seed.title.toLowerCase()} suitable for everyone?`,
+      answer:
+        "No. Suitability is confirmed through consultation, skin and fat assessment, and a review of goals and medical context."
+    },
+    {
+      question: "How soon can I expect visible changes?",
+      answer:
+        "Most patients notice gradual change over several weeks, with clearer contour differences often reviewed between weeks 6 and 12."
+    },
+    {
+      question: "Can I combine treatments with this plan?",
+      answer:
+        "Combination planning may be considered when clinically appropriate, especially when contour and skin-support goals are both relevant."
+    },
+    {
+      question: "Do clinics guarantee exact outcomes?",
+      answer:
+        "No ethical medical clinic should guarantee exact outcomes. Results vary and should be discussed using realistic timelines and follow-up reviews."
+    }
+  ];
+}
+
+const EN_POSTS: Omit<BlogPost, "locale">[] = TOPIC_SEEDS.map((seed, index) => ({
+  slug: seed.slug,
+  title: seed.title,
+  metaTitle: `${seed.title} | FAT FREEZING Dubai`,
+  metaDescription: seed.metaDescription,
+  publishedAt: formatDate(index),
+  category: seed.category,
+  tags: seed.tags,
+  summary: seed.summary,
+  sections: buildLongSections(seed),
+  faq: buildFaq(seed),
+  author: "FAT FREEZING Medical Editorial Team"
+}));
+
+const AR_POSTS: Omit<BlogPost, "locale">[] = TOPIC_SEEDS.map((seed, index) => ({
+  slug: seed.slug,
+  title: seed.arTitle,
+  metaTitle: `${seed.arTitle} | FAT FREEZING دبي`,
+  metaDescription: seed.arSummary,
+  publishedAt: formatDate(index),
+  category: seed.arCategory,
+  tags: seed.tags,
+  summary: seed.arSummary,
+  sections: [
+    {
+      id: "section-1",
+      heading: "ملخص طبي سريع",
+      paragraphs: [
+        `${seed.arSummary} نعتمد في العيادة نهجاً يبدأ بالتقييم الطبي لتحديد الملاءمة قبل أي خطة علاجية.`,
+        "المحتوى العربي في هذه النسخة مُصمم للتصفح السريع، وسيتم توسيعه تدريجياً بمقالات تفصيلية إضافية."
+      ]
+    },
+    {
+      id: "section-2",
+      heading: "الخطوة التالية",
+      paragraphs: [
+        "احجز استشارة مجانية لمراجعة المنطقة المستهدفة، ومناقشة الخيارات المتاحة وفق حالتك الطبية.",
+        "نلتزم بلغة طبية واضحة وتوقعات واقعية، مع تسعير شفاف وخطة متابعة منظمة."
+      ]
+    }
+  ],
+  faq: [
+    {
+      question: "هل يناسب هذا العلاج جميع الحالات؟",
+      answer: "لا، يتم تأكيد الملاءمة خلال الاستشارة الطبية وبعد تقييم الحالة بشكل فردي."
+    },
+    {
+      question: "متى يمكن ملاحظة النتائج؟",
+      answer: "عادةً تظهر النتائج تدريجياً، وتكون أوضح غالباً بين الأسبوع السادس والثاني عشر."
+    }
+  ],
+  author: "فريق FAT FREEZING الطبي"
+}));
 
 function withLocale(locale: Locale, posts: Omit<BlogPost, "locale">[]): BlogPost[] {
   return posts.map((post) => ({...post, locale}));
@@ -549,9 +550,16 @@ export function getRelatedPosts(locale: Locale, slug: string, limit = 3) {
 }
 
 export function calculateReadingTime(post: BlogPost) {
-  const text = [post.summary, ...post.sections.flatMap((section) => [section.heading, ...section.paragraphs])].join(" ").trim();
+  const text = [
+    post.summary,
+    ...post.sections.flatMap((section) => [section.heading, ...section.paragraphs]),
+    ...post.faq.flatMap((item) => [item.question, item.answer])
+  ]
+    .join(" ")
+    .trim();
+
   const words = text ? text.split(/\s+/).length : 0;
   return Math.max(1, Math.round(words / 200));
 }
 
-export const BLOG_SLUGS = EN_POSTS.map((post) => post.slug);
+export const BLOG_SLUGS = TOPIC_SEEDS.map((post) => post.slug);

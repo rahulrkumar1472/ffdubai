@@ -337,7 +337,7 @@ const dictionary: Record<Locale, Dictionary> = {
     localeName: "English",
     dir: "ltr",
     banner: {
-      text: "Ramadan & Eid Offers — Discounts Now Live",
+      text: "Ramadan & Eid Fat Freezing Offers — Live Now",
       dismissLabel: "Dismiss banner",
       ctaLabel: "View Offers"
     },
@@ -845,7 +845,7 @@ const dictionary: Record<Locale, Dictionary> = {
     localeName: "العربية",
     dir: "rtl",
     banner: {
-      text: "عروض رمضان والعيد — خصومات متاحة الآن",
+      text: "عروض رمضان والعيد لتجميد الدهون — متاحة الآن",
       dismissLabel: "إغلاق الشريط الترويجي",
       ctaLabel: "عرض العروض"
     },

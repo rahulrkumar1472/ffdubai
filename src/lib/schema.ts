@@ -112,8 +112,8 @@ export function blogPostingSchema(locale: Locale, post: BlogPost) {
     mainEntityOfPage: `${SITE_URL}${path}`,
     url: `${SITE_URL}${path}`,
     author: {
-      "@type": "Organization",
-      name: "FAT FREEZING"
+      "@type": "Person",
+      name: post.author
     },
     publisher: {
       "@type": "Organization",
