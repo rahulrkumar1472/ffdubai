@@ -23,6 +23,8 @@ export function TreatmentView({locale, kind}: {locale: Locale; kind: TreatmentKi
   const t = getDictionary(locale);
   const base = locale === "en" ? "/en" : "/ar";
   const bookHref = `${base}/book`;
+  const fatPackageIds = ["starter", "sculpt", "transform"] as const;
+  const addonTreatmentId = kind === "ultrasound" ? "ultrasound-cavitation" : "radiofrequency";
 
   const page =
     kind === "fatFreezing" ? t.pages.fatFreezing : kind === "ultrasound" ? t.pages.ultrasound : t.pages.radiofrequency;
@@ -91,7 +93,7 @@ export function TreatmentView({locale, kind}: {locale: Locale; kind: TreatmentKi
             <div className="container">
               <h2 className="section-title">{locale === "ar" ? "باقات تجميد الدهون" : "Fat Freezing Packages"}</h2>
               <div className="package-grid">
-                {page.packages.map((pkg) => (
+                {page.packages.map((pkg, index) => (
                   <article className="card package-card" key={pkg.name}>
                     {pkg.badge ? <p className="package-badge">{pkg.badge}</p> : null}
                     <h3>{pkg.name}</h3>
@@ -100,8 +102,8 @@ export function TreatmentView({locale, kind}: {locale: Locale; kind: TreatmentKi
                       <span className="price-new">{pkg.promoPrice}</span>
                     </p>
                     <p className="package-meta">{pkg.bestFor}</p>
-                    <Link className="primary-btn" href={bookHref}>
-                      {t.hero.bookTreatmentCta}
+                    <Link className="primary-btn" href={`${base}/book?mode=treatment&treatment=fat-freezing&package=${fatPackageIds[index]}`}>
+                      {t.nav.bookTreatment}
                     </Link>
                   </article>
                 ))}
@@ -131,6 +133,14 @@ export function TreatmentView({locale, kind}: {locale: Locale; kind: TreatmentKi
               <p className="results-disclaimer" style={{marginTop: "14px"}}>
                 {page.disclaimer}
               </p>
+              <div className="cta-row cta-row-tight">
+                <Link className="primary-btn" href={`${base}/book?mode=treatment&treatment=${addonTreatmentId}&package=six-session`}>
+                  {t.nav.bookTreatment}
+                </Link>
+                <Link className="outline-btn" href={`${base}/book?mode=treatment&treatment=${addonTreatmentId}&package=single`}>
+                  {t.booking.singleSessionCta}
+                </Link>
+              </div>
             </div>
           </section>
         )}

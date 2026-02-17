@@ -9,8 +9,15 @@ export const metadata: Metadata = buildMetadata({
   description: "اختر الموعد ثم أكمل البيانات و أكد حجزك لمدة 60 دقيقة للاستشارة أو العلاج في دبي."
 });
 
-export default function ArBookPage({searchParams}: {searchParams?: {mode?: string}}) {
-  const initialMode = searchParams?.mode === "treatment" ? "treatment" : "consultation";
+export default function ArBookPage({
+  searchParams
+}: {
+  searchParams?: {mode?: string; treatment?: string; package?: string};
+}) {
+  const hasTreatmentPreset = Boolean(searchParams?.treatment);
+  const initialMode = searchParams?.mode === "treatment" || hasTreatmentPreset ? "treatment" : "consultation";
+  const initialTreatment = searchParams?.treatment ?? "";
+  const initialPackage = searchParams?.package ?? "";
 
-  return <BookView initialMode={initialMode} locale="ar" />;
+  return <BookView initialMode={initialMode} initialPackage={initialPackage} initialTreatment={initialTreatment} locale="ar" />;
 }

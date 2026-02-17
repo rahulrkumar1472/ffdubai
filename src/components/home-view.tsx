@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {Typewriter} from "@/components/typewriter";
 import {ResultsGallery} from "@/components/results-gallery";
+import {LeadCapturePopup} from "@/components/lead-capture-popup";
 import {JsonLd} from "@/components/json-ld";
 import {clinicSchema, serviceSchema} from "@/lib/schema";
 import {getDictionary, type Locale} from "@/lib/i18n";
@@ -17,6 +18,11 @@ export function HomeView({locale}: {locale: Locale}) {
   const base = locale === "en" ? "/en" : "/ar";
   const bookHref = `${base}/book`;
   const treatmentBookHref = `${base}/book?mode=treatment`;
+  const fatPackageIds = ["starter", "sculpt", "transform"] as const;
+  const addonTreatments = [
+    {id: "ultrasound-cavitation", content: t.pages.pricing.addons[0]},
+    {id: "radiofrequency", content: t.pages.pricing.addons[1]}
+  ] as const;
 
   const heroImage = getImage(STOCK_IMAGES, 0);
   const whatIsImage = getImage(STOCK_IMAGES, 1);
@@ -77,16 +83,11 @@ export function HomeView({locale}: {locale: Locale}) {
                   <Link className="primary-btn" href={bookHref}>
                     {t.hero.primaryCta}
                   </Link>
-                  <Link className="outline-btn" href={treatmentBookHref}>
-                    {t.hero.bookTreatmentCta}
+                  <Link className="outline-btn" href={`${base}/pricing`}>
+                    {t.hero.secondaryCta}
                   </Link>
                 </div>
                 <p className="hero-trustline">{t.hero.sameDayLine}</p>
-                <p className="hero-trustline hero-whatsapp-note">
-                  <a href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-                    {t.hero.secondaryCta}
-                  </a>
-                </p>
               </article>
 
               {heroImage ? (
@@ -175,6 +176,61 @@ export function HomeView({locale}: {locale: Locale}) {
           </section>
         ) : null}
 
+        <section className="section treatment-menu-section" id="treatment-menu">
+          <div className="container">
+            <h2 className="section-title">{t.pages.pricing.packagesTitle}</h2>
+            <p className="section-lead">{t.pages.pricing.packagesLead}</p>
+
+            <div className="package-grid">
+              {t.pages.fatFreezing.packages.map((pkg, index) => (
+                <article className={`card package-card${index === 1 ? " package-card-featured" : ""}`} key={pkg.name}>
+                  {pkg.badge ? <p className="package-badge">{pkg.badge}</p> : null}
+                  <p className="package-savings">{pkg.savingsLabel}</p>
+                  <h3>{pkg.name}</h3>
+                  <p className="package-pricing">
+                    <span className="price-old">{pkg.standardPrice}</span>
+                    <span className="price-new">{pkg.promoPrice}</span>
+                  </p>
+                  <p className="package-meta">{pkg.bestFor}</p>
+                  <ul className="package-points">
+                    <li>{pkg.sessions}</li>
+                    <li>{pkg.areas}</li>
+                  </ul>
+                  <div className="cta-row cta-row-tight">
+                    <Link className="primary-btn" href={`${base}/book?mode=treatment&treatment=fat-freezing&package=${fatPackageIds[index]}`}>
+                      {t.nav.bookTreatment}
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <h3 className="section-title section-subtitle">{t.pages.pricing.addonsTitle}</h3>
+            <p className="section-lead">{t.pages.pricing.addonsLead}</p>
+
+            <div className="inner-card-grid treatment-addon-grid">
+              {addonTreatments.map((item) => (
+                <article className="card addon-card" key={item.id}>
+                  <h3>{item.content.name}</h3>
+                  <p className="package-pricing">
+                    <span className="price-old">{item.content.standardPrice}</span>
+                    <span className="price-new">{item.content.promoPrice}</span>
+                  </p>
+                  <p className="package-meta">{item.content.offer}</p>
+                  <div className="cta-row cta-row-tight">
+                    <Link className="primary-btn" href={`${base}/book?mode=treatment&treatment=${item.id}&package=six-session`}>
+                      {t.nav.bookTreatment}
+                    </Link>
+                    <Link className="outline-btn" href={`${base}/book?mode=treatment&treatment=${item.id}&package=single`}>
+                      {t.booking.singleSessionCta}
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="section" id="results">
           <div className="container">
             <h2 className="section-title">{t.results.title}</h2>
@@ -191,7 +247,7 @@ export function HomeView({locale}: {locale: Locale}) {
                     {t.hero.primaryCta}
                   </Link>
                   <Link className="outline-btn" href={treatmentBookHref}>
-                    {t.hero.bookTreatmentCta}
+                    {t.nav.bookTreatment}
                   </Link>
                 </div>
               </>
@@ -204,7 +260,7 @@ export function HomeView({locale}: {locale: Locale}) {
                     {t.results.comingSoonCta}
                   </Link>
                   <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-                    {t.hero.secondaryCta}
+                    {t.finalCta.tertiaryCta}
                   </a>
                 </div>
               </article>
@@ -284,16 +340,15 @@ export function HomeView({locale}: {locale: Locale}) {
                   {t.finalCta.primaryCta}
                 </Link>
                 <Link className="outline-btn" href={treatmentBookHref}>
-                  {t.finalCta.secondaryCta}
+                  {t.nav.bookTreatment}
                 </Link>
-                <a className="link-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-                  {t.finalCta.tertiaryCta}
-                </a>
               </div>
             </article>
           </div>
         </section>
       </main>
+
+      <LeadCapturePopup locale={locale} />
     </>
   );
 }

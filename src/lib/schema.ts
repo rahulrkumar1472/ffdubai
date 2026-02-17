@@ -4,7 +4,7 @@ import type {Locale} from "@/lib/i18n";
 export function clinicSchema(locale: Locale) {
   return {
     "@context": "https://schema.org",
-    "@type": ["MedicalClinic", "LocalBusiness"],
+    "@type": ["MedicalBusiness", "MedicalClinic", "LocalBusiness"],
     name: "FAT FREEZING",
     alternateName: locale === "ar" ? "مركز دبي المتخصص لنحت وخسارة الوزن" : "Dubai's Weight Loss Centre",
     url: `${SITE_URL}/${locale}`,

@@ -8,6 +8,11 @@ export function PricingView({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
   const base = locale === "en" ? "/en" : "/ar";
   const fatPage = t.pages.fatFreezing;
+  const fatPackageIds = ["starter", "sculpt", "transform"] as const;
+  const addonTreatments = [
+    {id: "ultrasound-cavitation", content: t.pages.pricing.addons[0]},
+    {id: "radiofrequency", content: t.pages.pricing.addons[1]}
+  ] as const;
 
   return (
     <>
@@ -23,19 +28,29 @@ export function PricingView({locale}: {locale: Locale}) {
             </div>
 
             <article className="card">
-              <h2 className="section-title">{t.pages.pricing.packagesTitle}</h2>
+              <h2 className="section-title">{locale === "ar" ? "قائمة العلاجات والباقات" : "Treatment Menu & Packages"}</h2>
               <p className="section-lead">{t.pages.pricing.packagesLead}</p>
 
               <div className="package-grid">
-                {fatPage.packages.map((pkg) => (
-                  <article className="card package-card" key={pkg.name}>
+                {fatPage.packages.map((pkg, index) => (
+                  <article className={`card package-card${index === 1 ? " package-card-featured" : ""}`} key={pkg.name}>
                     {pkg.badge ? <p className="package-badge">{pkg.badge}</p> : null}
+                    <p className="package-savings">{pkg.savingsLabel}</p>
                     <h3>{pkg.name}</h3>
                     <p className="package-pricing">
                       <span className="price-old">{pkg.standardPrice}</span>
                       <span className="price-new">{pkg.promoPrice}</span>
                     </p>
                     <p className="package-meta">{pkg.bestFor}</p>
+                    <ul className="package-points">
+                      <li>{pkg.sessions}</li>
+                      <li>{pkg.areas}</li>
+                    </ul>
+                    <div className="cta-row cta-row-tight">
+                      <Link className="primary-btn" href={`${base}/book?mode=treatment&treatment=fat-freezing&package=${fatPackageIds[index]}`}>
+                        {t.nav.bookTreatment}
+                      </Link>
+                    </div>
                   </article>
                 ))}
               </div>
@@ -51,9 +66,9 @@ export function PricingView({locale}: {locale: Locale}) {
                 <thead>
                   <tr>
                     <th>{locale === "ar" ? "العنصر" : "Feature"}</th>
-                    <th>{locale === "ar" ? "البداية" : "Starter"}</th>
-                    <th>{locale === "ar" ? "الأكثر طلباً" : "Popular"}</th>
-                    <th>{locale === "ar" ? "التحول" : "Transformation"}</th>
+                    <th>{fatPage.packages[0]?.name ?? (locale === "ar" ? "البداية" : "Starter")}</th>
+                    <th>{fatPage.packages[1]?.name ?? (locale === "ar" ? "الأكثر طلباً" : "Popular")}</th>
+                    <th>{fatPage.packages[2]?.name ?? (locale === "ar" ? "متقدم" : "Advanced")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -72,15 +87,24 @@ export function PricingView({locale}: {locale: Locale}) {
             <h2 className="section-title" style={{marginTop: "20px"}}>
               {t.pages.pricing.addonsTitle}
             </h2>
+            <p className="section-lead">{t.pages.pricing.addonsLead}</p>
             <div className="inner-card-grid">
-              {t.pages.pricing.addons.map((addon) => (
-                <article className="card addon-card" key={addon.name}>
-                  <h3>{addon.name}</h3>
+              {addonTreatments.map((addon) => (
+                <article className="card addon-card" key={addon.content.name}>
+                  <h3>{addon.content.name}</h3>
                   <p className="package-pricing">
-                    <span className="price-old">{addon.standardPrice}</span>
-                    <span className="price-new">{addon.promoPrice}</span>
+                    <span className="price-old">{addon.content.standardPrice}</span>
+                    <span className="price-new">{addon.content.promoPrice}</span>
                   </p>
-                  <p className="package-meta">{addon.offer}</p>
+                  <p className="package-meta">{addon.content.offer}</p>
+                  <div className="cta-row cta-row-tight">
+                    <Link className="primary-btn" href={`${base}/book?mode=treatment&treatment=${addon.id}&package=six-session`}>
+                      {t.nav.bookTreatment}
+                    </Link>
+                    <Link className="outline-btn" href={`${base}/book?mode=treatment&treatment=${addon.id}&package=single`}>
+                      {t.booking.singleSessionCta}
+                    </Link>
+                  </div>
                 </article>
               ))}
             </div>

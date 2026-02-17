@@ -7,6 +7,11 @@ export function Typewriter({lines}: {lines: string[]}) {
   const [text, setText] = useState("");
 
   useEffect(() => {
+    if (lines.length === 0) {
+      setText("");
+      return;
+    }
+
     const activeLine = lines[lineIndex] ?? "";
     let i = 0;
 

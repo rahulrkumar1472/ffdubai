@@ -5,6 +5,7 @@ type BookingEmailPayload = {
   referenceId: string;
   bookingType: "consultation" | "treatment";
   treatment: string | null;
+  packageId: string | null;
   area: string | null;
   name: string;
   phone: string;
@@ -51,13 +52,13 @@ function buildCustomerCopy(payload: BookingEmailPayload) {
   if (payload.locale === "ar") {
     return {
       subject: `تأكيد حجزك - ${payload.referenceId}`,
-      text: `مرحباً ${payload.name}،\n\nتم استلام حجزك بنجاح.\n\nالمرجع: ${payload.referenceId}\nالنوع: ${payload.bookingType === "consultation" ? "استشارة مجانية" : "جلسة علاج"}\nالعلاج: ${payload.treatment ?? "يحدد أثناء الاستشارة"}\nالتاريخ: ${payload.date}\nالوقت: ${payload.time}\nالمدة: ${payload.durationMinutes} دقيقة\n\nسنقوم بتأكيد الموعد معك قريباً.\n\nFAT FREEZING`
+      text: `مرحباً ${payload.name}،\n\nتم استلام حجزك بنجاح.\n\nالمرجع: ${payload.referenceId}\nالنوع: ${payload.bookingType === "consultation" ? "استشارة مجانية" : "جلسة علاج"}\nالعلاج: ${payload.treatment ?? "يحدد أثناء الاستشارة"}\nالباقة: ${payload.packageId ?? "تحدد أثناء الاستشارة"}\nالتاريخ: ${payload.date}\nالوقت: ${payload.time}\nالمدة: ${payload.durationMinutes} دقيقة\n\nسنقوم بتأكيد الموعد معك قريباً.\n\nFAT FREEZING`
     };
   }
 
   return {
     subject: `Booking Confirmation - ${payload.referenceId}`,
-    text: `Hi ${payload.name},\n\nYour booking request has been received.\n\nReference: ${payload.referenceId}\nType: ${payload.bookingType === "consultation" ? "Free Consultation" : "Treatment Booking"}\nTreatment: ${payload.treatment ?? "To be confirmed during consultation"}\nDate: ${payload.date}\nTime: ${payload.time}\nDuration: ${payload.durationMinutes} minutes\n\nOur clinic team will contact you shortly.\n\nFAT FREEZING`
+    text: `Hi ${payload.name},\n\nYour booking request has been received.\n\nReference: ${payload.referenceId}\nType: ${payload.bookingType === "consultation" ? "Free Consultation" : "Treatment Booking"}\nTreatment: ${payload.treatment ?? "To be confirmed during consultation"}\nPackage: ${payload.packageId ?? "To be confirmed during consultation"}\nDate: ${payload.date}\nTime: ${payload.time}\nDuration: ${payload.durationMinutes} minutes\n\nOur clinic team will contact you shortly.\n\nFAT FREEZING`
   };
 }
 
@@ -66,7 +67,7 @@ function buildAdminCopy(payload: BookingEmailPayload) {
 
   return {
     subject: `New Booking ${payload.referenceId}`,
-    text: `New booking submitted\n\nReference: ${payload.referenceId}\nLocale: ${payload.locale}\nMode: ${modeLabel}\nTreatment: ${payload.treatment ?? "N/A"}\nArea: ${payload.area ?? "N/A"}\nName: ${payload.name}\nPhone: ${payload.phone}\nEmail: ${payload.email}\nDate: ${payload.date}\nTime: ${payload.time}\nDuration: ${payload.durationMinutes} minutes`
+    text: `New booking submitted\n\nReference: ${payload.referenceId}\nLocale: ${payload.locale}\nMode: ${modeLabel}\nTreatment: ${payload.treatment ?? "N/A"}\nPackage: ${payload.packageId ?? "N/A"}\nArea: ${payload.area ?? "N/A"}\nName: ${payload.name}\nPhone: ${payload.phone}\nEmail: ${payload.email}\nDate: ${payload.date}\nTime: ${payload.time}\nDuration: ${payload.durationMinutes} minutes`
   };
 }
 

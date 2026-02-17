@@ -9,6 +9,7 @@ type BookingPayload = {
   locale: string;
   bookingType: "consultation" | "treatment";
   treatment?: string | null;
+  packageId?: string | null;
   area?: string | null;
   name: string;
   phone: string;
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
     const locale = body.locale ?? "";
     const bookingType = body.bookingType ?? "consultation";
     const treatment = body.treatment?.trim() || null;
+    const packageId = body.packageId?.trim() || null;
     const area = body.area?.trim() || null;
     const name = body.name?.trim() ?? "";
     const phone = body.phone?.trim() ?? "";
@@ -82,6 +84,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ok: false, message: "Missing treatment selection."}, {status: 400});
     }
 
+    if (bookingType === "treatment" && !packageId) {
+      return NextResponse.json({ok: false, message: "Missing package selection."}, {status: 400});
+    }
+
     const slotDate = parseDubaiDateTime(date, time);
     const nowDubai = toDubaiNow();
 
@@ -91,6 +97,7 @@ export async function POST(request: Request) {
 
     const referenceId = generateReferenceId();
     const durationMinutes = 60;
+    const normalizedTreatment = bookingType === "treatment" && treatment && packageId ? `${treatment}:${packageId}` : treatment;
 
     let persistedId = "";
     let storageMode: "database" | "fallback" = "database";
@@ -101,7 +108,7 @@ export async function POST(request: Request) {
           referenceId,
           locale,
           bookingType,
-          treatment,
+          treatment: normalizedTreatment,
           area,
           name,
           phone,
@@ -121,7 +128,7 @@ export async function POST(request: Request) {
         referenceId,
         locale: locale as "en" | "ar",
         bookingType,
-        treatment,
+        treatment: normalizedTreatment,
         area,
         name,
         phone,
@@ -139,6 +146,7 @@ export async function POST(request: Request) {
       referenceId,
       bookingType,
       treatment,
+      packageId,
       area,
       name,
       phone,

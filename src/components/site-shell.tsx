@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {LanguageToggle} from "@/components/language-toggle";
+import {PromoBanner} from "@/components/promo-banner";
 import {getDictionary, type Locale} from "@/lib/i18n";
 
 type SiteShellProps = {
@@ -30,12 +31,11 @@ export function SiteShell({locale, children}: SiteShellProps) {
   ];
 
   const bookLink = localePath(locale, "/book");
+  const bookTreatmentLink = `${bookLink}?mode=treatment`;
 
   return (
     <div className="page" dir={t.dir} lang={locale}>
-      <div className="seasonal-banner" role="note">
-        <div className="container">{t.banner.text}</div>
-      </div>
+      <PromoBanner dismissLabel={t.banner.dismissLabel} text={t.banner.text} />
 
       <header className="site-header">
         <div className="container header-inner">
@@ -52,6 +52,9 @@ export function SiteShell({locale, children}: SiteShellProps) {
             <details className="nav-dropdown">
               <summary className="nav-link">{t.nav.treatments}</summary>
               <div className="dropdown-panel">
+                <Link className="dropdown-link" href={localePath(locale, "/treatments")}>
+                  {t.nav.treatments}
+                </Link>
                 {treatmentItems.map((item) => (
                   <Link className="dropdown-link" href={item.href} key={item.href}>
                     {item.label}
@@ -68,9 +71,15 @@ export function SiteShell({locale, children}: SiteShellProps) {
           </nav>
 
           <div className="header-actions">
-            <LanguageToggle currentLocale={locale} />
-            <Link className="primary-btn header-book" href={bookLink}>
-              {t.nav.book}
+            <div className="header-lang desktop-only-lang">
+              <LanguageToggle currentLocale={locale} />
+            </div>
+
+            <Link className="primary-btn header-book header-book-desktop" href={bookLink}>
+              {t.nav.bookNow}
+            </Link>
+            <Link className="primary-btn header-book header-book-mobile" href={bookLink}>
+              {t.nav.bookShort}
             </Link>
 
             <details className="mobile-drawer">
@@ -82,11 +91,15 @@ export function SiteShell({locale, children}: SiteShellProps) {
 
               <div className="mobile-drawer-panel">
                 <div className="mobile-drawer-head">{t.nav.mobileMenu}</div>
+
                 <div className="mobile-drawer-links">
                   <Link className="drawer-link" href={localePath(locale, "/")}>
                     {t.nav.home}
                   </Link>
                   <div className="drawer-group-title">{t.nav.treatments}</div>
+                  <Link className="drawer-link" href={localePath(locale, "/treatments")}>
+                    {t.nav.treatments}
+                  </Link>
                   {treatmentItems.map((item) => (
                     <Link className="drawer-link" href={item.href} key={item.href}>
                       {item.label}
@@ -105,9 +118,20 @@ export function SiteShell({locale, children}: SiteShellProps) {
                     {t.nav.contact}
                   </Link>
                 </div>
-                <Link className="primary-btn drawer-cta" href={bookLink}>
-                  {t.nav.book}
-                </Link>
+
+                <div className="drawer-actions">
+                  <Link className="primary-btn drawer-cta" href={bookLink}>
+                    {t.nav.book}
+                  </Link>
+                  <Link className="outline-btn drawer-cta-secondary" href={bookTreatmentLink}>
+                    {t.nav.bookTreatment}
+                  </Link>
+                </div>
+
+                <div className="drawer-lang">
+                  <p className="drawer-group-title">{t.nav.languageLabel}</p>
+                  <LanguageToggle currentLocale={locale} />
+                </div>
               </div>
             </details>
           </div>
@@ -116,13 +140,17 @@ export function SiteShell({locale, children}: SiteShellProps) {
 
       {children}
 
-      <div className="mobile-sticky-cta" role="region" aria-label="Quick booking actions">
+      <div
+        className="mobile-sticky-cta"
+        role="region"
+        aria-label={locale === "ar" ? "إجراءات الحجز السريع" : "Quick booking actions"}
+      >
         <div className="mobile-sticky-inner">
           <Link className="sticky-book" href={bookLink}>
-            {locale === "ar" ? "احجز" : "Book"}
+            {t.nav.bookShort}
           </Link>
           <a className="sticky-wa" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
-            WhatsApp
+            {t.nav.whatsappShort}
           </a>
         </div>
       </div>

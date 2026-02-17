@@ -12,7 +12,17 @@ function pickImage(images: string[], index: number) {
   return images[index % images.length];
 }
 
-export function BookView({locale, initialMode = "consultation"}: {locale: Locale; initialMode?: "consultation" | "treatment"}) {
+export function BookView({
+  locale,
+  initialMode = "consultation",
+  initialTreatment = "",
+  initialPackage = ""
+}: {
+  locale: Locale;
+  initialMode?: "consultation" | "treatment";
+  initialTreatment?: string;
+  initialPackage?: string;
+}) {
   const t = getDictionary(locale);
   const base = locale === "en" ? "/en" : "/ar";
 
@@ -38,7 +48,12 @@ export function BookView({locale, initialMode = "consultation"}: {locale: Locale
               <article className="card">
                 <h2 className="section-title">{t.booking.sectionTitle}</h2>
                 <p className="section-lead">{t.booking.sectionSubtitle}</p>
-                <BookingForm initialMode={initialMode} locale={locale} />
+                <BookingForm
+                  initialMode={initialMode}
+                  initialPackage={initialPackage}
+                  initialTreatment={initialTreatment}
+                  locale={locale}
+                />
               </article>
 
               <article className="card booking-side-panel">

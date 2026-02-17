@@ -7,6 +7,7 @@ type Dictionary = {
   dir: "ltr" | "rtl";
   banner: {
     text: string;
+    dismissLabel: string;
   };
   brand: {
     name: string;
@@ -27,9 +28,13 @@ type Dictionary = {
     faq: string;
     contact: string;
     book: string;
+    bookNow: string;
+    bookTreatment: string;
     languageLabel: string;
     mobileMenu: string;
     closeMenu: string;
+    bookShort: string;
+    whatsappShort: string;
   };
   hero: {
     eyebrow: string;
@@ -98,6 +103,20 @@ type Dictionary = {
     secondaryCta: string;
     tertiaryCta: string;
   };
+  leadPopup: {
+    title: string;
+    subtitle: string;
+    name: string;
+    email: string;
+    phone: string;
+    submit: string;
+    dismiss: string;
+    requiredError: string;
+    submitError: string;
+    successTitle: string;
+    successBody: string;
+    successCta: string;
+  };
   innerPage: {
     backToHome: string;
     primaryCta: string;
@@ -114,6 +133,9 @@ type Dictionary = {
       treatment: string;
     };
     treatmentLabel: string;
+    packageLabel: string;
+    packagePlaceholder: string;
+    singleSessionCta: string;
     areaLabel: string;
     areaPlaceholder: string;
     areaOptions: string[];
@@ -133,6 +155,7 @@ type Dictionary = {
     summaryDate: string;
     summaryMode: string;
     summaryTreatment: string;
+    summaryPackage: string;
     summaryArea: string;
     noArea: string;
     duration: string;
@@ -148,12 +171,21 @@ type Dictionary = {
     invalidTime: string;
     pastTime: string;
     missingTreatment: string;
+    missingPackage: string;
     sideTitle: string;
     sidePoints: string[];
     treatmentOptions: Array<{
       value: string;
       label: string;
       hint: string;
+    }>;
+    packageOptions: Array<{
+      treatment: string;
+      options: Array<{
+        value: string;
+        label: string;
+        hint: string;
+      }>;
     }>;
   };
   pages: {
@@ -167,6 +199,9 @@ type Dictionary = {
         standardPrice: string;
         promoPrice: string;
         bestFor: string;
+        sessions: string;
+        areas: string;
+        savingsLabel: string;
         badge?: string;
       }>;
       disclaimer: string;
@@ -208,6 +243,7 @@ type Dictionary = {
         transformation: string;
       }>;
       addonsTitle: string;
+      addonsLead: string;
       addons: Array<{
         name: string;
         standardPrice: string;
@@ -260,7 +296,8 @@ const dictionary: Record<Locale, Dictionary> = {
     localeName: "English",
     dir: "ltr",
     banner: {
-      text: "Ramadan Mubarak 🌙 | Special promotional pricing (limited time)"
+      text: "Ramadan & Eid Special Offers Now Live — Limited Time Packages Available",
+      dismissLabel: "Dismiss banner"
     },
     brand: {
       name: "FAT FREEZING",
@@ -275,32 +312,36 @@ const dictionary: Record<Locale, Dictionary> = {
       treatments: "Treatments",
       fatFreezing: "Fat Freezing",
       ultrasound: "Ultrasound Cavitation",
-      radiofrequency: "Radiofrequency",
+      radiofrequency: "Radiofrequency Tightening",
       pricing: "Pricing",
       results: "Results",
       faq: "FAQ",
       contact: "Contact",
       book: "Book Free Consultation",
+      bookNow: "Book Now",
+      bookTreatment: "Book Treatment",
       languageLabel: "Language",
       mobileMenu: "Menu",
-      closeMenu: "Close"
+      closeMenu: "Close",
+      bookShort: "Book",
+      whatsappShort: "WhatsApp"
     },
     hero: {
       eyebrow: "Doctor-led body contouring in Jumeirah, Dubai",
-      heading: "Remove stubborn fat from just AED 489",
-      subheading: "Doctor-led non-invasive cryolipolysis for targeted sculpting with no surgery and no downtime.",
-      trustPills: ["DHA licensed doctor", "Same-day appointments", "No downtime", "No surgery"],
+      heading: "Dubai’s Most Affordable Fat Freezing Clinic",
+      subheading: "Doctor-Led Fat Reduction Treatments With No Surgery Or Downtime",
+      trustPills: ["✓ UK-Backed Clinic", "✓ Doctor Led", "✓ No Downtime", "✓ 5★ Reviews"],
       typewriterLines: [
-        "Permanent fat reduction for selected stubborn pockets",
-        "Clinically proven technology with doctor-led planning",
-        "Target stomach, love handles, arms, and chin",
-        "Free 30-min consultation before treatment"
+        "From AED 489 entry pricing",
+        "Clinically guided body contouring",
+        "Target stomach, arms, chin, thighs, and flanks",
+        "60-minute appointments daily 12:00-20:00"
       ],
       priceChip: "From AED 489",
       consultationBadge: "Free 30-min consultation",
-      sameDayLine: "Same-day treatment available (subject to medical suitability).",
+      sameDayLine: "Same-day treatment available, subject to medical suitability.",
       primaryCta: "Book Free Consultation",
-      secondaryCta: "Chat on WhatsApp",
+      secondaryCta: "View Treatment Packages",
       bookTreatmentCta: "Book Treatment"
     },
     whatIs: {
@@ -398,6 +439,20 @@ const dictionary: Record<Locale, Dictionary> = {
       secondaryCta: "Book Treatment",
       tertiaryCta: "Chat on WhatsApp"
     },
+    leadPopup: {
+      title: "Claim Your Fat Reduction Consultation Offer",
+      subtitle: "Leave your details and our team will secure your priority callback.",
+      name: "Name",
+      email: "Email",
+      phone: "Phone",
+      submit: "Unlock Offer",
+      dismiss: "Close offer popup",
+      requiredError: "Please complete name, email, and phone.",
+      submitError: "We couldn't submit right now. Please try again.",
+      successTitle: "Offer unlocked",
+      successBody: "Your consultation request is recorded. Our coordinator will confirm shortly.",
+      successCta: "Continue to Booking"
+    },
     innerPage: {
       backToHome: "Back to Home",
       primaryCta: "Book Free Consultation",
@@ -414,6 +469,9 @@ const dictionary: Record<Locale, Dictionary> = {
         treatment: "Book Treatment"
       },
       treatmentLabel: "Treatment selection",
+      packageLabel: "Package selection",
+      packagePlaceholder: "Select package",
+      singleSessionCta: "Book single session",
       areaLabel: "Area of concern (optional)",
       areaPlaceholder: "Select area",
       areaOptions: ["Stomach", "Love Handles", "Arms", "Chin", "Thighs", "Back"],
@@ -433,6 +491,7 @@ const dictionary: Record<Locale, Dictionary> = {
       summaryDate: "Date & time",
       summaryMode: "Booking type",
       summaryTreatment: "Treatment",
+      summaryPackage: "Package",
       summaryArea: "Area",
       noArea: "Not specified",
       duration: "Duration: 60 minutes",
@@ -448,6 +507,7 @@ const dictionary: Record<Locale, Dictionary> = {
       invalidTime: "Please choose a valid slot between 12:00 and 20:00.",
       pastTime: "Please choose a future time slot.",
       missingTreatment: "Please select a treatment option.",
+      missingPackage: "Please select a package option.",
       sideTitle: "What happens next",
       sidePoints: [
         "Our coordinator reviews your slot request and confirms availability.",
@@ -456,11 +516,33 @@ const dictionary: Record<Locale, Dictionary> = {
         "You can speed up communication via WhatsApp at any time."
       ],
       treatmentOptions: [
-        {value: "fat-freezing-starter", label: "Fat Freezing Starter", hint: "AED 489"},
-        {value: "fat-freezing-popular", label: "Fat Freezing Most Popular", hint: "AED 999"},
-        {value: "fat-freezing-transformation", label: "Fat Freezing Transformation", hint: "AED 1,599"},
+        {value: "fat-freezing", label: "Fat Freezing", hint: "From AED 489"},
         {value: "ultrasound-cavitation", label: "Ultrasound Cavitation", hint: "AED 450/session"},
         {value: "radiofrequency", label: "Radiofrequency", hint: "AED 450/session"}
+      ],
+      packageOptions: [
+        {
+          treatment: "fat-freezing",
+          options: [
+            {value: "starter", label: "Starter", hint: "AED 489"},
+            {value: "sculpt", label: "Popular", hint: "AED 899"},
+            {value: "transform", label: "Advanced", hint: "AED 1,599"}
+          ]
+        },
+        {
+          treatment: "ultrasound-cavitation",
+          options: [
+            {value: "single", label: "Single session", hint: "AED 450"},
+            {value: "six-session", label: "6-session offer", hint: "AED 2,250 (save AED 450)"}
+          ]
+        },
+        {
+          treatment: "radiofrequency",
+          options: [
+            {value: "single", label: "Single session", hint: "AED 450"},
+            {value: "six-session", label: "6-session offer", hint: "AED 2,250 (save AED 450)"}
+          ]
+        }
       ]
     },
     pages: {
@@ -473,24 +555,38 @@ const dictionary: Record<Locale, Dictionary> = {
         ],
         highlights: [
           "From AED 489 starter access",
-          "Most popular package at AED 999",
+          "Most popular package at AED 899",
           "Transformation package capped at AED 1,599",
           "No surgery, no injections, no downtime"
         ],
         packages: [
-          {name: "Starter", standardPrice: "AED 699", promoPrice: "AED 489", bestFor: "First-time trial for one focused area"},
           {
-            name: "Most Popular",
-            standardPrice: "AED 1,299",
-            promoPrice: "AED 999",
-            bestFor: "Balanced contouring for two or more priority zones",
+            name: "Starter",
+            standardPrice: "AED 699",
+            promoPrice: "AED 489",
+            bestFor: "Best for first-time contouring trials",
+            sessions: "1 tailored session",
+            areas: "Up to 1 focus area",
+            savingsLabel: "Save AED 210"
+          },
+          {
+            name: "Popular",
+            standardPrice: "AED 1,199",
+            promoPrice: "AED 899",
+            bestFor: "Most booked plan for visible reshaping",
+            sessions: "2 tailored sessions",
+            areas: "Up to 2 priority areas",
+            savingsLabel: "Save AED 300",
             badge: "Most popular"
           },
           {
-            name: "Transformation",
+            name: "Advanced",
             standardPrice: "AED 1,999",
             promoPrice: "AED 1,599",
-            bestFor: "Comprehensive shape plan with staged sessions"
+            bestFor: "Comprehensive strategy for bigger goals",
+            sessions: "Up to 4 tailored sessions",
+            areas: "Multi-area plan",
+            savingsLabel: "Save AED 400"
           }
         ],
         disclaimer: "Applicator count and protocol are finalized after doctor consultation. Results vary by individual."
@@ -503,7 +599,7 @@ const dictionary: Record<Locale, Dictionary> = {
           "It can be recommended after assessment when goals and tissue profile suggest benefit."
         ],
         price: "AED 450 per session",
-        offer: "6-session offer: AED 2,199 (instead of AED 2,700)",
+        offer: "6-session offer: AED 2,250 (save AED 450)",
         sections: [
           {
             title: "Who it suits",
@@ -524,7 +620,7 @@ const dictionary: Record<Locale, Dictionary> = {
           "It is commonly combined with body contouring for patients concerned about skin laxity."
         ],
         price: "AED 450 per session",
-        offer: "6-session offer: AED 2,199 (instead of AED 2,700)",
+        offer: "6-session offer: AED 2,250 (save AED 450)",
         sections: [
           {
             title: "Why it is combined",
@@ -544,11 +640,11 @@ const dictionary: Record<Locale, Dictionary> = {
         packagesLead: "Select the package that matches your contouring goals and treatment scope.",
         comparisonTitle: "Package comparison",
         rows: [
-          {label: "Price", starter: "AED 489", popular: "AED 999", transformation: "AED 1,599"},
+          {label: "Price", starter: "AED 489", popular: "AED 899", transformation: "AED 1,599"},
           {
             label: "Best for",
             starter: "Single-area starter",
-            popular: "Multi-area contour plan",
+            popular: "Most-booked contour plan",
             transformation: "Comprehensive transformation"
           },
           {
@@ -558,19 +654,20 @@ const dictionary: Record<Locale, Dictionary> = {
             transformation: "Included"
           }
         ],
-        addonsTitle: "Add-on treatments",
+        addonsTitle: "Supporting Treatments",
+        addonsLead: "Enhance contouring plans with targeted skin and tissue support.",
         addons: [
           {
             name: "Ultrasound Cavitation",
             standardPrice: "AED 500/session",
             promoPrice: "AED 450/session",
-            offer: "6 sessions for AED 2,199"
+            offer: "6 sessions for AED 2,250 (save AED 450)"
           },
           {
             name: "Radiofrequency",
             standardPrice: "AED 500/session",
             promoPrice: "AED 450/session",
-            offer: "6 sessions for AED 2,199"
+            offer: "6 sessions for AED 2,250 (save AED 450)"
           }
         ],
         disclaimer: "Final recommendation and total plan cost depend on medical suitability and treatment scope."
@@ -650,7 +747,8 @@ const dictionary: Record<Locale, Dictionary> = {
     localeName: "العربية",
     dir: "rtl",
     banner: {
-      text: "رمضان مبارك 🌙 | أسعار ترويجية خاصة لفترة محدودة"
+      text: "عروض رمضان والعيد متاحة الآن — باقات ترويجية لفترة محدودة",
+      dismissLabel: "إغلاق الشريط الترويجي"
     },
     brand: {
       name: "FAT FREEZING",
@@ -665,32 +763,36 @@ const dictionary: Record<Locale, Dictionary> = {
       treatments: "العلاجات",
       fatFreezing: "تجميد الدهون",
       ultrasound: "الألتراساوند كافيتيشن",
-      radiofrequency: "التردد الحراري",
+      radiofrequency: "شد البشرة بالتردد الحراري",
       pricing: "الأسعار",
       results: "النتائج",
       faq: "الأسئلة الشائعة",
-      contact: "التواصل والموقع",
+      contact: "التواصل",
       book: "احجز استشارة مجانية",
+      bookNow: "احجز الآن",
+      bookTreatment: "احجز جلسة علاج",
       languageLabel: "اللغة",
       mobileMenu: "القائمة",
-      closeMenu: "إغلاق"
+      closeMenu: "إغلاق",
+      bookShort: "احجز",
+      whatsappShort: "واتساب"
     },
     hero: {
-      eyebrow: "نحت الجسم بإشراف طبي في جميرا، دبي",
-      heading: "تخلّص من الدهون العنيدة ابتداءً من 489 درهم",
-      subheading: "علاج كرايو ليبوليسيس غير جراحي بإشراف طبي لنحت المناطق المستهدفة بدون جراحة وبدون فترة نقاهة.",
-      trustPills: ["طبيب مرخص من DHA", "مواعيد في نفس اليوم", "بدون نقاهة", "بدون جراحة"],
+      eyebrow: "نحت القوام بإشراف طبي في جميرا، دبي",
+      heading: "العيادة الأكثر توفيراً لتجميد الدهون في دبي",
+      subheading: "علاجات خفض الدهون بإشراف طبي، بدون جراحة وبدون فترة نقاهة.",
+      trustPills: ["✓ عيادة بمعايير بريطانية", "✓ بإشراف طبي", "✓ بدون نقاهة", "✓ تقييمات 5 نجوم"],
       typewriterLines: [
-        "تقليل دائم للدهون الموضعية المناسبة للعلاج",
-        "تقنية مثبتة سريرياً مع خطة علاج بإشراف طبي",
-        "استهداف دقيق للبطن والخواصر والذراعين والذقن",
-        "استشارة مجانية لمدة 30 دقيقة قبل بدء العلاج"
+        "بداية من 489 درهم",
+        "تقنيات مثبتة لنحت الدهون الموضعية",
+        "استهداف البطن والذراعين والذقن والخواصر",
+        "مواعيد يومية من 12:00 حتى 20:00"
       ],
       priceChip: "ابتداءً من 489 درهم",
       consultationBadge: "استشارة مجانية لمدة 30 دقيقة",
-      sameDayLine: "إمكانية بدء العلاج في نفس اليوم عند تأكيد الملاءمة الطبية.",
+      sameDayLine: "إمكانية بدء العلاج في نفس اليوم وفق الملاءمة الطبية.",
       primaryCta: "احجز استشارة مجانية",
-      secondaryCta: "تواصل عبر واتساب",
+      secondaryCta: "اعرض باقات العلاج",
       bookTreatmentCta: "احجز جلسة علاج"
     },
     whatIs: {
@@ -787,6 +889,20 @@ const dictionary: Record<Locale, Dictionary> = {
       secondaryCta: "احجز جلسة علاج",
       tertiaryCta: "تواصل عبر واتساب"
     },
+    leadPopup: {
+      title: "احصل على عرض الاستشارة لنحت الدهون",
+      subtitle: "اترك بياناتك وسيتواصل فريقنا معك سريعاً لتأكيد أفضل موعد.",
+      name: "الاسم",
+      email: "البريد الإلكتروني",
+      phone: "رقم الجوال",
+      submit: "احصل على العرض",
+      dismiss: "إغلاق النافذة",
+      requiredError: "يرجى إدخال الاسم والبريد الإلكتروني ورقم الجوال.",
+      submitError: "تعذر إرسال الطلب حالياً، يرجى المحاولة مرة أخرى.",
+      successTitle: "تم تفعيل العرض",
+      successBody: "تم تسجيل طلب الاستشارة، وسيتواصل معك منسق العيادة قريباً.",
+      successCta: "الانتقال إلى الحجز"
+    },
     innerPage: {
       backToHome: "العودة للرئيسية",
       primaryCta: "احجز استشارة مجانية",
@@ -803,6 +919,9 @@ const dictionary: Record<Locale, Dictionary> = {
         treatment: "حجز جلسة علاج"
       },
       treatmentLabel: "اختيار العلاج",
+      packageLabel: "اختيار الباقة",
+      packagePlaceholder: "اختر الباقة",
+      singleSessionCta: "احجز جلسة مفردة",
       areaLabel: "المنطقة المستهدفة (اختياري)",
       areaPlaceholder: "اختر المنطقة",
       areaOptions: ["البطن", "الخواصر", "الذراعان", "الذقن", "الفخذان", "الظهر"],
@@ -822,6 +941,7 @@ const dictionary: Record<Locale, Dictionary> = {
       summaryDate: "التاريخ والوقت",
       summaryMode: "نوع الحجز",
       summaryTreatment: "العلاج",
+      summaryPackage: "الباقة",
       summaryArea: "المنطقة",
       noArea: "غير محدد",
       duration: "المدة: 60 دقيقة",
@@ -837,6 +957,7 @@ const dictionary: Record<Locale, Dictionary> = {
       invalidTime: "يرجى اختيار موعد صحيح بين 12:00 و20:00.",
       pastTime: "يرجى اختيار وقت لاحق غير منتهي.",
       missingTreatment: "يرجى اختيار نوع العلاج.",
+      missingPackage: "يرجى اختيار الباقة المناسبة.",
       sideTitle: "ماذا يحدث بعد الحجز؟",
       sidePoints: [
         "يقوم فريقنا بتأكيد الموعد خلال وقت قصير.",
@@ -845,11 +966,33 @@ const dictionary: Record<Locale, Dictionary> = {
         "يمكنك تسريع التواصل عبر واتساب في أي وقت."
       ],
       treatmentOptions: [
-        {value: "fat-freezing-starter", label: "تجميد الدهون - باقة البداية", hint: "489 درهم"},
-        {value: "fat-freezing-popular", label: "تجميد الدهون - الأكثر طلباً", hint: "999 درهم"},
-        {value: "fat-freezing-transformation", label: "تجميد الدهون - باقة التحول", hint: "1,599 درهم"},
+        {value: "fat-freezing", label: "تجميد الدهون", hint: "ابتداءً من 489 درهم"},
         {value: "ultrasound-cavitation", label: "ألتراساوند كافيتيشن", hint: "450 درهم/جلسة"},
         {value: "radiofrequency", label: "التردد الحراري", hint: "450 درهم/جلسة"}
+      ],
+      packageOptions: [
+        {
+          treatment: "fat-freezing",
+          options: [
+            {value: "starter", label: "باقة البداية", hint: "489 درهم"},
+            {value: "sculpt", label: "باقة Popular (الأكثر طلباً)", hint: "899 درهم"},
+            {value: "transform", label: "باقة Advanced", hint: "1,599 درهم"}
+          ]
+        },
+        {
+          treatment: "ultrasound-cavitation",
+          options: [
+            {value: "single", label: "جلسة مفردة", hint: "450 درهم"},
+            {value: "six-session", label: "عرض 6 جلسات", hint: "2,250 درهم (توفير 450 درهم)"}
+          ]
+        },
+        {
+          treatment: "radiofrequency",
+          options: [
+            {value: "single", label: "جلسة مفردة", hint: "450 درهم"},
+            {value: "six-session", label: "عرض 6 جلسات", hint: "2,250 درهم (توفير 450 درهم)"}
+          ]
+        }
       ]
     },
     pages: {
@@ -862,7 +1005,7 @@ const dictionary: Record<Locale, Dictionary> = {
         ],
         highlights: [
           "بداية من 489 درهم",
-          "الباقة الأكثر طلباً 999 درهم",
+          "الباقة الأكثر طلباً 899 درهم",
           "الحد الأعلى لباقة التحول 1,599 درهم",
           "بدون جراحة وبدون تعطيل للروتين"
         ],
@@ -871,20 +1014,29 @@ const dictionary: Record<Locale, Dictionary> = {
             name: "باقة البداية",
             standardPrice: "699 درهم",
             promoPrice: "489 درهم",
-            bestFor: "مناسبة لتجربة أولى لمنطقة مركزة"
+            bestFor: "مناسبة كتجربة أولى لنحت منطقة محددة",
+            sessions: "جلسة مخصصة واحدة",
+            areas: "حتى منطقة واحدة",
+            savingsLabel: "توفير 210 درهم"
           },
           {
-            name: "الأكثر طلباً",
-            standardPrice: "1,299 درهم",
-            promoPrice: "999 درهم",
-            bestFor: "نحت متوازن لأكثر من منطقة",
+            name: "باقة Popular",
+            standardPrice: "1,199 درهم",
+            promoPrice: "899 درهم",
+            bestFor: "الخيار الأكثر طلباً لنحت ملحوظ",
+            sessions: "جلستان مخصصتان",
+            areas: "حتى منطقتين أساسيتين",
+            savingsLabel: "توفير 300 درهم",
             badge: "الأكثر طلباً"
           },
           {
-            name: "باقة التحول",
+            name: "باقة Advanced",
             standardPrice: "1,999 درهم",
             promoPrice: "1,599 درهم",
-            bestFor: "خطة شاملة على مراحل"
+            bestFor: "خطة شاملة للأهداف الأكبر",
+            sessions: "حتى 4 جلسات مخصصة",
+            areas: "خطة متعددة المناطق",
+            savingsLabel: "توفير 400 درهم"
           }
         ],
         disclaimer: "عدد التطبيقات والبروتوكول النهائي يحددان بعد الاستشارة. النتائج تختلف حسب الحالة."
@@ -897,7 +1049,7 @@ const dictionary: Record<Locale, Dictionary> = {
           "يساعد في دعم النتائج التدريجية للحالات المناسبة."
         ],
         price: "450 درهم للجلسة",
-        offer: "عرض 6 جلسات: 2,199 درهم بدلاً من 2,700",
+        offer: "عرض 6 جلسات: 2,250 درهم (توفير 450 درهم)",
         sections: [
           {
             title: "لمن يناسب",
@@ -918,7 +1070,7 @@ const dictionary: Record<Locale, Dictionary> = {
           "يُدمج عادةً مع خطط النحت للحالات التي تهتم بتماسك الجلد."
         ],
         price: "450 درهم للجلسة",
-        offer: "عرض 6 جلسات: 2,199 درهم بدلاً من 2,700",
+        offer: "عرض 6 جلسات: 2,250 درهم (توفير 450 درهم)",
         sections: [
           {
             title: "لماذا يُدمج مع النحت",
@@ -938,28 +1090,29 @@ const dictionary: Record<Locale, Dictionary> = {
         packagesLead: "اختر الباقة المناسبة لهدفك بعد تقييم الحالة.",
         comparisonTitle: "مقارنة الباقات",
         rows: [
-          {label: "السعر", starter: "489 درهم", popular: "999 درهم", transformation: "1,599 درهم"},
+          {label: "السعر", starter: "489 درهم", popular: "899 درهم", transformation: "1,599 درهم"},
           {
             label: "الأفضل لـ",
             starter: "بداية لمنطقة واحدة",
-            popular: "خطة متعددة المناطق",
+            popular: "الخطة الأكثر طلباً للنحت",
             transformation: "خطة تحول شاملة"
           },
           {label: "الاستشارة", starter: "مشمولة", popular: "مشمولة", transformation: "مشمولة"}
         ],
-        addonsTitle: "العلاجات الإضافية",
+        addonsTitle: "العلاجات الداعمة",
+        addonsLead: "جلسات داعمة لتقوية النتائج وشد المظهر العام للمناطق المستهدفة.",
         addons: [
           {
             name: "الألتراساوند كافيتيشن",
             standardPrice: "500 درهم/جلسة",
             promoPrice: "450 درهم/جلسة",
-            offer: "6 جلسات مقابل 2,199 درهم"
+            offer: "6 جلسات مقابل 2,250 درهم (توفير 450 درهم)"
           },
           {
             name: "التردد الحراري",
             standardPrice: "500 درهم/جلسة",
             promoPrice: "450 درهم/جلسة",
-            offer: "6 جلسات مقابل 2,199 درهم"
+            offer: "6 جلسات مقابل 2,250 درهم (توفير 450 درهم)"
           }
         ],
         disclaimer: "الخطة النهائية والتكلفة الإجمالية تعتمدان على الملاءمة الطبية ونطاق العلاج."

@@ -9,8 +9,15 @@ export const metadata: Metadata = buildMetadata({
   description: "Choose date and time, complete details, and confirm your 60-minute consultation or treatment booking in Dubai."
 });
 
-export default function EnBookPage({searchParams}: {searchParams?: {mode?: string}}) {
-  const initialMode = searchParams?.mode === "treatment" ? "treatment" : "consultation";
+export default function EnBookPage({
+  searchParams
+}: {
+  searchParams?: {mode?: string; treatment?: string; package?: string};
+}) {
+  const hasTreatmentPreset = Boolean(searchParams?.treatment);
+  const initialMode = searchParams?.mode === "treatment" || hasTreatmentPreset ? "treatment" : "consultation";
+  const initialTreatment = searchParams?.treatment ?? "";
+  const initialPackage = searchParams?.package ?? "";
 
-  return <BookView initialMode={initialMode} locale="en" />;
+  return <BookView initialMode={initialMode} initialPackage={initialPackage} initialTreatment={initialTreatment} locale="en" />;
 }

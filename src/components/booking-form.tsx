@@ -9,6 +9,7 @@ type Step = 1 | 2 | 3;
 type FormState = {
   bookingType: "consultation" | "treatment";
   treatment: string;
+  packageId: string;
   area: string;
   name: string;
   phone: string;
@@ -28,6 +29,7 @@ type BookingApiResponse = {
 const initialState: FormState = {
   bookingType: "consultation",
   treatment: "",
+  packageId: "",
   area: "",
   name: "",
   phone: "",
@@ -55,15 +57,29 @@ function slotToMinutes(slot: string) {
 
 export function BookingForm({
   locale,
-  initialMode = "consultation"
+  initialMode = "consultation",
+  initialTreatment = "",
+  initialPackage = ""
 }: {
   locale: Locale;
   initialMode?: "consultation" | "treatment";
+  initialTreatment?: string;
+  initialPackage?: string;
 }) {
   const t = getDictionary(locale);
   const defaultMode = initialMode === "treatment" ? "treatment" : "consultation";
+  const validTreatmentOptions = t.booking.treatmentOptions.map((option) => option.value);
+  const normalizedTreatment = validTreatmentOptions.includes(initialTreatment) ? initialTreatment : "";
+  const packagesForInitialTreatment =
+    t.booking.packageOptions.find((item) => item.treatment === normalizedTreatment)?.options.map((option) => option.value) || [];
+  const normalizedPackage = packagesForInitialTreatment.includes(initialPackage) ? initialPackage : "";
   const [step, setStep] = useState<Step>(1);
-  const [state, setState] = useState<FormState>({...initialState, bookingType: defaultMode});
+  const [state, setState] = useState<FormState>({
+    ...initialState,
+    bookingType: defaultMode,
+    treatment: defaultMode === "treatment" ? normalizedTreatment : "",
+    packageId: defaultMode === "treatment" ? normalizedPackage : ""
+  });
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<null | {referenceId: string; emailConfigured: boolean; customerEmailSent: boolean}>(null);
@@ -87,6 +103,9 @@ export function BookingForm({
 
   const selectedTreatmentLabel =
     t.booking.treatmentOptions.find((option) => option.value === state.treatment)?.label || state.treatment || "-";
+  const packageOptionsForSelectedTreatment = t.booking.packageOptions.find((item) => item.treatment === state.treatment)?.options || [];
+  const selectedPackageLabel =
+    packageOptionsForSelectedTreatment.find((option) => option.value === state.packageId)?.label || state.packageId || t.booking.noArea;
 
   const validateStep1 = () => {
     if (!state.date || !state.time) {
@@ -125,6 +144,10 @@ export function BookingForm({
       setError(t.booking.missingTreatment);
       return false;
     }
+    if (state.bookingType === "treatment" && !state.packageId) {
+      setError(t.booking.missingPackage);
+      return false;
+    }
 
     setError("");
     return true;
@@ -153,7 +176,12 @@ export function BookingForm({
         customerEmailSent: Boolean(data.customerEmailSent)
       });
       setError("");
-      setState({...initialState, bookingType: defaultMode});
+      setState({
+        ...initialState,
+        bookingType: defaultMode,
+        treatment: defaultMode === "treatment" ? normalizedTreatment : "",
+        packageId: defaultMode === "treatment" ? normalizedPackage : ""
+      });
       setStep(1);
     } catch {
       setError(t.booking.required);
@@ -225,7 +253,7 @@ export function BookingForm({
             <div className="mode-switch">
               <button
                 className={state.bookingType === "consultation" ? "mode-btn active" : "mode-btn"}
-                onClick={() => setState((prev) => ({...prev, bookingType: "consultation", treatment: ""}))}
+                onClick={() => setState((prev) => ({...prev, bookingType: "consultation", treatment: "", packageId: ""}))}
                 type="button"
               >
                 {t.booking.modes.consultation}
@@ -246,11 +274,29 @@ export function BookingForm({
                 <label htmlFor="treatment">{t.booking.treatmentLabel}</label>
                 <select
                   id="treatment"
-                  onChange={(event) => setState((prev) => ({...prev, treatment: event.target.value}))}
+                  onChange={(event) => setState((prev) => ({...prev, treatment: event.target.value, packageId: ""}))}
                   value={state.treatment}
                 >
                   <option value="">--</option>
                   {t.booking.treatmentOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label} ({option.hint})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+
+            {state.bookingType === "treatment" && state.treatment ? (
+              <div style={{gridColumn: "1 / -1"}}>
+                <label htmlFor="packageId">{t.booking.packageLabel}</label>
+                <select
+                  id="packageId"
+                  onChange={(event) => setState((prev) => ({...prev, packageId: event.target.value}))}
+                  value={state.packageId}
+                >
+                  <option value="">{t.booking.packagePlaceholder}</option>
+                  {packageOptionsForSelectedTreatment.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label} ({option.hint})
                     </option>
@@ -302,6 +348,9 @@ export function BookingForm({
           </p>
           <p>
             <strong>{t.booking.summaryTreatment}:</strong> {state.bookingType === "treatment" ? selectedTreatmentLabel : t.booking.modes.consultation}
+          </p>
+          <p>
+            <strong>{t.booking.summaryPackage}:</strong> {state.bookingType === "treatment" ? selectedPackageLabel : "-"}
           </p>
           <p>
             <strong>{t.booking.summaryArea}:</strong> {state.area || t.booking.noArea}
