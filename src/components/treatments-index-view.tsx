@@ -22,7 +22,7 @@ export function TreatmentsIndexView({locale}: {locale: Locale}) {
         locale === "ar"
           ? "العلاج الرئيسي لنحت الدهون الموضعية بخطة تبدأ من 489 درهم."
           : "Core contouring treatment with doctor-led planning from AED 489.",
-      href: `${base}/treatments/fat-freezing`,
+      href: `${base}/fat-freezing`,
       image: pickImage(4)
     },
     {
@@ -31,7 +31,7 @@ export function TreatmentsIndexView({locale}: {locale: Locale}) {
         locale === "ar"
           ? "جلسات داعمة لنحت القوام بسعر 450 درهم للجلسة."
           : "Supportive contouring sessions at AED 450 per session.",
-      href: `${base}/treatments/ultrasound-cavitation`,
+      href: `${base}/ultrasound-cavitation`,
       image: pickImage(6)
     },
     {
@@ -40,7 +40,7 @@ export function TreatmentsIndexView({locale}: {locale: Locale}) {
         locale === "ar"
           ? "جلسات شد البشرة بالتردد الحراري بسعر 450 درهم للجلسة."
           : "Skin-firming RF sessions at AED 450 per session.",
-      href: `${base}/treatments/radiofrequency`,
+      href: `${base}/radiofrequency`,
       image: pickImage(8)
     }
   ];

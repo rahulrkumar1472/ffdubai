@@ -3,6 +3,8 @@ import Link from "next/link";
 import {Typewriter} from "@/components/typewriter";
 import {ResultsGallery} from "@/components/results-gallery";
 import {LeadCapturePopup} from "@/components/lead-capture-popup";
+import {ClinicMapSection} from "@/components/clinic-map-section";
+import {InstagramSection} from "@/components/instagram-section";
 import {JsonLd} from "@/components/json-ld";
 import {clinicSchema, serviceSchema} from "@/lib/schema";
 import {getDictionary, type Locale} from "@/lib/i18n";
@@ -107,6 +109,8 @@ export function HomeView({locale}: {locale: Locale}) {
           </div>
         </section>
 
+        <ClinicMapSection locale={locale} />
+
         <section className="section" id="what-is-fat-freezing">
           <div className="container">
             <div className={whatIsImage ? "authority-grid" : "authority-grid authority-grid-single"}>
@@ -149,7 +153,7 @@ export function HomeView({locale}: {locale: Locale}) {
               <h2 className="section-title">{t.areas.title}</h2>
               <p className="section-lead">{t.areas.lead}</p>
               <div className="inline-links">
-                <Link href={`${base}/treatments/fat-freezing`}>{t.nav.fatFreezing}</Link>
+                <Link href={`${base}/fat-freezing`}>{t.nav.fatFreezing}</Link>
                 <Link href={`${base}/pricing`}>{t.nav.pricing}</Link>
               </div>
 
@@ -267,6 +271,8 @@ export function HomeView({locale}: {locale: Locale}) {
             )}
           </div>
         </section>
+
+        <InstagramSection locale={locale} />
 
         <section className="section section-muted" id="why-choose-us">
           <div className="container">

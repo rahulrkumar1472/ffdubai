@@ -5,6 +5,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "/book",
+    "/fat-freezing",
+    "/ultrasound-cavitation",
+    "/radiofrequency",
     "/treatments",
     "/treatments/fat-freezing",
     "/treatments/ultrasound-cavitation",

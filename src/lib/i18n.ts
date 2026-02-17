@@ -8,6 +8,7 @@ type Dictionary = {
   banner: {
     text: string;
     dismissLabel: string;
+    ctaLabel: string;
   };
   brand: {
     name: string;
@@ -21,6 +22,10 @@ type Dictionary = {
     home: string;
     treatments: string;
     fatFreezing: string;
+    whatIsFatFreezing: string;
+    howItWorks: string;
+    areasTreated: string;
+    bookConsultation: string;
     ultrasound: string;
     radiofrequency: string;
     pricing: string;
@@ -76,6 +81,23 @@ type Dictionary = {
     comingSoonText: string;
     comingSoonCta: string;
   };
+  mapSection: {
+    title: string;
+    lead: string;
+    directionsCta: string;
+    distanceLabel: string;
+    locationPending: string;
+    trustItems: string[];
+    addressLabel: string;
+    hoursLabel: string;
+    phoneLabel: string;
+  };
+  instagramSection: {
+    title: string;
+    lead: string;
+    followCta: string;
+    viewCta: string;
+  };
   whyChooseUs: {
     title: string;
     lead: string;
@@ -106,6 +128,7 @@ type Dictionary = {
   leadPopup: {
     title: string;
     subtitle: string;
+    scarcity: string;
     name: string;
     email: string;
     phone: string;
@@ -297,7 +320,8 @@ const dictionary: Record<Locale, Dictionary> = {
     dir: "ltr",
     banner: {
       text: "Ramadan & Eid Special Offers Now Live — Limited Time Packages Available",
-      dismissLabel: "Dismiss banner"
+      dismissLabel: "Dismiss banner",
+      ctaLabel: "View Offers"
     },
     brand: {
       name: "FAT FREEZING",
@@ -311,6 +335,10 @@ const dictionary: Record<Locale, Dictionary> = {
       home: "Home",
       treatments: "Treatments",
       fatFreezing: "Fat Freezing",
+      whatIsFatFreezing: "What is Fat Freezing",
+      howItWorks: "How it Works",
+      areasTreated: "Areas Treated",
+      bookConsultation: "Book Consultation",
       ultrasound: "Ultrasound Cavitation",
       radiofrequency: "Radiofrequency Tightening",
       pricing: "Pricing",
@@ -332,10 +360,10 @@ const dictionary: Record<Locale, Dictionary> = {
       subheading: "Doctor-Led Fat Reduction Treatments With No Surgery Or Downtime",
       trustPills: ["✓ UK-Backed Clinic", "✓ Doctor Led", "✓ No Downtime", "✓ 5★ Reviews"],
       typewriterLines: [
-        "From AED 489 entry pricing",
-        "Clinically guided body contouring",
-        "Target stomach, arms, chin, thighs, and flanks",
-        "60-minute appointments daily 12:00-20:00"
+        "Doctor-Led Treatments",
+        "No Surgery",
+        "No Downtime",
+        "Visible Results"
       ],
       priceChip: "From AED 489",
       consultationBadge: "Free 30-min consultation",
@@ -389,6 +417,23 @@ const dictionary: Record<Locale, Dictionary> = {
         "We publish only approved clinical outcomes. Book a consultation to review the most suitable treatment path and realistic timeline.",
       comingSoonCta: "Book Free Consultation"
     },
+    mapSection: {
+      title: "Find Our Clinic Near You",
+      lead: "Central Jumeirah location with direct map access and simple travel guidance.",
+      directionsCta: "Get Directions",
+      distanceLabel: "Estimated distance from your location",
+      locationPending: "Allow location access to view your distance to our clinic.",
+      trustItems: ["Parking Available", "Near Public Transport", "Central Dubai Location"],
+      addressLabel: "Address",
+      hoursLabel: "Hours",
+      phoneLabel: "Phone"
+    },
+    instagramSection: {
+      title: "Latest Clinic Highlights",
+      lead: "See recent treatment stories, clinic updates, and patient-focused content.",
+      followCta: "Follow Us",
+      viewCta: "View Instagram"
+    },
     whyChooseUs: {
       title: "Why Patients Choose FAT FREEZING",
       lead: "Consultation-first treatment planning with premium clinical care in Dubai.",
@@ -441,7 +486,8 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     leadPopup: {
       title: "Claim Your Fat Reduction Consultation Offer",
-      subtitle: "Leave your details and our team will secure your priority callback.",
+      subtitle: "20% OFF first treatment for new clients only. Leave your details for priority callback.",
+      scarcity: "Ramadan special • Limited daily offer",
       name: "Name",
       email: "Email",
       phone: "Phone",
@@ -747,8 +793,9 @@ const dictionary: Record<Locale, Dictionary> = {
     localeName: "العربية",
     dir: "rtl",
     banner: {
-      text: "عروض رمضان والعيد متاحة الآن — باقات ترويجية لفترة محدودة",
-      dismissLabel: "إغلاق الشريط الترويجي"
+      text: "عروض رمضان والعيد متاحة الآن — باقات محدودة بخصومات خاصة",
+      dismissLabel: "إغلاق الشريط الترويجي",
+      ctaLabel: "عرض العروض"
     },
     brand: {
       name: "FAT FREEZING",
@@ -762,6 +809,10 @@ const dictionary: Record<Locale, Dictionary> = {
       home: "الرئيسية",
       treatments: "العلاجات",
       fatFreezing: "تجميد الدهون",
+      whatIsFatFreezing: "ما هو تجميد الدهون",
+      howItWorks: "كيف يعمل العلاج",
+      areasTreated: "المناطق المعالجة",
+      bookConsultation: "احجز استشارة",
       ultrasound: "الألتراساوند كافيتيشن",
       radiofrequency: "شد البشرة بالتردد الحراري",
       pricing: "الأسعار",
@@ -783,10 +834,10 @@ const dictionary: Record<Locale, Dictionary> = {
       subheading: "علاجات خفض الدهون بإشراف طبي، بدون جراحة وبدون فترة نقاهة.",
       trustPills: ["✓ عيادة بمعايير بريطانية", "✓ بإشراف طبي", "✓ بدون نقاهة", "✓ تقييمات 5 نجوم"],
       typewriterLines: [
-        "بداية من 489 درهم",
-        "تقنيات مثبتة لنحت الدهون الموضعية",
-        "استهداف البطن والذراعين والذقن والخواصر",
-        "مواعيد يومية من 12:00 حتى 20:00"
+        "علاجات بإشراف طبي",
+        "بدون جراحة",
+        "بدون فترة نقاهة",
+        "نتائج ملحوظة"
       ],
       priceChip: "ابتداءً من 489 درهم",
       consultationBadge: "استشارة مجانية لمدة 30 دقيقة",
@@ -838,6 +889,23 @@ const dictionary: Record<Locale, Dictionary> = {
       comingSoonTitle: "معرض النتائج قيد التحديث",
       comingSoonText: "نعرض فقط الحالات المعتمدة. يمكنك مراجعة أمثلة مناسبة خلال الاستشارة.",
       comingSoonCta: "احجز استشارة مجانية"
+    },
+    mapSection: {
+      title: "اعثر على عيادتنا بالقرب منك",
+      lead: "موقع مركزي في جميرا مع وصول سهل وخيارات تنقل واضحة.",
+      directionsCta: "عرض الاتجاهات",
+      distanceLabel: "المسافة التقديرية من موقعك",
+      locationPending: "فعّل الوصول للموقع لمعرفة المسافة إلى العيادة.",
+      trustItems: ["مواقف متوفرة", "قريب من وسائل النقل", "موقع مركزي في دبي"],
+      addressLabel: "العنوان",
+      hoursLabel: "ساعات العمل",
+      phoneLabel: "الهاتف"
+    },
+    instagramSection: {
+      title: "أحدث محتوى العيادة",
+      lead: "اطّلع على آخر التحديثات والحالات والمحتوى العلاجي من فريقنا.",
+      followCta: "تابعنا",
+      viewCta: "عرض إنستغرام"
     },
     whyChooseUs: {
       title: "لماذا يختار المرضى FAT FREEZING",
@@ -891,7 +959,8 @@ const dictionary: Record<Locale, Dictionary> = {
     },
     leadPopup: {
       title: "احصل على عرض الاستشارة لنحت الدهون",
-      subtitle: "اترك بياناتك وسيتواصل فريقنا معك سريعاً لتأكيد أفضل موعد.",
+      subtitle: "خصم 20% على أول جلسة للعملاء الجدد ضمن عروض رمضان. اترك بياناتك وسيتواصل فريقنا فوراً.",
+      scarcity: "عرض محدود يومياً خلال رمضان",
       name: "الاسم",
       email: "البريد الإلكتروني",
       phone: "رقم الجوال",

@@ -14,12 +14,26 @@ const pathMap: Record<TreatmentKind, string> = {
   radiofrequency: "/treatments/radiofrequency"
 };
 
+const standalonePathMap: Record<TreatmentKind, string> = {
+  fatFreezing: "/fat-freezing",
+  ultrasound: "/ultrasound-cavitation",
+  radiofrequency: "/radiofrequency"
+};
+
 function pickImage(index: number) {
   if (STOCK_IMAGES.length === 0) return null;
   return STOCK_IMAGES[index % STOCK_IMAGES.length];
 }
 
-export function TreatmentView({locale, kind}: {locale: Locale; kind: TreatmentKind}) {
+export function TreatmentView({
+  locale,
+  kind,
+  standalone = false
+}: {
+  locale: Locale;
+  kind: TreatmentKind;
+  standalone?: boolean;
+}) {
   const t = getDictionary(locale);
   const base = locale === "en" ? "/en" : "/ar";
   const bookHref = `${base}/book`;
@@ -31,9 +45,11 @@ export function TreatmentView({locale, kind}: {locale: Locale; kind: TreatmentKi
 
   const heroImage = pickImage(kind === "fatFreezing" ? 2 : kind === "ultrasound" ? 6 : 9);
 
+  const pagePath = standalone ? standalonePathMap[kind] : pathMap[kind];
+
   const crumbs = [
     {label: t.nav.treatments, href: `${base}/treatments`},
-    {label: page.title, href: `${base}${pathMap[kind]}`}
+    {label: page.title, href: `${base}${pagePath}`}
   ];
 
   return (
@@ -42,7 +58,7 @@ export function TreatmentView({locale, kind}: {locale: Locale; kind: TreatmentKi
       <JsonLd
         data={breadcrumbSchema(locale, [
           {name: t.nav.treatments, path: "/treatments"},
-          {name: page.title, path: pathMap[kind]}
+          {name: page.title, path: pagePath}
         ])}
       />
 

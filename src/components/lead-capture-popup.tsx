@@ -2,8 +2,10 @@
 
 import {useEffect, useState} from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {VALID_TIME_SLOTS} from "@/lib/time-slots";
 import {getDictionary, type Locale} from "@/lib/i18n";
+import {STOCK_IMAGES} from "@/lib/image-manifest";
 
 type LeadCapturePopupProps = {
   locale: Locale;
@@ -57,6 +59,8 @@ function getNextSlot() {
 export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
   const t = getDictionary(locale);
   const base = locale === "en" ? "/en" : "/ar";
+  const popupImage = STOCK_IMAGES[0] ?? null;
+  const trustPills = t.hero.trustPills.slice(0, 3);
 
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -160,8 +164,14 @@ export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
   };
 
   return (
-    <div className="lead-popup-overlay" role="dialog" aria-modal="true" aria-labelledby="lead-popup-title">
-      <article className="lead-popup-card">
+    <div
+      className="lead-popup-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lead-popup-title"
+      onClick={() => setOpen(false)}
+    >
+      <article className="lead-popup-card" onClick={(event) => event.stopPropagation()}>
         <button aria-label={t.leadPopup.dismiss} className="lead-popup-close" onClick={() => setOpen(false)} type="button">
           <span aria-hidden>×</span>
         </button>
@@ -181,8 +191,29 @@ export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
           </div>
         ) : (
           <div>
+            {popupImage ? (
+              <div className="lead-popup-image">
+                <Image
+                  alt={locale === "ar" ? "عرض علاج تجميد الدهون في دبي" : "Fat freezing Ramadan special offer"}
+                  fill
+                  priority
+                  sizes="(max-width: 560px) 100vw, 440px"
+                  src={popupImage}
+                />
+                <span className="lead-popup-image-overlay" />
+              </div>
+            ) : null}
+
             <h2 id="lead-popup-title">{t.leadPopup.title}</h2>
             <p className="section-lead">{t.leadPopup.subtitle}</p>
+            <p className="lead-popup-scarcity">{t.leadPopup.scarcity}</p>
+
+            <ul className="lead-popup-trust">
+              {trustPills.map((pill) => (
+                <li key={pill}>{pill}</li>
+              ))}
+            </ul>
+
             <div className="lead-popup-grid">
               <div>
                 <label htmlFor={`lead-name-${locale}`}>{t.leadPopup.name}</label>

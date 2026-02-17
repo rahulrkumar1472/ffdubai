@@ -35,7 +35,7 @@ export function serviceSchema(locale: Locale) {
       priceCurrency: "AED",
       price: "489"
     },
-    url: `${SITE_URL}/${locale}/treatments/fat-freezing`
+    url: `${SITE_URL}/${locale}/fat-freezing`
   };
 }
 
