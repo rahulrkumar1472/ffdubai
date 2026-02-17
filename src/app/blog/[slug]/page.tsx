@@ -3,6 +3,7 @@ import {notFound} from "next/navigation";
 import {BlogPostView} from "@/components/blog-post-view";
 import {PageLayout} from "@/components/site/PageLayout";
 import {BLOG_SLUGS, getBlogPost} from "@/lib/blog";
+import {getServerLang} from "@/lib/i18n/lang";
 import {buildRootMetadata} from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -10,7 +11,8 @@ export function generateStaticParams() {
 }
 
 export function generateMetadata({params}: {params: {slug: string}}): Metadata {
-  const post = getBlogPost("en", params.slug);
+  const lang = getServerLang();
+  const post = getBlogPost(lang, params.slug) ?? getBlogPost("en", params.slug);
 
   if (!post) {
     return buildRootMetadata({
@@ -28,7 +30,8 @@ export function generateMetadata({params}: {params: {slug: string}}): Metadata {
 }
 
 export default function BlogPostPage({params}: {params: {slug: string}}) {
-  const post = getBlogPost("en", params.slug);
+  const lang = getServerLang();
+  const post = getBlogPost(lang, params.slug);
 
   if (!post) {
     notFound();
@@ -36,7 +39,7 @@ export default function BlogPostPage({params}: {params: {slug: string}}) {
 
   return (
     <PageLayout>
-      <BlogPostView basePath="" locale="en" post={post} />
+      <BlogPostView basePath="" canonicalPrefix="" locale={lang} post={post} />
     </PageLayout>
   );
 }

@@ -8,7 +8,7 @@ export type Crumb = {
 
 export function Breadcrumbs({locale, items}: {locale: Locale; items: Crumb[]}) {
   const t = getDictionary(locale);
-  const homeHref = locale === "en" ? "/en" : "/ar";
+  const homeHref = "/";
 
   return (
     <nav aria-label="Breadcrumb" className="breadcrumbs">

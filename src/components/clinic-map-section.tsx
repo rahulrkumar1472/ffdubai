@@ -39,6 +39,7 @@ function buildDirectionsUrl(origin: string) {
 
 export function ClinicMapSection({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
+  const originInputId = "map-origin-" + locale;
   const [distance, setDistance] = useState<number | null>(null);
   const [originInput, setOriginInput] = useState("");
   const [directionsUrl, setDirectionsUrl] = useState<string>(MAPS_APP_LINK);
@@ -98,10 +99,10 @@ export function ClinicMapSection({locale}: {locale: Locale}) {
             </div>
 
             <form className="map-direction-form" onSubmit={onSubmit}>
-              <label htmlFor={`map-origin-${locale}`}>{t.mapSection.directionsInputLabel}</label>
+              <label htmlFor={originInputId}>{t.mapSection.directionsInputLabel}</label>
               <div className="map-direction-row">
                 <input
-                  id={`map-origin-${locale}`}
+                  id={originInputId}
                   onChange={(event) => setOriginInput(event.target.value)}
                   placeholder={t.mapSection.directionsInputPlaceholder}
                   value={originInput}

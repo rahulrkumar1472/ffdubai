@@ -30,7 +30,9 @@ export function SeoPageTemplate({
   ctaTitle,
   ctaDescription,
   breadcrumbs,
-  disclaimer
+  disclaimer,
+  relatedHeading,
+  faqHeading
 }: {
   h1: string;
   intro: string[];
@@ -42,6 +44,8 @@ export function SeoPageTemplate({
   ctaDescription: string;
   breadcrumbs: Array<{href: string; label: string}>;
   disclaimer: string;
+  relatedHeading: string;
+  faqHeading: string;
 }) {
   return (
     <main>
@@ -83,7 +87,7 @@ export function SeoPageTemplate({
             ))}
 
             <section className="blog-section">
-              <h2>Related Pages</h2>
+              <h2>{relatedHeading}</h2>
               <div className="inline-links">
                 {internalLinks.map((link) => (
                   <Link href={link.href} key={link.href}>
@@ -98,7 +102,7 @@ export function SeoPageTemplate({
         </div>
       </section>
 
-      <FaqSection items={faq} />
+      <FaqSection items={faq} title={faqHeading} />
       <CtaSection description={ctaDescription} title={ctaTitle} />
     </main>
   );

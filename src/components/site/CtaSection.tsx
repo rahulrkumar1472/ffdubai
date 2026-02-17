@@ -1,17 +1,22 @@
 import Link from "next/link";
+import {getServerLang} from "@/lib/i18n/lang";
 import {SITE_CONFIG} from "@/lib/site-config";
 
 export function CtaSection({
   title,
   description,
   primaryHref = "/book",
-  primaryLabel = "Book Free Consultation"
+  primaryLabel
 }: {
   title: string;
   description: string;
   primaryHref?: string;
   primaryLabel?: string;
 }) {
+  const lang = getServerLang();
+  const resolvedPrimaryLabel = primaryLabel ?? (lang === "ar" ? "احجز استشارة مجانية" : "Book Free Consultation");
+  const whatsappLabel = lang === "ar" ? "واتساب العيادة" : "WhatsApp Clinic";
+
   return (
     <section className="section">
       <div className="container">
@@ -20,10 +25,10 @@ export function CtaSection({
           <p className="section-lead">{description}</p>
           <div className="cta-row cta-row-tight">
             <Link className="primary-btn" href={primaryHref}>
-              {primaryLabel}
+              {resolvedPrimaryLabel}
             </Link>
             <a className="outline-btn" href={SITE_CONFIG.whatsappUrl} rel="noreferrer" target="_blank">
-              WhatsApp Clinic
+              {whatsappLabel}
             </a>
           </div>
         </article>

@@ -59,7 +59,10 @@ function getNextSlot() {
 
 export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
   const t = getDictionary(locale);
-  const base = locale === "en" ? "/en" : "/ar";
+  const base = "";
+  const nameId = "lead-name-" + locale;
+  const emailId = "lead-email-" + locale;
+  const phoneId = "lead-phone-" + locale;
   const popupImage =
     STOCK_IMAGES.find((image) => image.includes("doctor-measuring-woman-waist")) ||
     STOCK_IMAGES.find((image) => image.includes("cryolipolysis-hardware")) ||
@@ -231,16 +234,16 @@ export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
 
             <div className="lead-popup-grid">
               <div>
-                <label htmlFor={`lead-name-${locale}`}>{t.leadPopup.name}</label>
-                <input id={`lead-name-${locale}`} onChange={(event) => setName(event.target.value)} value={name} />
+                <label htmlFor={nameId}>{t.leadPopup.name}</label>
+                <input id={nameId} onChange={(event) => setName(event.target.value)} value={name} />
               </div>
               <div>
-                <label htmlFor={`lead-email-${locale}`}>{t.leadPopup.email}</label>
-                <input id={`lead-email-${locale}`} onChange={(event) => setEmail(event.target.value)} type="email" value={email} />
+                <label htmlFor={emailId}>{t.leadPopup.email}</label>
+                <input id={emailId} onChange={(event) => setEmail(event.target.value)} type="email" value={email} />
               </div>
               <div>
-                <label htmlFor={`lead-phone-${locale}`}>{t.leadPopup.phone}</label>
-                <input id={`lead-phone-${locale}`} onChange={(event) => setPhone(event.target.value)} value={phone} />
+                <label htmlFor={phoneId}>{t.leadPopup.phone}</label>
+                <input id={phoneId} onChange={(event) => setPhone(event.target.value)} value={phone} />
               </div>
             </div>
 

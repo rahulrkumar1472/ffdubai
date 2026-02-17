@@ -3,6 +3,8 @@ import Link from "next/link";
 import {BookingForm} from "@/components/booking-form";
 import {JsonLd} from "@/components/json-ld";
 import {PageLayout} from "@/components/site/PageLayout";
+import {getDictionary} from "@/lib/i18n";
+import {getServerLang} from "@/lib/i18n/lang";
 import {buildRootMetadata} from "@/lib/seo";
 import {localBusinessJsonLd} from "@/lib/seo/jsonld";
 import {SITE_CONFIG} from "@/lib/site-config";
@@ -18,6 +20,8 @@ export default function BookPage({
 }: {
   searchParams?: {mode?: string; treatment?: string; package?: string};
 }) {
+  const lang = getServerLang();
+  const t = getDictionary(lang);
   const hasTreatmentPreset = Boolean(searchParams?.treatment);
   const initialMode = searchParams?.mode === "treatment" || hasTreatmentPreset ? "treatment" : "consultation";
   const initialTreatment = searchParams?.treatment ?? "";
@@ -43,25 +47,23 @@ export default function BookPage({
         <section className="section inner-hero">
           <div className="container">
             <article className="card">
-              <h1>Book Free Consultation</h1>
-              <p className="section-lead">
-                Select a date and time, complete your details, and confirm your appointment request. Every booking is reviewed
-                for medical suitability, and treatment recommendations are provided during consultation.
-              </p>
+              <h1>{t.booking.pageTitle}</h1>
+              <p className="section-lead">{t.booking.pageSubtitle}</p>
               <BookingForm
                 initialMode={initialMode}
                 initialPackage={initialPackage}
                 initialTreatment={initialTreatment}
-                locale="en"
+                locale={lang}
               />
               <div className="inline-links" style={{marginTop: 16}}>
-                <Link href="/pricing">Pricing</Link>
-                <Link href="/fat-freezing">Fat Freezing</Link>
-                <Link href="/faq">FAQ</Link>
+                <Link href="/pricing">{t.nav.pricing}</Link>
+                <Link href="/fat-freezing">{t.nav.fatFreezing}</Link>
+                <Link href="/faq">{t.nav.faq}</Link>
               </div>
               <p className="results-disclaimer">
-                Informational note: booking confirmation does not guarantee treatment suitability. Final clinical decisions are
-                made at consultation.
+                {lang === "ar"
+                  ? "ملاحظة: تأكيد الحجز لا يعني تأكيد الملاءمة الطبية النهائية. يتم اعتماد الخطة بعد التقييم السريري."
+                  : "Informational note: booking confirmation does not guarantee treatment suitability. Final clinical decisions are made at consultation."}
               </p>
             </article>
           </div>

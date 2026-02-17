@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import {JsonLd} from "@/components/json-ld";
 import {PageLayout} from "@/components/site/PageLayout";
 import {SeoPage, getCorePage} from "@/components/site/SeoPage";
+import {getServerLang} from "@/lib/i18n/lang";
 import {buildRootMetadata} from "@/lib/seo";
 import {localBusinessJsonLd} from "@/lib/seo/jsonld";
 import {SITE_CONFIG} from "@/lib/site-config";
@@ -15,6 +16,8 @@ export const metadata: Metadata = buildRootMetadata({
 });
 
 export default function JumeirahLocationPage() {
+  const lang = getServerLang();
+
   return (
     <PageLayout>
       <JsonLd
@@ -31,10 +34,11 @@ export default function JumeirahLocationPage() {
       />
       <SeoPage
         breadcrumbs={[
-          {href: "/", label: "Home"},
-          {href: "/locations", label: "Locations"},
-          {href: "/locations/jumeirah", label: "Jumeirah"}
+          {href: "/", label: lang === "ar" ? "الرئيسية" : "Home"},
+          {href: "/locations", label: lang === "ar" ? "المواقع" : "Locations"},
+          {href: "/locations/jumeirah", label: lang === "ar" ? "جميرا" : "Jumeirah"}
         ]}
+        locale={lang}
         page={page}
       />
     </PageLayout>

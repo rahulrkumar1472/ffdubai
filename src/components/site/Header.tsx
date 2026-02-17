@@ -1,92 +1,89 @@
 import Link from "next/link";
+import {LanguageToggle} from "@/components/site/LanguageToggle";
+import {getDictionary, type Locale} from "@/lib/i18n";
 import {SITE_CONFIG} from "@/lib/site-config";
 
 const fatFreezingLinks = [
-  {href: "/fat-freezing#what-is-fat-freezing", label: "What is Fat Freezing"},
-  {href: "/fat-freezing#how-it-works", label: "How it Works"},
-  {href: "/fat-freezing#areas-treated", label: "Areas Treated"},
-  {href: "/fat-freezing#results", label: "Results"},
-  {href: "/fat-freezing#pricing", label: "Pricing"},
-  {href: "/fat-freezing#faq", label: "FAQs"},
-  {href: "/book", label: "Book Consultation"}
+  {href: "/fat-freezing#what-is-fat-freezing", id: "whatIsFatFreezing"},
+  {href: "/fat-freezing#how-it-works", id: "howItWorks"},
+  {href: "/fat-freezing#areas-treated", id: "areasTreated"},
+  {href: "/fat-freezing#results", id: "results"},
+  {href: "/fat-freezing#pricing", id: "pricing"},
+  {href: "/fat-freezing#faq", id: "faq"},
+  {href: "/book", id: "bookConsultation"}
 ] as const;
 
 const treatmentLinks = [
-  {href: "/fat-freezing", label: "Fat Freezing"},
-  {href: "/cryolipolysis", label: "Cryolipolysis"},
-  {href: "/coolsculpting-alternative", label: "CoolSculpting Alternative"}
+  {href: "/fat-freezing", id: "fatFreezing"},
+  {href: "/ultrasound-cavitation", id: "ultrasound"},
+  {href: "/radiofrequency", id: "radiofrequency"}
 ] as const;
 
-export function Header() {
+export function Header({lang}: {lang: Locale}) {
+  const t = getDictionary(lang);
+
   return (
     <header className="site-header seo-site-header">
       <div className="container header-inner">
         <Link className="brand-wrap" href="/">
           <span className="brand">{SITE_CONFIG.brandName}</span>
-          <span className="brand-sub">{SITE_CONFIG.tagline}</span>
+          <span className="brand-sub">{t.brand.tagline}</span>
         </Link>
 
-        <nav aria-label="Primary" className="desktop-nav seo-nav-desktop">
+        <nav aria-label={lang === "ar" ? "التنقل الرئيسي" : "Primary navigation"} className="desktop-nav seo-nav-desktop">
           <Link className="nav-link" href="/">
-            Home
+            {t.nav.home}
           </Link>
 
           <details className="nav-dropdown-details">
-            <summary className="nav-link">Fat Freezing</summary>
+            <summary className="nav-link">{t.nav.fatFreezing}</summary>
             <div className="dropdown-panel seo-dropdown-panel">
               {fatFreezingLinks.map((item) => (
                 <Link className="dropdown-link" href={item.href} key={item.href}>
-                  {item.label}
+                  {t.nav[item.id as keyof typeof t.nav]}
                 </Link>
               ))}
             </div>
           </details>
 
           <details className="nav-dropdown-details">
-            <summary className="nav-link">Treatments</summary>
+            <summary className="nav-link">{t.nav.treatments}</summary>
             <div className="dropdown-panel seo-dropdown-panel">
               {treatmentLinks.map((item) => (
                 <Link className="dropdown-link" href={item.href} key={item.href}>
-                  {item.label}
+                  {t.nav[item.id as keyof typeof t.nav]}
                 </Link>
               ))}
             </div>
           </details>
 
           <Link className="nav-link" href="/pricing">
-            Pricing
+            {t.nav.pricing}
           </Link>
           <Link className="nav-link" href="/results">
-            Results
+            {t.nav.results}
           </Link>
           <Link className="nav-link" href="/locations">
-            Locations
+            {lang === "ar" ? "المواقع" : "Locations"}
           </Link>
           <Link className="nav-link" href="/faq">
-            FAQ
+            {t.nav.faq}
           </Link>
           <Link className="nav-link" href="/contact">
-            Contact
+            {t.nav.contact}
           </Link>
         </nav>
 
         <div className="header-actions seo-header-actions">
-          <div className="lang-toggle" aria-label="Language">
-            <Link className="lang-option" href="/en">
-              EN
-            </Link>
-            <Link className="lang-option" href="/ar">
-              AR
-            </Link>
-          </div>
+          <LanguageToggle currentLang={lang} />
           <Link className="primary-btn header-book" href="/book">
-            Book Free Consultation
+            {t.nav.bookShort}
           </Link>
         </div>
       </div>
 
       <details className="seo-mobile-menu">
-        <summary className="mobile-menu-btn" aria-label="Menu">
+        <summary className="mobile-menu-btn" aria-label={lang === "ar" ? "القائمة" : "Menu"}>
           <span />
           <span />
           <span />
@@ -94,31 +91,34 @@ export function Header() {
         <div className="mobile-drawer-panel seo-mobile-panel">
           <div className="mobile-drawer-links">
             <Link className="drawer-link" href="/">
-              Home
+              {t.nav.home}
             </Link>
             <Link className="drawer-link" href="/treatments">
-              Treatments
+              {t.nav.treatments}
             </Link>
             <Link className="drawer-link" href="/fat-freezing">
-              Fat Freezing
+              {t.nav.fatFreezing}
+            </Link>
+            <Link className="drawer-link" href="/ultrasound-cavitation">
+              {t.nav.ultrasound}
+            </Link>
+            <Link className="drawer-link" href="/radiofrequency">
+              {t.nav.radiofrequency}
             </Link>
             <Link className="drawer-link" href="/pricing">
-              Pricing
+              {t.nav.pricing}
             </Link>
             <Link className="drawer-link" href="/results">
-              Results
-            </Link>
-            <Link className="drawer-link" href="/locations">
-              Locations
+              {t.nav.results}
             </Link>
             <Link className="drawer-link" href="/faq">
-              FAQ
+              {t.nav.faq}
             </Link>
             <Link className="drawer-link" href="/contact">
-              Contact
+              {t.nav.contact}
             </Link>
             <Link className="drawer-link" href="/book">
-              Book Free Consultation
+              {lang === "ar" ? "احجز استشارة مجانية" : "Book Free Consultation"}
             </Link>
           </div>
         </div>

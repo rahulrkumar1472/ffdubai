@@ -627,10 +627,10 @@ export const CORE_PAGES: Record<string, SeoPageData> = {
       {
         title: "Start here",
         paragraphs: [
-          "For broad treatment overview, use the Fat Freezing page. For technical explanation, use Cryolipolysis page. For brand comparison context, use CoolSculpting alternative page.",
+          "For broad treatment overview, use the Fat Freezing page. For technical explanation, use Cryolipolysis page. For standalone add-on pathways, review Ultrasound Cavitation and Radiofrequency pages.",
           "This structure is built to reduce confusion and help patients make confident, informed decisions."
         ],
-        bullets: ["Fat Freezing", "Cryolipolysis", "CoolSculpting Alternative", "Body Areas"]
+        bullets: ["Fat Freezing", "Cryolipolysis", "Ultrasound Cavitation", "Radiofrequency", "Body Areas"]
       }
     ],
     faq: [
@@ -639,6 +639,8 @@ export const CORE_PAGES: Record<string, SeoPageData> = {
     internalLinks: [
       {href: "/fat-freezing", label: "Fat Freezing"},
       {href: "/cryolipolysis", label: "Cryolipolysis"},
+      {href: "/ultrasound-cavitation", label: "Ultrasound Cavitation"},
+      {href: "/radiofrequency", label: "Radiofrequency"},
       {href: "/coolsculpting-alternative", label: "CoolSculpting Alternative"},
       {href: "/body-areas", label: "Areas We Treat"}
     ],

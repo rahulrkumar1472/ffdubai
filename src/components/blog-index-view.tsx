@@ -7,8 +7,8 @@ import {breadcrumbJsonLd} from "@/lib/seo/jsonld";
 import {SITE_URL} from "@/lib/seo";
 
 export function BlogIndexView({locale, basePath, canonicalPrefix}: {locale: Locale; basePath?: string; canonicalPrefix?: string}) {
-  const base = basePath ?? (locale === "en" ? "/en" : "/ar");
-  const prefix = canonicalPrefix ?? (locale === "en" ? "/en" : "/ar");
+  const base = basePath ?? "";
+  const prefix = canonicalPrefix ?? "";
   const blogHref = `${base}/blog`.replace("//", "/");
   const posts = getBlogPosts(locale);
 

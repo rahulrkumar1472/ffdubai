@@ -8,7 +8,7 @@ export function clinicSchema(locale: Locale) {
     "@type": ["MedicalBusiness", "MedicalClinic", "LocalBusiness"],
     name: "FAT FREEZING",
     alternateName: locale === "ar" ? "مركز دبي المتخصص لنحت وخسارة الوزن" : "Dubai's Weight Loss Centre",
-    url: `${SITE_URL}/${locale}`,
+    url: `${SITE_URL}/`,
     description: "Doctor-led fat freezing clinic in Dubai with transparent pricing from AED 489.",
     address: {
       "@type": "PostalAddress",
@@ -32,6 +32,7 @@ export function clinicSchema(locale: Locale) {
 }
 
 export function serviceSchema(locale: Locale) {
+  void locale;
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -46,7 +47,7 @@ export function serviceSchema(locale: Locale) {
       priceCurrency: "AED",
       price: "489"
     },
-    url: `${SITE_URL}/${locale}/fat-freezing`
+    url: `${SITE_URL}/fat-freezing`
   };
 }
 
@@ -63,7 +64,7 @@ export function breadcrumbSchema(
       "@type": "ListItem",
       position: 1,
       name: homeName,
-      item: `${SITE_URL}/${locale}`
+      item: `${SITE_URL}/`
     }
   ];
 
@@ -72,7 +73,7 @@ export function breadcrumbSchema(
       "@type": "ListItem",
       position: index + 2,
       name: item.name,
-      item: `${SITE_URL}/${locale}${item.path}`
+      item: `${SITE_URL}${item.path}`
     });
   });
 
@@ -99,7 +100,8 @@ export function faqSchema(items: Array<{question: string; answer: string}>) {
 }
 
 export function blogPostingSchema(locale: Locale, post: BlogPost) {
-  const path = `/${locale}/blog/${post.slug}`;
+  void locale;
+  const path = `/blog/${post.slug}`;
 
   return {
     "@context": "https://schema.org",

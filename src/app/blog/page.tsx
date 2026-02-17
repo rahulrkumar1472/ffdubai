@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {BlogIndexView} from "@/components/blog-index-view";
 import {PageLayout} from "@/components/site/PageLayout";
+import {getServerLang} from "@/lib/i18n/lang";
 import {buildRootMetadata} from "@/lib/seo";
 
 export const metadata: Metadata = buildRootMetadata({
@@ -11,9 +12,11 @@ export const metadata: Metadata = buildRootMetadata({
 });
 
 export default function BlogPage() {
+  const lang = getServerLang();
+
   return (
     <PageLayout>
-      <BlogIndexView basePath="" locale="en" />
+      <BlogIndexView basePath="" canonicalPrefix="" locale={lang} />
     </PageLayout>
   );
 }

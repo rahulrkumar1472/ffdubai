@@ -17,7 +17,7 @@ function getImage(images: string[], index: number) {
 
 export function HomeView({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
-  const base = locale === "en" ? "/en" : "/ar";
+  const base = "";
   const bookHref = `${base}/book`;
   const treatmentBookHref = `${base}/book?mode=treatment`;
   const fatPackageIds = ["starter", "sculpt", "transform"] as const;

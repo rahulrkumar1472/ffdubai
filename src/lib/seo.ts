@@ -15,19 +15,15 @@ export function buildMetadata({
   description: string;
 }): Metadata {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  const localePath = `/${locale}${normalizedPath === "/" ? "" : normalizedPath}`;
-  const canonical = `${siteUrl}${localePath}`;
+  void locale;
+  const canonical = `${siteUrl}${normalizedPath}`;
 
   return {
     metadataBase: new URL(siteUrl),
     title,
     description,
     alternates: {
-      canonical,
-      languages: {
-        en: `${siteUrl}/en${normalizedPath === "/" ? "" : normalizedPath}`,
-        ar: `${siteUrl}/ar${normalizedPath === "/" ? "" : normalizedPath}`
-      }
+      canonical
     },
     openGraph: {
       title,

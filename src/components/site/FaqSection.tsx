@@ -3,13 +3,13 @@ type FaqItem = {
   answer: string;
 };
 
-export function FaqSection({items}: {items: FaqItem[]}) {
+export function FaqSection({items, title = "Frequently Asked Questions"}: {items: FaqItem[]; title?: string}) {
   if (!items.length) return null;
 
   return (
     <section className="section" id="faq">
       <div className="container">
-        <h2 className="section-title">Frequently Asked Questions</h2>
+        <h2 className="section-title">{title}</h2>
         <div className="inner-card-grid">
           {items.map((item) => (
             <article className="card faq-item-card" key={item.question}>

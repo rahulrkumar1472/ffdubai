@@ -31,8 +31,8 @@ export function BlogPostView({
   basePath?: string;
   canonicalPrefix?: string;
 }) {
-  const base = basePath ?? (locale === "en" ? "/en" : "/ar");
-  const prefix = canonicalPrefix ?? (locale === "en" ? "/en" : "/ar");
+  const base = basePath ?? "";
+  const prefix = canonicalPrefix ?? "";
   const blogHref = `${base}/blog`.replace("//", "/");
   const related = getRelatedPosts(locale, post.slug, 3);
   const featuredImage = getFeaturedImage(post.slug);
