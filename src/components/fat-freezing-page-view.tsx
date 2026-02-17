@@ -5,7 +5,8 @@ import {ResultsGallery} from "@/components/results-gallery";
 import {JsonLd} from "@/components/json-ld";
 import {breadcrumbSchema, faqSchema, serviceSchema} from "@/lib/schema";
 import {getDictionary, type Locale} from "@/lib/i18n";
-import {BEFORE_AFTER_IMAGES, STOCK_IMAGES} from "@/lib/image-manifest";
+import {STOCK_IMAGES} from "@/lib/image-manifest";
+import {REAL_RESULTS_IMAGES} from "@/lib/results";
 
 function getImage(index: number) {
   if (STOCK_IMAGES.length === 0) return null;
@@ -20,7 +21,7 @@ export function FatFreezingPageView({locale}: {locale: Locale}) {
   const heroImage = getImage(2);
   const fat = t.pages.fatFreezing;
   const faqItems = t.pages.faq.items.slice(0, 6);
-  const results = BEFORE_AFTER_IMAGES.filter(Boolean);
+  const results = REAL_RESULTS_IMAGES.filter(Boolean);
   const resultsClass = results.length === 1 ? "results-single" : results.length < 3 ? "results-compact" : "results-standard";
   const fatPackageIds = ["starter", "sculpt", "transform"] as const;
 
@@ -64,6 +65,20 @@ export function FatFreezingPageView({locale}: {locale: Locale}) {
                 </article>
               ) : null}
             </div>
+          </div>
+        </section>
+
+        <section className="hub-subnav-wrap" aria-label={locale === "ar" ? "تنقل أقسام الصفحة" : "Section navigation"}>
+          <div className="container">
+            <nav className="hub-subnav">
+              <a href="#what-is-fat-freezing">{t.nav.whatIsFatFreezing}</a>
+              <a href="#how-it-works">{t.nav.howItWorks}</a>
+              <a href="#areas-treated">{t.nav.areasTreated}</a>
+              <a href="#results">{t.nav.results}</a>
+              <a href="#pricing">{t.nav.pricing}</a>
+              <a href="#faq">{t.nav.faq}</a>
+              <a href="#book-consultation">{t.nav.bookConsultation}</a>
+            </nav>
           </div>
         </section>
 
@@ -136,8 +151,16 @@ export function FatFreezingPageView({locale}: {locale: Locale}) {
               </div>
             ) : (
               <article className="card results-empty">
-                <h3>{t.results.comingSoonTitle}</h3>
+                <h3>{locale === "ar" ? "إضافة النتائج الفعلية قريباً" : "Real patient results being added"}</h3>
                 <p>{t.results.comingSoonText}</p>
+                <div className="cta-row cta-row-center cta-row-tight">
+                  <Link className="primary-btn" href={bookHref}>
+                    {t.hero.primaryCta}
+                  </Link>
+                  <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                    {t.finalCta.tertiaryCta}
+                  </a>
+                </div>
               </article>
             )}
             <div className="cta-row cta-row-tight">

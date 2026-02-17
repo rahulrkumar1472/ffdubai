@@ -52,7 +52,19 @@ type Dictionary = {
     sameDayLine: string;
     primaryCta: string;
     secondaryCta: string;
+    tertiaryCta: string;
     bookTreatmentCta: string;
+  };
+  offers: {
+    title: string;
+    lead: string;
+    cards: Array<{
+      id: string;
+      title: string;
+      highlight: string;
+      bullets: string[];
+      cta: string;
+    }>;
   };
   whatIs: {
     title: string;
@@ -84,6 +96,9 @@ type Dictionary = {
   mapSection: {
     title: string;
     lead: string;
+    directionsInputLabel: string;
+    directionsInputPlaceholder: string;
+    directionsBuilderCta: string;
     directionsCta: string;
     distanceLabel: string;
     locationPending: string;
@@ -91,6 +106,8 @@ type Dictionary = {
     addressLabel: string;
     hoursLabel: string;
     phoneLabel: string;
+    whatsappCta: string;
+    callCta: string;
   };
   instagramSection: {
     title: string;
@@ -139,6 +156,7 @@ type Dictionary = {
     successTitle: string;
     successBody: string;
     successCta: string;
+    successWhatsappCta: string;
   };
   innerPage: {
     backToHome: string;
@@ -319,7 +337,7 @@ const dictionary: Record<Locale, Dictionary> = {
     localeName: "English",
     dir: "ltr",
     banner: {
-      text: "Ramadan & Eid Special Offers Now Live — Limited Time Packages Available",
+      text: "Ramadan & Eid Offers — Discounts Now Live",
       dismissLabel: "Dismiss banner",
       ctaLabel: "View Offers"
     },
@@ -370,7 +388,35 @@ const dictionary: Record<Locale, Dictionary> = {
       sameDayLine: "Same-day treatment available, subject to medical suitability.",
       primaryCta: "Book Free Consultation",
       secondaryCta: "View Treatment Packages",
+      tertiaryCta: "Chat on WhatsApp",
       bookTreatmentCta: "Book Treatment"
+    },
+    offers: {
+      title: "Ramadan & Eid Offers — Discounts Now Live",
+      lead: "Limited-time promotional packages built to help you start treatment with confidence.",
+      cards: [
+        {
+          id: "ramadan-starter",
+          title: "Starter Offer",
+          highlight: "From AED 489",
+          bullets: ["Consultation-first plan", "Ideal for first treatment", "Limited same-day slots"],
+          cta: "Claim Offer"
+        },
+        {
+          id: "ramadan-popular",
+          title: "Popular Sculpt Offer",
+          highlight: "AED 899",
+          bullets: ["Most booked package", "Multi-area suitability review", "Priority scheduling window"],
+          cta: "Claim Offer"
+        },
+        {
+          id: "ramadan-combo",
+          title: "Body + Tightening Combo",
+          highlight: "Save on 6-session bundles",
+          bullets: ["Cavitation / RF add-ons", "Tailored after assessment", "Transparent pricing only"],
+          cta: "Claim Offer"
+        }
+      ]
     },
     whatIs: {
       title: "What Is Fat Freezing?",
@@ -420,13 +466,18 @@ const dictionary: Record<Locale, Dictionary> = {
     mapSection: {
       title: "Find Our Clinic Near You",
       lead: "Central Jumeirah location with direct map access and simple travel guidance.",
+      directionsInputLabel: "Enter your starting location",
+      directionsInputPlaceholder: "Example: Business Bay Metro",
+      directionsBuilderCta: "Build Directions",
       directionsCta: "Get Directions",
       distanceLabel: "Estimated distance from your location",
       locationPending: "Allow location access to view your distance to our clinic.",
-      trustItems: ["Parking Available", "Near Public Transport", "Central Dubai Location"],
+      trustItems: ["Parking Available", "Near local amenities", "Central Dubai Location"],
       addressLabel: "Address",
       hoursLabel: "Hours",
-      phoneLabel: "Phone"
+      phoneLabel: "Phone",
+      whatsappCta: "WhatsApp Us",
+      callCta: "Call Clinic"
     },
     instagramSection: {
       title: "Latest Clinic Highlights",
@@ -485,19 +536,20 @@ const dictionary: Record<Locale, Dictionary> = {
       tertiaryCta: "Chat on WhatsApp"
     },
     leadPopup: {
-      title: "Claim Your Fat Reduction Consultation Offer",
-      subtitle: "20% OFF first treatment for new clients only. Leave your details for priority callback.",
-      scarcity: "Ramadan special • Limited daily offer",
+      title: "Claim 20% Off Your First Treatment",
+      subtitle: "New customers only — limited monthly slots.",
+      scarcity: "Ramadan special • Priority callback within clinic hours",
       name: "Name",
       email: "Email",
       phone: "Phone",
-      submit: "Unlock Offer",
+      submit: "Claim 20% Discount",
       dismiss: "Close offer popup",
       requiredError: "Please complete name, email, and phone.",
       submitError: "We couldn't submit right now. Please try again.",
-      successTitle: "Offer unlocked",
-      successBody: "Your consultation request is recorded. Our coordinator will confirm shortly.",
-      successCta: "Continue to Booking"
+      successTitle: "Offer secured",
+      successBody: "Your details are received. Our team will contact you with the next available consultation slot.",
+      successCta: "Book Consultation",
+      successWhatsappCta: "WhatsApp Us"
     },
     innerPage: {
       backToHome: "Back to Home",
@@ -793,7 +845,7 @@ const dictionary: Record<Locale, Dictionary> = {
     localeName: "العربية",
     dir: "rtl",
     banner: {
-      text: "عروض رمضان والعيد متاحة الآن — باقات محدودة بخصومات خاصة",
+      text: "عروض رمضان والعيد — خصومات متاحة الآن",
       dismissLabel: "إغلاق الشريط الترويجي",
       ctaLabel: "عرض العروض"
     },
@@ -844,7 +896,35 @@ const dictionary: Record<Locale, Dictionary> = {
       sameDayLine: "إمكانية بدء العلاج في نفس اليوم وفق الملاءمة الطبية.",
       primaryCta: "احجز استشارة مجانية",
       secondaryCta: "اعرض باقات العلاج",
+      tertiaryCta: "تواصل عبر واتساب",
       bookTreatmentCta: "احجز جلسة علاج"
+    },
+    offers: {
+      title: "عروض رمضان والعيد — خصومات متاحة الآن",
+      lead: "باقات ترويجية محدودة لمساعدتك على بدء خطة نحت القوام بثقة.",
+      cards: [
+        {
+          id: "ramadan-starter",
+          title: "عرض البداية",
+          highlight: "ابتداءً من 489 درهم",
+          bullets: ["خطة تبدأ بالاستشارة", "مثالي لأول جلسة", "مواعيد محدودة في نفس اليوم"],
+          cta: "احصل على العرض"
+        },
+        {
+          id: "ramadan-popular",
+          title: "عرض النحت الأكثر طلباً",
+          highlight: "899 درهم",
+          bullets: ["الباقة الأكثر حجزاً", "تقييم مناطق متعددة", "أولوية في المواعيد"],
+          cta: "احصل على العرض"
+        },
+        {
+          id: "ramadan-combo",
+          title: "عرض النحت + الشد",
+          highlight: "وفر مع باقات 6 جلسات",
+          bullets: ["إضافات الكافيتيشن / التردد الحراري", "الخطة تُحدد بعد التقييم", "تسعير واضح بدون مفاجآت"],
+          cta: "احصل على العرض"
+        }
+      ]
     },
     whatIs: {
       title: "ما هو تجميد الدهون؟",
@@ -893,13 +973,18 @@ const dictionary: Record<Locale, Dictionary> = {
     mapSection: {
       title: "اعثر على عيادتنا بالقرب منك",
       lead: "موقع مركزي في جميرا مع وصول سهل وخيارات تنقل واضحة.",
+      directionsInputLabel: "أدخل نقطة الانطلاق",
+      directionsInputPlaceholder: "مثال: محطة مترو الخليج التجاري",
+      directionsBuilderCta: "إنشاء المسار",
       directionsCta: "عرض الاتجاهات",
       distanceLabel: "المسافة التقديرية من موقعك",
       locationPending: "فعّل الوصول للموقع لمعرفة المسافة إلى العيادة.",
-      trustItems: ["مواقف متوفرة", "قريب من وسائل النقل", "موقع مركزي في دبي"],
+      trustItems: ["مواقف متوفرة", "قريب من المرافق المحلية", "موقع مركزي في دبي"],
       addressLabel: "العنوان",
       hoursLabel: "ساعات العمل",
-      phoneLabel: "الهاتف"
+      phoneLabel: "الهاتف",
+      whatsappCta: "تواصل عبر واتساب",
+      callCta: "اتصل بالعيادة"
     },
     instagramSection: {
       title: "أحدث محتوى العيادة",
@@ -958,19 +1043,20 @@ const dictionary: Record<Locale, Dictionary> = {
       tertiaryCta: "تواصل عبر واتساب"
     },
     leadPopup: {
-      title: "احصل على عرض الاستشارة لنحت الدهون",
-      subtitle: "خصم 20% على أول جلسة للعملاء الجدد ضمن عروض رمضان. اترك بياناتك وسيتواصل فريقنا فوراً.",
-      scarcity: "عرض محدود يومياً خلال رمضان",
+      title: "احصل على خصم 20% على أول جلسة علاج",
+      subtitle: "للعملاء الجدد فقط — عدد المقاعد الشهرية محدود.",
+      scarcity: "عرض رمضان • أولوية للتواصل خلال ساعات العيادة",
       name: "الاسم",
       email: "البريد الإلكتروني",
       phone: "رقم الجوال",
-      submit: "احصل على العرض",
+      submit: "احصل على خصم 20%",
       dismiss: "إغلاق النافذة",
       requiredError: "يرجى إدخال الاسم والبريد الإلكتروني ورقم الجوال.",
       submitError: "تعذر إرسال الطلب حالياً، يرجى المحاولة مرة أخرى.",
-      successTitle: "تم تفعيل العرض",
-      successBody: "تم تسجيل طلب الاستشارة، وسيتواصل معك منسق العيادة قريباً.",
-      successCta: "الانتقال إلى الحجز"
+      successTitle: "تم حجز العرض",
+      successBody: "تم استلام بياناتك وسيتواصل فريق العيادة معك لتأكيد أقرب موعد متاح.",
+      successCta: "احجز الاستشارة",
+      successWhatsappCta: "تواصل عبر واتساب"
     },
     innerPage: {
       backToHome: "العودة للرئيسية",

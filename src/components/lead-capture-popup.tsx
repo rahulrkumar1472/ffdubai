@@ -18,6 +18,7 @@ type BookingApiResponse = {
 };
 
 const SESSION_KEY = "ffdubai_offer_popup_seen";
+const POPUP_MS = 24 * 60 * 60 * 1000;
 
 function toDateString(value: Date) {
   const yyyy = value.getFullYear();
@@ -59,7 +60,11 @@ function getNextSlot() {
 export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
   const t = getDictionary(locale);
   const base = locale === "en" ? "/en" : "/ar";
-  const popupImage = STOCK_IMAGES[0] ?? null;
+  const popupImage =
+    STOCK_IMAGES.find((image) => image.includes("doctor-measuring-woman-waist")) ||
+    STOCK_IMAGES.find((image) => image.includes("cryolipolysis-hardware")) ||
+    STOCK_IMAGES[0] ||
+    null;
   const trustPills = t.hero.trustPills.slice(0, 3);
 
   const [open, setOpen] = useState(false);
@@ -73,21 +78,22 @@ export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
   useEffect(() => {
     const markSeen = () => {
       try {
-        window.sessionStorage.setItem(SESSION_KEY, "1");
+        window.localStorage.setItem(SESSION_KEY, String(Date.now()));
       } catch {
         // noop
       }
     };
 
-    const alreadySeen = (() => {
+    const dismissedInWindow = (() => {
       try {
-        return window.sessionStorage.getItem(SESSION_KEY) === "1";
+        const value = Number(window.localStorage.getItem(SESSION_KEY) ?? "0");
+        return Number.isFinite(value) && Date.now() - value < POPUP_MS;
       } catch {
         return false;
       }
     })();
 
-    if (alreadySeen) return;
+    if (dismissedInWindow) return;
 
     const openPopup = () => {
       setOpen((prev) => {
@@ -98,14 +104,20 @@ export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
     };
 
     const timeoutId = window.setTimeout(openPopup, 12000);
+    const isDesktop = window.matchMedia("(pointer: fine)").matches && window.innerWidth >= 900;
     const onMouseLeave = (event: MouseEvent) => {
       if (event.clientY <= 0) openPopup();
     };
-    document.addEventListener("mouseleave", onMouseLeave);
+
+    if (isDesktop) {
+      document.addEventListener("mouseleave", onMouseLeave);
+    }
 
     return () => {
       window.clearTimeout(timeoutId);
-      document.removeEventListener("mouseleave", onMouseLeave);
+      if (isDesktop) {
+        document.removeEventListener("mouseleave", onMouseLeave);
+      }
     };
   }, []);
 
@@ -187,6 +199,9 @@ export function LeadCapturePopup({locale}: LeadCapturePopupProps) {
               <Link className="primary-btn" href={`${base}/book`}>
                 {t.leadPopup.successCta}
               </Link>
+              <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                {t.leadPopup.successWhatsappCta}
+              </a>
             </div>
           </div>
         ) : (

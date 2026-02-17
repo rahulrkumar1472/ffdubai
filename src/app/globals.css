@@ -12,7 +12,16 @@
   --teal: #2f8d93;
   --gold: #c7a269;
   --shadow: 0 10px 28px rgba(18, 74, 127, 0.08);
+  --shadow-strong: 0 24px 48px rgba(11, 46, 82, 0.24);
   --container-max: 1120px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 18px;
   --section-space-desktop: 24px;
   --section-space-tablet: 20px;
   --section-space-mobile: 18px;
@@ -510,7 +519,7 @@ h3 {
 }
 
 .card {
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -826,6 +835,40 @@ h3 {
   margin-top: 10px;
 }
 
+.offer-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.offer-card {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.offer-card-featured {
+  border-color: rgba(199, 162, 105, 0.62);
+  background: linear-gradient(180deg, #fffdf7 0%, #ffffff 38%);
+}
+
+.offer-highlight {
+  margin: 0;
+  color: #0f5ea7;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.offer-points {
+  margin: 0;
+  padding-inline-start: 1rem;
+  display: grid;
+  gap: 5px;
+  color: #355d83;
+  font-size: 0.84rem;
+}
+
 .results-gallery-wrap {
   margin-top: 14px;
   width: 100%;
@@ -1027,6 +1070,40 @@ h3 {
 
 .breadcrumbs {
   margin-bottom: 10px;
+}
+
+.hub-subnav-wrap {
+  position: sticky;
+  top: calc(var(--header-height) + 2px);
+  z-index: 20;
+  background: rgba(245, 249, 254, 0.95);
+  backdrop-filter: blur(6px);
+  border-block: 1px solid #d9e6f3;
+}
+
+.hub-subnav {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 8px;
+  scrollbar-width: none;
+}
+
+.hub-subnav::-webkit-scrollbar {
+  display: none;
+}
+
+.hub-subnav a {
+  border: 1px solid #c6dbed;
+  border-radius: 999px;
+  background: #fff;
+  color: #2a5a84;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.34rem 0.62rem;
+  white-space: nowrap;
 }
 
 .breadcrumbs ol {
@@ -1340,6 +1417,28 @@ h3 {
   font-size: 0.86rem;
 }
 
+.map-direction-form {
+  margin-top: 12px;
+}
+
+.map-direction-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.map-direction-row .outline-btn {
+  white-space: nowrap;
+}
+
+.map-inline-link {
+  display: inline-flex;
+  margin: 10px;
+  color: #1f6caf;
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+
 .instagram-grid {
   margin-top: 14px;
   display: grid;
@@ -1360,6 +1459,66 @@ h3 {
 .instagram-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 24px rgba(16, 64, 110, 0.16);
+}
+
+.blog-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.blog-card {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.blog-card p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.blog-meta {
+  margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: #5d7d9e;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.blog-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.blog-tag {
+  border-radius: 999px;
+  border: 1px solid #c8dbed;
+  background: #f7fbff;
+  color: #2f5a84;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.52rem;
+}
+
+.blog-post-card {
+  display: grid;
+  gap: 14px;
+  max-width: 860px;
+}
+
+.blog-section {
+  display: grid;
+  gap: 8px;
+}
+
+.blog-inline-cta {
+  background: linear-gradient(135deg, #f8fbff 0%, #edf5ff 100%);
 }
 
 .form-wrap {
@@ -1660,7 +1819,7 @@ select:focus {
   border-radius: 16px;
   border: 1px solid rgba(199, 162, 105, 0.52);
   background: #fff;
-  box-shadow: 0 22px 45px rgba(8, 35, 60, 0.26);
+  box-shadow: var(--shadow-strong);
   padding: 16px;
   position: relative;
 }
@@ -1836,9 +1995,11 @@ select:focus {
 
   .inner-card-grid,
   .package-grid,
+  .offer-grid,
   .grid-areas,
   .grid-features,
   .grid-steps,
+  .blog-grid,
   .form-grid,
   .footer-grid,
   .results-grid,
@@ -1957,9 +2118,11 @@ select:focus {
 
   .inner-card-grid,
   .package-grid,
+  .offer-grid,
   .grid-areas,
   .grid-features,
   .grid-steps,
+  .blog-grid,
   .form-grid,
   .footer-grid,
   .results-grid,
@@ -1991,5 +2154,13 @@ select:focus {
   .lead-popup-card {
     padding: 12px;
     border-radius: 14px;
+  }
+
+  .map-direction-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hub-subnav-wrap {
+    top: 48px;
   }
 }

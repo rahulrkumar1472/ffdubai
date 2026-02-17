@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {SiteHeader} from "@/components/site-header";
 import {PromoBanner} from "@/components/promo-banner";
+import {LiveChatWidget} from "@/components/live-chat-widget";
 import {getDictionary, type Locale} from "@/lib/i18n";
 
 type SiteShellProps = {
@@ -20,7 +21,7 @@ export function SiteShell({locale, children}: SiteShellProps) {
   return (
     <div className="page" dir={t.dir} lang={locale}>
       <PromoBanner
-        ctaHref={localePath(locale, "/pricing")}
+        ctaHref={localePath(locale, "/#offers")}
         ctaLabel={t.banner.ctaLabel}
         dismissLabel={t.banner.dismissLabel}
         text={t.banner.text}
@@ -62,6 +63,11 @@ export function SiteShell({locale, children}: SiteShellProps) {
               <p>{t.trust.hours}</p>
             </div>
             <div className="footer-links">
+              <Link href={localePath(locale, "/fat-freezing")}>{t.nav.fatFreezing}</Link>
+              <Link href={localePath(locale, "/pricing")}>{t.nav.pricing}</Link>
+              <Link href={localePath(locale, "/book")}>{t.nav.book}</Link>
+              <Link href={localePath(locale, "/blog")}>{locale === "ar" ? "المدونة" : "Blog"}</Link>
+              <Link href={localePath(locale, "/areas/jumeirah-1")}>{locale === "ar" ? "جميرا 1" : "Jumeirah 1"}</Link>
               <a href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
                 WhatsApp: +971521231743
               </a>
@@ -77,6 +83,7 @@ export function SiteShell({locale, children}: SiteShellProps) {
           <p className="footer-disclaimer">{t.trust.disclaimer}</p>
         </div>
       </footer>
+      <LiveChatWidget />
     </div>
   );
 }

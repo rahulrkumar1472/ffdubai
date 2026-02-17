@@ -31,9 +31,10 @@ export function SiteHeader({locale}: {locale: Locale}) {
       {label: t.nav.areasTreated, href: `${localePath(locale, "/fat-freezing")}#areas-treated`},
       {label: t.nav.results, href: `${localePath(locale, "/fat-freezing")}#results`},
       {label: t.nav.pricing, href: `${localePath(locale, "/fat-freezing")}#pricing`},
+      {label: t.nav.faq, href: `${localePath(locale, "/fat-freezing")}#faq`},
       {label: t.nav.bookConsultation, href: `${localePath(locale, "/fat-freezing")}#book-consultation`}
     ],
-    [locale, t.nav.areasTreated, t.nav.bookConsultation, t.nav.howItWorks, t.nav.pricing, t.nav.results, t.nav.whatIsFatFreezing]
+    [locale, t.nav.areasTreated, t.nav.bookConsultation, t.nav.faq, t.nav.howItWorks, t.nav.pricing, t.nav.results, t.nav.whatIsFatFreezing]
   );
 
   const treatmentItems = useMemo(

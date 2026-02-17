@@ -4,13 +4,13 @@ import {ResultsGallery} from "@/components/results-gallery";
 import {JsonLd} from "@/components/json-ld";
 import {breadcrumbSchema} from "@/lib/schema";
 import {getDictionary, type Locale} from "@/lib/i18n";
-import {BEFORE_AFTER_IMAGES} from "@/lib/image-manifest";
+import {REAL_RESULTS_IMAGES} from "@/lib/results";
 
 export function ResultsPageView({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
   const base = locale === "en" ? "/en" : "/ar";
 
-  const images = BEFORE_AFTER_IMAGES.filter(Boolean);
+  const images = REAL_RESULTS_IMAGES.filter(Boolean);
   const resultsClass = images.length === 1 ? "results-single" : images.length < 3 ? "results-compact" : "results-standard";
 
   return (
@@ -33,7 +33,7 @@ export function ResultsPageView({locale}: {locale: Locale}) {
               </div>
             ) : (
               <article className="card results-empty">
-                <h2>{t.pages.results.emptyTitle}</h2>
+                <h2>{locale === "ar" ? "إضافة النتائج الفعلية قريباً" : "Real patient results being added"}</h2>
                 <p>{t.pages.results.emptyText}</p>
               </article>
             )}

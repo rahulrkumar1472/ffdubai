@@ -1,12 +1,15 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
+import {FormEvent, useEffect, useMemo, useState} from "react";
 import {getDictionary, type Locale} from "@/lib/i18n";
 
 const CLINIC_COORDS = {
   lat: 25.2018,
   lng: 55.245
 };
+
+const CLINIC_ADDRESS = "Jumeira St - Jumeirah - Jumeirah 1 - Dubai - United Arab Emirates";
+const MAPS_APP_LINK = "https://maps.app.goo.gl/nb9w9JxUo8nre2Ef9";
 
 function toRadians(value: number) {
   return (value * Math.PI) / 180;
@@ -23,9 +26,22 @@ function getDistanceKm(fromLat: number, fromLng: number, toLat: number, toLng: n
   return earthRadiusKm * c;
 }
 
+function buildDirectionsUrl(origin: string) {
+  const base = "https://www.google.com/maps/dir/?api=1";
+  const destination = encodeURIComponent(CLINIC_ADDRESS);
+
+  if (!origin.trim()) {
+    return `${base}&destination=${destination}`;
+  }
+
+  return `${base}&origin=${encodeURIComponent(origin.trim())}&destination=${destination}`;
+}
+
 export function ClinicMapSection({locale}: {locale: Locale}) {
   const t = getDictionary(locale);
   const [distance, setDistance] = useState<number | null>(null);
+  const [originInput, setOriginInput] = useState("");
+  const [directionsUrl, setDirectionsUrl] = useState<string>(MAPS_APP_LINK);
 
   useEffect(() => {
     if (!navigator.geolocation) return;
@@ -47,6 +63,11 @@ export function ClinicMapSection({locale}: {locale: Locale}) {
     const rounded = new Intl.NumberFormat(locale === "ar" ? "ar-AE" : "en-AE", {maximumFractionDigits: 1}).format(distance);
     return `${t.mapSection.distanceLabel}: ${rounded} km`;
   }, [distance, locale, t.mapSection.distanceLabel, t.mapSection.locationPending]);
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setDirectionsUrl(buildDirectionsUrl(originInput));
+  };
 
   return (
     <section className="section section-muted" id="clinic-location">
@@ -76,9 +97,30 @@ export function ClinicMapSection({locale}: {locale: Locale}) {
               </p>
             </div>
 
+            <form className="map-direction-form" onSubmit={onSubmit}>
+              <label htmlFor={`map-origin-${locale}`}>{t.mapSection.directionsInputLabel}</label>
+              <div className="map-direction-row">
+                <input
+                  id={`map-origin-${locale}`}
+                  onChange={(event) => setOriginInput(event.target.value)}
+                  placeholder={t.mapSection.directionsInputPlaceholder}
+                  value={originInput}
+                />
+                <button className="outline-btn" type="submit">
+                  {t.mapSection.directionsBuilderCta}
+                </button>
+              </div>
+            </form>
+
             <div className="cta-row cta-row-tight">
-              <a className="primary-btn" href="https://maps.app.goo.gl/nb9w9JxUo8nre2Ef9" rel="noreferrer" target="_blank">
+              <a className="primary-btn" href={directionsUrl} rel="noreferrer" target="_blank">
                 {t.mapSection.directionsCta}
+              </a>
+              <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                {t.mapSection.whatsappCta}
+              </a>
+              <a className="outline-btn" href="tel:+971521231743">
+                {t.mapSection.callCta}
               </a>
             </div>
           </article>
@@ -91,6 +133,9 @@ export function ClinicMapSection({locale}: {locale: Locale}) {
               src="https://www.google.com/maps?q=Jumeira%20St%20-%20Jumeirah%20-%20Jumeirah%201%20-%20Dubai%20-%20United%20Arab%20Emirates&output=embed"
               title={t.mapSection.title}
             />
+            <a className="map-inline-link" href={MAPS_APP_LINK} rel="noreferrer" target="_blank">
+              {t.mapSection.directionsCta}
+            </a>
           </article>
         </div>
       </div>

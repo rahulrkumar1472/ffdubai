@@ -4,11 +4,11 @@ import {Typewriter} from "@/components/typewriter";
 import {ResultsGallery} from "@/components/results-gallery";
 import {LeadCapturePopup} from "@/components/lead-capture-popup";
 import {ClinicMapSection} from "@/components/clinic-map-section";
-import {InstagramSection} from "@/components/instagram-section";
 import {JsonLd} from "@/components/json-ld";
 import {clinicSchema, serviceSchema} from "@/lib/schema";
 import {getDictionary, type Locale} from "@/lib/i18n";
-import {BEFORE_AFTER_IMAGES, STOCK_IMAGES} from "@/lib/image-manifest";
+import {STOCK_IMAGES} from "@/lib/image-manifest";
+import {REAL_RESULTS_IMAGES} from "@/lib/results";
 
 function getImage(images: string[], index: number) {
   if (!images.length) return null;
@@ -37,7 +37,7 @@ export function HomeView({locale}: {locale: Locale}) {
     }))
     .filter((item): item is {name: string; description: string; image: string} => Boolean(item.image));
 
-  const resultsImagesAvailable = BEFORE_AFTER_IMAGES.filter(Boolean);
+  const resultsImagesAvailable = REAL_RESULTS_IMAGES.filter(Boolean);
   const resultsCount = resultsImagesAvailable.length;
   const resultsMode = resultsCount === 0 ? "empty" : resultsCount < 3 ? "compact" : "grid";
   const isCompactResults = resultsMode === "compact";
@@ -88,6 +88,9 @@ export function HomeView({locale}: {locale: Locale}) {
                   <Link className="outline-btn" href={`${base}/pricing`}>
                     {t.hero.secondaryCta}
                   </Link>
+                  <a className="outline-btn" href="https://wa.me/971521231743" rel="noreferrer" target="_blank">
+                    {t.hero.tertiaryCta}
+                  </a>
                 </div>
                 <p className="hero-trustline">{t.hero.sameDayLine}</p>
               </article>
@@ -110,6 +113,41 @@ export function HomeView({locale}: {locale: Locale}) {
         </section>
 
         <ClinicMapSection locale={locale} />
+
+        <section className="section" id="offers">
+          <div className="container">
+            <h2 className="section-title">{t.offers.title}</h2>
+            <p className="section-lead">{t.offers.lead}</p>
+
+            <div className="offer-grid">
+              {t.offers.cards.map((offer, index) => {
+                const href =
+                  index === 0
+                    ? `${bookHref}?offer=${offer.id}`
+                    : index === 1
+                      ? `${base}/book?mode=treatment&treatment=fat-freezing&package=sculpt&offer=${offer.id}`
+                      : `${base}/book?mode=treatment&treatment=radiofrequency&package=six-session&offer=${offer.id}`;
+
+                return (
+                  <article className={`card offer-card${index === 1 ? " offer-card-featured" : ""}`} key={offer.id}>
+                    <p className="offer-highlight">{offer.highlight}</p>
+                    <h3>{offer.title}</h3>
+                    <ul className="offer-points">
+                      {offer.bullets.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                    <div className="cta-row cta-row-tight">
+                      <Link className="primary-btn" href={href}>
+                        {offer.cta}
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         <section className="section" id="what-is-fat-freezing">
           <div className="container">
@@ -271,8 +309,6 @@ export function HomeView({locale}: {locale: Locale}) {
             )}
           </div>
         </section>
-
-        <InstagramSection locale={locale} />
 
         <section className="section section-muted" id="why-choose-us">
           <div className="container">

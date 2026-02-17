@@ -1,5 +1,6 @@
 import {SITE_URL} from "@/lib/seo";
 import type {Locale} from "@/lib/i18n";
+import type {BlogPost} from "@/lib/blog";
 
 export function clinicSchema(locale: Locale) {
   return {
@@ -15,8 +16,18 @@ export function clinicSchema(locale: Locale) {
       addressLocality: "Dubai",
       addressCountry: "AE"
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 25.2018,
+      longitude: 55.245
+    },
     telephone: "+971521231743",
-    openingHours: "Mo-Su 12:00-20:00"
+    openingHours: "Mo-Su 12:00-20:00",
+    sameAs: [
+      "https://www.instagram.com/vivo_aesthetics_uae/",
+      "https://share.google/sqnY4VLOsXzIrgkrD",
+      "https://maps.app.goo.gl/nb9w9JxUo8nre2Ef9"
+    ]
   };
 }
 
@@ -84,5 +95,31 @@ export function faqSchema(items: Array<{question: string; answer: string}>) {
         text: item.answer
       }
     }))
+  };
+}
+
+export function blogPostingSchema(locale: Locale, post: BlogPost) {
+  const path = `/${locale}/blog/${post.slug}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.metaDescription,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    inLanguage: locale === "ar" ? "ar-AE" : "en-AE",
+    mainEntityOfPage: `${SITE_URL}${path}`,
+    url: `${SITE_URL}${path}`,
+    author: {
+      "@type": "Organization",
+      name: "FAT FREEZING"
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "FAT FREEZING"
+    },
+    articleSection: post.category,
+    keywords: post.tags.join(", ")
   };
 }

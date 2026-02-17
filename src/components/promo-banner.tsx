@@ -4,6 +4,7 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 
 const DISMISS_KEY = "ffdubai_banner_dismissed_v1";
+const DISMISS_MS = 24 * 60 * 60 * 1000;
 
 type PromoBannerProps = {
   text: string;
@@ -17,7 +18,8 @@ export function PromoBanner({text, dismissLabel, ctaLabel, ctaHref}: PromoBanner
 
   useEffect(() => {
     try {
-      const dismissed = window.sessionStorage.getItem(DISMISS_KEY) === "1";
+      const lastDismissed = Number(window.localStorage.getItem(DISMISS_KEY) ?? "0");
+      const dismissed = Number.isFinite(lastDismissed) && Date.now() - lastDismissed < DISMISS_MS;
       if (!dismissed) setVisible(true);
     } catch {
       setVisible(true);
@@ -40,7 +42,7 @@ export function PromoBanner({text, dismissLabel, ctaLabel, ctaHref}: PromoBanner
             className="seasonal-banner-close"
             onClick={() => {
               try {
-                window.sessionStorage.setItem(DISMISS_KEY, "1");
+                window.localStorage.setItem(DISMISS_KEY, String(Date.now()));
               } catch {
                 // noop
               }
