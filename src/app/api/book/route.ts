@@ -3,6 +3,7 @@ import {prisma} from "@/lib/prisma";
 import {locales} from "@/lib/i18n";
 import {VALID_TIME_SLOTS} from "@/lib/time-slots";
 import {sendBookingEmails} from "@/lib/email";
+import {upsertGHLContact} from "@/lib/gohighlevel";
 import {saveFallbackBooking} from "@/lib/booking-store";
 
 type BookingPayload = {
@@ -141,20 +142,33 @@ export async function POST(request: Request) {
       persistedId = fallback.id;
     }
 
-    const emailStatus = await sendBookingEmails({
-      locale: locale as "en" | "ar",
-      referenceId,
-      bookingType,
-      treatment,
-      packageId,
-      area,
-      name,
-      phone,
-      email,
-      date,
-      time,
-      durationMinutes
-    });
+    const [emailStatus, ghlStatus] = await Promise.all([
+      sendBookingEmails({
+        locale: locale as "en" | "ar",
+        referenceId,
+        bookingType,
+        treatment,
+        packageId,
+        area,
+        name,
+        phone,
+        email,
+        date,
+        time,
+        durationMinutes
+      }),
+      upsertGHLContact({
+        name,
+        email,
+        phone,
+        bookingType,
+        treatment,
+        referenceId,
+        locale,
+        date,
+        time
+      })
+    ]);
 
     return NextResponse.json({
       ok: true,
@@ -163,7 +177,9 @@ export async function POST(request: Request) {
       storageMode,
       emailConfigured: emailStatus.configured,
       customerEmailSent: emailStatus.customerSent,
-      adminEmailSent: emailStatus.adminSent
+      adminEmailSent: emailStatus.adminSent,
+      ghlConfigured: ghlStatus.configured,
+      ghlSynced: ghlStatus.success
     });
   } catch (error) {
     console.error("BOOKING_API_ERROR", error);

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {LanguageToggle} from "@/components/site/LanguageToggle";
+import {DropdownManager} from "@/components/site/DropdownManager";
 import {getDictionary, type Locale} from "@/lib/i18n";
 import {SITE_CONFIG} from "@/lib/site-config";
 
@@ -123,6 +124,7 @@ export function Header({lang}: {lang: Locale}) {
           </div>
         </div>
       </details>
+      <DropdownManager />
     </header>
   );
 }
